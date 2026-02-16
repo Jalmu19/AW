@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang = "es">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Bocetos</title>
+    </head>
+
+    <body>
+        <!--Enlaces al resto de páginas de la web-->
+        <h3>Enlaces al resto de la web:</h3>
+            <ul>
+                 <li>
+                    <a href="index.html" > Página principal</a>
+                </li>
+
+                <li>
+                    <a href="detalles.html" > Detalles</a>
+                </li>
+
+                <li>
+                    <a href="miembros.html" > Miembros</a>
+                </li>
+
+                <li>
+                    <a href="planificacion.html" > Planificación</a>
+                </li>
+
+                <li>
+                    <a href="contacto.html" > Contacto</a>
+                </li>
+
+            </ul>
+
+        <hr>
+        
+        <h1>Índice</h1>
+       <ol>
+            <li>
+                <a href="#general">General</a>
+            </li>
+
+            <li>
+                <a href="#iCliente">Interfaz cliente</a>
+            </li>
+
+            <li>
+                <a href="#iGerente"> Interfaz gerente</a>
+            </li>
+
+            <li>
+                <a href="#iCocinero">Interfaz cocinero</a>
+            </li>
+
+            <li>
+                <a href="#iCamarero"> Interfaz camarero</a>
+            </li>
+
+        </ol>
+
+        <br><br>
+        <ol>
+            <li>
+                <strong>General</strong>
+                <p>Esta es la página principal de inicio de sesión. <br>
+                    En ella tendremos la opción de iniciar sesión con un correo y contraseña si ya se está autenticado en el sistema
+                    o de registrarse si no.
+                </p>
+                <img src = "img/Inicio_de_sesión.jpg" alt="inicio de sesión" width="500">
+            </li>      
+
+            <li id="iCliente">
+                <strong>Interfaz del cliente</strong>
+                <p>Para la interfaz que utilizarán los clientes contamos con varias pantallas: <br>         
+        
+                        <img src = "img/Inicio_cliente.jpg" alt="Página principal del cliente" width="500">
+                        <img src = "img/Perfil_cliente.jpg" alt="Perfil del cliente" width="500">
+                        <img src = "img/Carrito_cliente.jpg" alt="Carrito del cliente" width="500">
+                        
+                </p>
+                <p>
+                    En la primera imagen se muestra la pantalla principal que verán los clientes después de iniciar sesión. En ella, se muestra 
+                    en el panel horizontal superior el logotipo del restaurante junto con el icono del carrito y del perfil de usuario.
+                    A continuación, aparece un filtro para los productos que se muestran disponibles en la lista más abajo.
+                    
+                    <br>
+                    La segunda imagen representa la información del perfil de usuario al clicar en el icono de la pantalla anterior.
+                    Se muestran los pedidos de ese usuario junto con los productos que los componen y su estado.
+                    Además se podrá editar el perfil.
+                    
+                    <br>
+                    La tercera imagen ofrece un resumen de los productos añadidos al carrito, accesible al pinchar en el icono de la primera pantalla, 
+                    además de opciones con checkboxes para elegir el método de pago y el lugar de consumición del pedido.
+                    Para finalizar aparecen dos botones de confirmar y cancelar pedido.
+
+                </p>
+                <p>
+                        <img src = "img/Confirmación_de_pedido_cliente.jpg" alt="Confirmación del pedido" width="500">
+                        <img src = "img/Seguimiento_cliente.jpg" alt="Seguimiento de los pedidos del cliente" width="500">
+                        <img src = "img/Tarjeta_cliente.jpg" alt="Pantalla pago con tarjeta" width="500">      
+
+                </p>
+
+                 <p>
+                    La siguiente pantalla aparece cuando el cliente confirma el pedido. Así se muestra el id asociado al
+                    pedido realizado, el estado de éste y un botón para volver a la pantalla principal.
+
+                    <br>
+                    La imagen central informa al cliente del estado de un pedido, que ha seleccionado previamente de la lista de pedidos de su perfil. 
+                    De manera concisa se pueden ver los estados por los que ha pasado y los que le quedan por pasar.
+                    
+                    <br>
+                    Al seleccionar el pago online en la página del carrito, aparecerá esta interfaz para rellenar los datos
+                    de la tarjeta con la que pagar.
+                    <br> 
+                    <br> 
+
+                </p>
+               
+            </li>
+
+            <li id="iCamarero">
+                <strong>Interfaz del camarero</strong>
+
+                 <p>Continuamos con la interfaz de los camareros: <br>         
+        
+                        <img src = "img/Inicio_camarero.jpg" alt="Página principal del camarero" width="500">
+                        <img src = "img/Cobrar_camarero.jpg" alt="Página de cobro" width="500">
+                        <img src = "img/Completar_camarero.jpg" alt="Página de completar pedido" width="500">
+                        <img src = "img/Entregar_camarero.jpg" alt="Página de entrega" width="500">                        
+                        
+                </p>
+                <p>
+                    Iniciamos con la pantalla que verán los camareros después de iniciar sesión. En ella, se muestra 
+                    en el panel horizontal superior el icono del perfil de usuario. Si se clica en este, le llevará a una pantalla
+                    con el mismo aspecto que la del perfil del cliente excepto por la lista de pedidos realizados, que no estará. 
+                    Debajo, tres botones con las tres acciones que realiza un camarero en su jornada de trabajo. 
+                    Seleccionará la que quiera llevar a cabo en ese momento, llevándole a una de las siguientes pantallas.
+                    
+                    <br>
+                    Tras pinchar en el botón de cobrar, se observan todos los pedidos pendientes de cobro, con la cantidad a abonar
+                    y una descripción con los productos que contienen. A su derecha se encuentran una casilla por cada uno de ellos, 
+                    que se marcará cuando se haya efectuado el cobro. Esto hará que se elimine el pedido de la lista.
+                    
+                    <br>
+                    Para completar un pedido, se lista al lado de su identificador los productos que faltan. Una vez el camarero los 
+                    haya conseguido, pinchará en su respectiva casilla y el pedido se eliminará de la lista.
+
+                    <br>
+                    La pantalla de entrega muestra los pedidos que están completos. De nuevo, el camarero pinchará en la casilla tras la
+                    entrega y el pedido se eliminará de la lista. 
+                    <br> 
+                    <br>
+                </p>
+
+            </li>
+
+            <li id="iCocinero">
+                <strong>Interfaz del cocinero</strong>
+
+                 <p>El cocinero tiene una sola pantalla para mayor simplicidad de uso: <br>  
+                        <img src = "img/Pedidos_cocinero.jpg" alt="Página principal del cocinero" width="500">
+                 </p>
+                 <p>
+                    Se listan los pedidos solamente con los productos a cocinar (sin incluir los que debe añadir el camarero).
+                    Conforme el cocinero vaya acabando cada producto del pedido, los va marcando, y pinchará terminar cuando estén todos.
+                    <br> 
+                    <br>
+                </p>
+                 
+
+            </li>
+
+            </li>
+            <li id="iGerente">
+                <strong>Interfaz del gerente</strong>
+
+                 <p>
+        
+                        <img src = "img/Inicio_gerente.jpg" alt="Página principal del gerente" width="500">
+                        <img src = "img/Administración de productos gerente.jpg" alt="Visualización de pedidos" width="500">
+                        <img src = "img/Vista producto gerente.jpg" alt="Información de un pedido concreto" width="500">
+     
+                </p>
+                <p>
+                    El gerente podrá elegir entre dos acciones: administrar los productos o visualizar los pedidos.
+                    
+                    <br>
+                    Si elige la adminsitración de productos, se le mostrará el total de productos existentes y la lista de estos. 
+                    Podrá editarlos al pinchar en el icono del lápiz que hay en cada uno, y podrá crear uno nuevo clicando en el icono 
+                    del "+" abajo a la derecha.
+
+                    <br>
+                    Al decidir crear uno nuevo se abre una pestaña que le permite introducir toda la información del producto.
+
+                </p>
+                <p>
+                        <img src = "img/Pedidos_gerente.jpg" alt="Visualización de pedidos" width="500">
+                        <img src = "img/Vista_pedido_gerente.jpg" alt="Información de un pedido concreto" width="500">
+
+                </p>
+                <p>
+                    Por otro lado, podrá visualizar todo el historial de pedidos del restaurante al clicar el otro botón del inicio.
+                    A la izquierda encontrará los pedidos que se encuentrar en preparación con la imagen del respectivo cocinero y demás información.
+                    A la derecha, verá el resto de pedidos junto con su estado. 
+
+                    <br>
+                    Si clica en alguno de los pedidos, se abrirá una nueva pantalla que listará los productos que contiene dicho pedido. 
+                    <br>
+                    <br>
+                </p>
+
+
+
+            </li>
+
+            
+
+           
+        </ol>
+
+
+    </body>
+
+</html>

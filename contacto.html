@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang = "es">      <!--Documento HTML en español-->
+    <head>
+        <meta charset="utf-8">
+        <title> Contacto </title>
+    </head>
+
+    <body>
+
+         <!--Enlaces al resto de páginas de la web-->
+        <h3>Enlaces al resto de la web:</h3>
+            <ul>
+                 <li>
+                    Página principal: <a href="index.html" > Página principal</a>
+                </li>
+
+                <li>
+                    Detalles: <a href="detalles.html" > Detalles </a>
+                </li>
+
+                <li>
+                    Bocetos: <a href="bocetos.html" > Bocetos</a>
+                </li>
+
+                <li>
+                    Miembros: <a href="miembros.html" > Miembros</a>
+                </li>
+
+                <li>
+                    Planificación: <a href="planificacion.html" > Planificación</a>
+                </li>
+
+            </ul>
+
+        <hr>
+
+        <h1> Formulario de contacto </h1>
+  
+        <p>Pongase en contacto con nosotros rellenando el formulario siguiente. <br>
+            Toda la información se enviará automáticamente al correo electrónico 
+            <a href="mailto:irodri15@ucm.es" > bistroFDI@gmail.com </a>
+        </p>
+            
+        <form action="mailto:irodri15@ucm.es" method="post" enctype="text/plain">
+           
+            <!--Agrupación de los elementos del formulario-->
+            <fieldset>
+                <legend> Datos personales: </legend>
+
+                Nombre: <input type = "text" name="nombre" size = "50" required> <br> 
+                <br>
+
+                Dirección de correo electrónico: <input type = "email" name="email" size = "50" required> <br>
+                <br>
+                
+                Motivo de la consulta:  <!--Radio buttons-->
+                    <input name="motivo" type = "radio"> Evaluación 
+                    <input name="motivo" type = "radio"> Sugerencias 
+                    <input name="motivo" type = "radio"> Críticas <br>               
+                <br>
+
+                Consulta: <br>
+                <textarea name="consulta" rows="3" cols="50" required> </textarea> <br>
+                <br>
+
+                <input name="verificar_terminos" type="checkbox" value="verificar" required> 
+                    Marque esta casilla para verificar que ha leído nuestros términos y condiciones del servicio. <br>
+                <br>
+                    
+                <input type="submit" name="enviar" value="Enviar">
+
+            </fieldset>
+          
+        </form>
+
+    </body>
+
+</html>

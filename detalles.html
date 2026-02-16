@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset = "utf-8">
+        <title>Detalles de la web</title>
+    </head>
+    <body>
+        <!--Enlaces al resto de páginas de la web-->
+        <h3>Enlaces al resto de la web:</h3>
+            <ul>
+                <li>
+                    <a href="index.html" > Página principal</a>
+                </li>
+
+                <li>
+                    <a href="bocetos.html" > Bocetos</a>
+                </li>
+
+                <li>
+                    <a href="miembros.html" > Miembros</a>
+                </li>
+
+                <li>
+                    <a href="planificacion.html" > Planificación</a>
+                </li>
+
+                <li>
+                    <a href="contacto.html" > Contacto</a>
+                </li>
+
+            </ul>
+            
+        <hr>
+        
+            <!--introduccion: para que se usa, que hace
+                Tipos de usuarios: tipos y cosas que pueden hacer
+                Funcionalidades: enumerar funcionalidades + explicaion y quien puede hacerlas-->
+            
+            <!--Indice-->
+            <p><strong>Índice</strong></p>
+
+            <ol>
+                <li><strong><a href="#intro"> Introducción</a></strong></li>
+                <li><strong><a href="#usuarios"> Tipos de usuarios</a></strong>
+                    <ul>
+                        <li><a href="#cocineros"> Cocinero</a></li>
+                        <li><a href="#cliente"> Cliente</a></li>
+                        <li><a href="#camarero"> Camarero</a></li>
+                        <li><a href="#gerente"> Gerente</a></li>
+                    </ul>
+                </li>
+
+                <li><strong><a href="#func"> Funcionalidades</a></strong>
+                    <ol>
+                        <li><a href="#gUsu"> Gestion de Usuarios</a></li>
+                        <li><a href="#gProd"> Gestion de Productos</a></li>
+                        <li><a href="#gPedi"> Gestion de Pedidos</a></li>                          
+                        <li><a href="#gPrepPedi"> Gestion de Preparacion de pedidos</a></li>
+                    </ol>
+                </li>
+            </ol>
+
+            <!--Desarrollo del indice-->
+            <ol>
+                <li id="intro"><strong>Introducción</strong>
+                    <p>Este proyecto trata de crear una página web para el restaurante Bistro FDI. 
+                        Esta página permitirá a los clientes realizar pedidos y el seguimiento de los mismos
+                        mientras que, al personal del restaurante les permitirá organizarse a la hora de
+                        preparar los pedidos y atender a los clientes lo más rápido posible.
+                    </p>
+                </li>
+
+                <li id="usuarios"><strong>Tipos de usuarios</strong>
+                    <ul>
+                        <li id="cocineros">Cocinero
+                            <p>
+                                Uno de los trabajadores del restaurante, encargado de preparar los pedidos.
+                                Los cocineros podrán consultar los pedidos pendientes de preparar y los detalles de estos,
+                                de manera que cuando preparen alguno de los productos que lo forman,
+                                lo confirmarán y, si ese era el último producto, finalizarán su preparación.  
+                            </p>
+                        </li>
+
+                        <li id="cliente">Cliente
+                            <p>
+                                Es el rol encargado de consumir los productos que se ofrecen en la web.
+                                El cliente podrá acceder al sistema de usuarios para poder crearse un perfil en la web y 
+                                al de gestión de pedidos para que puedan realizarlos y comprobar su estado con un seguimiento. 
+                            </p>
+                        </li>
+
+                        <li id="camarero">Camarero
+                            <p>
+                                El camarero forma parte del personal del restaurante encargado de entregar los pedidos preparados a los clientes y,
+                                si no se ha realizado antes, los cobra. Podrá acceder a los pedidos preparados y ver si le falta algún producto 
+                                que no necesite preparación en cocina por parte de los cocineros
+                                y lo añade él mismo. Además, podrá cobrar a los clientes de manera que
+                                el estado del pedido pase de "Recibido" a "En preparación".  
+                            </p>
+                        </li>
+
+                        <li id="gerente">Gerente
+                            <p>
+                                Forma parte del personal del Bistro FDI, se encarga de gestionar los productos y servicios ofrecidos.
+                                Podrá acceder al sistema de usuarios para modificar el rol de estos ya que por defecto se crean como clientes, 
+                                y al sistema de productos, donde podrá crear categorias y productos para cada categoria.
+                                Además, podrá consultar todos los pedidos asociados a un cliente y el estado de todos los pedidos
+                                pendientes. Si el pedido esta en estado "En preparación" verá el avatar/foto del cocinero que lo está preparando.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="func"><strong>Funcionalidades</strong>
+                    <ol>
+                        <li id="gUsu">Gestión de Usuarios
+                            <p>
+                                Se trata del sistema que creará usuarios asociados al resturante, ya sean los trabajdores o los clientes, 
+                                podrán cambiar sus datos y perfil. Para los avatares se podrá: seleccionar uno de entre varias opciones, subirlo desde el ordenador o seleccionar uno por defecto.
+                                Se distinguirá entre ellos por los distintos roles que se les asignen, por defecto serán clientes.
+                                Los usuarios tienen una jerarquía, de mayor a menor prioridad: gerente, cocinero, camarero y cliente.
+                                Todos podrán acceder a esta funcionalidad, pero el gerente será el único que pueda cambiar los roles.
+                            </p>
+                        </li>
+
+                        <li id="gProd">Gestión de Productos
+                            <p>
+                                De esta parte se encarga el gerente, ya que será el único que pueda crear categorias y productos que ofrecer.
+                            </p>
+                        </li>
+
+                        <li id="gPedi">Gestión de Pedidos     
+                            <p>
+                                Se trata de toda la gestión de los pedidos que se realicen por parte de los clientes, cada pedido tiene 8 fases:
+                                Nuevo, Recibido, En preparación, Cocinando, Listo cocina, Terminado, Entregado y Cancelado.
+                                Los pedidos pueden ser de consumo local o para llevar y el flujo que hemos decidido es el siguiente:  
+                            </p> 
+                                    <!--Flujo de ejecucion-->
+                                <ol> <!--Lista a modo de índice-->
+                                    <li>Identificarse</li>
+                                    <li>Añadir productos al carrito</li>
+                                    <li>Elegir si es para llevar o consumir en el local</li>
+                                    <li>Elegir método de pago</li>
+                                    <li>Confirmar o cancelar pedido</li>      
+                                    <li>Confirmación o datos de seguimiento del pedido</li>
+
+                                </ol>
+
+                            <p>
+                                Los usuarios que pueden acceder son: los clientes para realizar y consultar los pedidos, 
+                                los gerentes para consultar los pedidos asociados a un cliente y 
+                                los camareros para cobrar a los clientes y entregar pedidos, además de añadir productos que falten y
+                                no sean de cocina.    
+                            </p>                            
+                             
+                        </li>  
+
+                        <li id="gPrepPedi">Gestión de Preparacion de pedidos
+                            <p>
+                                Esta parte está centrada en los cocineros, que podrán quedarse con pedidos a preparar, 
+                                confirmar cuando haya un producto preparado y finalizar la preparación del pedido. 
+                                Además, los gerentes pueden ver el estado de los pedidos pendientes en cualquier estado
+                                y si estan "En preparación", podrá ver la foto de quien lo está realizando.
+                            </p>
+                        </li>
+                    </ol>
+                </li>
+        </ol>        
+
+    </body>
+</html>

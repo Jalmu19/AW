@@ -1,13 +1,13 @@
 <?php
 function perfil() {
-    $rutaApp = RUTA_APP;
+    $rutaApp = RAIZ_APP;
     $html = '';
 
     //Si el usuario ha iniciado sesión
     if (isset($_SESSION["login"]) && ($_SESSION["login"] === true)) {
         //Determinar la imagen (si no tiene, una por defecto)
         $avatar = $_SESSION["avatar"] ?? "user_icon.png";
-        $imagenAvatar = "{$rutaApp}/img/avatares/{$avatar}"; //???
+        $imagenAvatar = RUTA_IMGS."/avatares/{$avatar}"; //???
 
         $html = <<<EOS
             <div>

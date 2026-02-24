@@ -8,8 +8,8 @@
     <body>
         <div id="contenedor">
             <?php
-            require(RAIZ_APP.'/comun/cabecera.php');
-            require(RAIZ_APP.'/comun/sidebarIzq.php');
+            require(RAIZ_APP.'/vistas/comun/cabecera.php');
+            require(RAIZ_APP.'/vistas/comun/sidebarIzq.php');
             ?>
             <main>
                 <article>
@@ -17,8 +17,8 @@
                 </article>
             </main>
             <?php
-            require(RAIZ_APP.'/comun/sidebarDer.php');
-            require(RAIZ_APP.'/comun/pie.php');
+            require(RAIZ_APP.'/vistas/comun/sidebarDer.php');
+            require(RAIZ_APP.'/vistas/comun/pie.php');
             ?>
         </div>
     </body>

@@ -122,7 +122,7 @@ class FormularioRegistro extends Formulario
                 $this->errores[] = "El usuario ya existe";
             } else {
                 
-                $usuario = Usuario::crea($nombreUsuario, $nombre, $apellido, $email, $password, $avatar, Usuario::USER_ROLE);
+                $usuario = Usuario::crea($nombreUsuario, $nombre, $apellido, $email, $password, $avatar, Usuario::CLIENT_ROLE);
                 
                 if ($usuario) {
                     $_SESSION['login'] = true;

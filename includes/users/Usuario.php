@@ -55,7 +55,7 @@ class Usuario
     }
 
     //función registrarse
-    public static function crea($nombreUsuario, $nombre, $apellido, $email, $password, $avatar, $rol = self::CLIENT_ROLE)
+    public static function crea($nombreUsuario, $nombre, $apellidos, $email, $password, $avatar, $rol = self::CLIENT_ROLE)
     {
         $user = new Usuario($nombreUsuario, $email, $nombre, $apellidos, password_hash($password, PASSWORD_DEFAULT), $rol, $avatar);
         return $user->guarda();

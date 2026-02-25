@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/forms/formularioRegistro.php';
+require_once RAIZ_APP.'/includes/forms/formularioRegistro.php';
 
 $form = new FormularioRegistro();
 $htmlFormRegistro = $form->gestiona();
@@ -13,4 +13,4 @@ $contenidoPrincipal = <<<EOS
 $htmlFormRegistro
 EOS;
 
-require RAIZ_APP.'/vistas/plantillas/plantilla.php';
+require RAIZ_APP.'/includes/vistas/plantillas/plantilla.php';

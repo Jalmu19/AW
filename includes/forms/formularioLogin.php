@@ -1,6 +1,6 @@
 <?php
-require_once RAIZ_APP.'/forms/formulario.php';
-require_once RAIZ_APP.'/users/Usuario.php';
+require_once RAIZ_APP.'/includes/forms/formulario.php';
+require_once RAIZ_APP.'/includes/users/Usuario.php';
 
 class FormularioLogin extends Formulario
 {
@@ -64,10 +64,8 @@ class FormularioLogin extends Formulario
             if (!$usuario) {
                 $this->errores[] = "El usuario o la contraseña no coinciden";
             } else {
-                $_SESSION['login'] = true;
-                $_SESSION['nombre'] = $usuario->getNombre();
-                $_SESSION['rol'] = $usuario->getRol();
-                $_SESSION['avatar'] = $usuario->getAvatar();
+                $app = Aplicacion::getInstance();
+                $app->loginUser($usuario);
             }
         }
     }

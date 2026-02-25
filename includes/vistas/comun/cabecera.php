@@ -1,35 +1,23 @@
 <?php
 function perfil() {
-    $rutaApp = RAIZ_APP;
+    $app = Aplicacion::getInstance();
     $html = '';
 
-    //Si el usuario ha iniciado sesión
-    if (isset($_SESSION["login"]) && ($_SESSION["login"] === true)) {
-        //Determinar la imagen (si no tiene, una por defecto)
-        $avatar = $_SESSION["avatar"] ?? "user_icon.png";
-        $imagenAvatar = RUTA_IMGS."/avatares/{$avatar}"; //???
+    if ($app->isCurrentUserLogged()) {
+        $avatar = $app->getCurrentUserAvatar();
+        $nombre = $app->getCurrentUserRealName();
+        $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
 
-        $html = <<<EOS
-            <div>
-                <a href="<?= $rutaApp ?>/carrito.php">
-                    <img src="<?= $rutaApp ?>/img/cart_icon.png" alt="Carrito" width= "30">
-                </a>
-
-                <a href = "{$rutaApp}/perfil.php">
-                    <img src="{$imagenAvatar}" alt="Avatar" width="40" height="40">
-                </a>
-            </div>
-        EOS;
-    } 
-    //Si no ha iniciado sesión
-    else {
-        $html = <<<EOS
-            <div>
-                <a href="{$rutaApp}/login.php">Iniciar sesión</a> | <a href="{$rutaApp}/registro.php">Registrarse</a>
-            </div>
-        EOS;
+        $html = "<div>
+            Hola, $nombre 
+            <a href='perfil.php'><img src='$rutaImg' width='40'></a>
+            <a href='logout.php'>Salir</a>
+        </div>";
+    } else {
+        $html = "<div>
+            <a href='login.php'>Login</a> | <a href='registro.php'>Registro</a>
+        </div>";
     }
-
     return $html;
 }
 ?>

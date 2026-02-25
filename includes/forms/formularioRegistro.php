@@ -1,6 +1,6 @@
 <?php
-require_once RAIZ_APP.'/forms/formulario.php';
-require_once RAIZ_APP.'/users/Usuario.php';
+require_once RAIZ_APP.'/includes/forms/formulario.php';
+require_once RAIZ_APP.'/includes/users/Usuario.php';
 
 class FormularioRegistro extends Formulario
 {
@@ -110,7 +110,7 @@ class FormularioRegistro extends Formulario
         }
 
         // Lógica del Avatar
-        $avatar = "user_icon.png"; // Valor por defecto
+        $avatar = RAIZ_APP."/img/user_icon.png"; // Valor por defecto
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
             $avatar = $_FILES['avatar']['name'];
         }
@@ -125,10 +125,8 @@ class FormularioRegistro extends Formulario
                 $usuario = Usuario::crea($nombreUsuario, $nombre, $apellido, $email, $password, $avatar, Usuario::CLIENT_ROLE);
                 
                 if ($usuario) {
-                    $_SESSION['login'] = true;
-                    $_SESSION['nombre'] = $usuario->getNombre();
-                    $_SESSION['rol'] = Usuario::CLIENT_ROLE;
-                    $_SESSION['avatar'] = $avatar;
+                    $app = Aplicacion::getInstance();
+                    $app->loginUser($usuario);
                 } else {
                     $this->errores[] = "Error al crear el usuario.";
                 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/forms/formularioLogin.php';
+require_once RAIZ_APP.'/includes/forms/formularioLogin.php';
 
 $form = new FormularioLogin();
 $htmlFormLogin = $form->gestiona();
@@ -13,4 +13,4 @@ $contenidoPrincipal = <<<EOS
 $htmlFormLogin
 EOS;
 
-require RAIZ_APP.'/vistas/plantillas/plantilla.php';
+require RAIZ_APP.'/includes/vistas/plantillas/plantilla.php';

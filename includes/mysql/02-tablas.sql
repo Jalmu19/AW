@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS `Usuario`;
 DROP TABLE IF EXISTS `Categoria`;
 DROP TABLE IF EXISTS `Producto`;
 DROP TABLE IF EXISTS `Pedido`;
+DROP TABLE IF EXISTS `Pedido-Producto`
+DROP TABLE IF EXISTS `Cocinero-Producto`
 
 
 

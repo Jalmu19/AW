@@ -9,7 +9,7 @@
         <div id="contenedor">
             <?php
             require(RAIZ_APP.'/includes/vistas/comun/cabecera.php');
-            require(RAIZ_APP.'/includes/vistas/comun/sidebarIzq.php');
+           # require(RAIZ_APP.'/includes/vistas/comun/sidebarIzq.php');
             ?>
             <main>
                 <article>
@@ -17,7 +17,7 @@
                 </article>
             </main>
             <?php
-            require(RAIZ_APP.'/includes/vistas/comun/sidebarDer.php');
+            #require(RAIZ_APP.'/includes/vistas/comun/sidebarDer.php');
             require(RAIZ_APP.'/includes/vistas/comun/pie.php');
             ?>
         </div>

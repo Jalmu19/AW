@@ -1,7 +1,9 @@
 <?php
 
-class Usuario
-{
+require_once '../config.php';
+
+class Usuario {
+
     // Roles jerárquicos: Cliente(1) < Camarero(2) < Cocinero(3) < Gerente(4)
     public const CLIENT_ROLE = 1;
     public const WAITER_ROLE = 2;
@@ -40,12 +42,13 @@ class Usuario
 
     public static function buscaUsuario($nombreUsuario)
     {
+       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Usuarios WHERE nombreUsuario='%s'", 
             $conn->real_escape_string($nombreUsuario)
         );
         $rs = $conn->query($query);
-        if ($rs && $rs->num_rows == 1) {
+        if ($rs && $rs->num_rows === 1) {
             $f = $rs->fetch_assoc();
             $user = new Usuario($f['nombreUsuario'], $f['email'], $f['nombre'], $f['apellidos'], $f['password'], $f['rol'], $f['avatar']);
             $rs->free();
@@ -72,6 +75,7 @@ class Usuario
 
     private static function inserta($usuario)
     {
+        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Usuarios(nombreUsuario, email, nombre, apellidos, password, rol, avatar) VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s')",
             $conn->real_escape_string($usuario->nombreUsuario),
@@ -87,6 +91,7 @@ class Usuario
 
     private static function actualiza($usuario)
     {
+        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Usuarios SET email='%s', nombre='%s', apellidos='%s', password='%s', rol=%d, avatar='%s' WHERE nombreUsuario='%s'",
             $conn->real_escape_string($usuario->email),
@@ -105,4 +110,5 @@ class Usuario
     public function getNombre() { return $this->nombre; }
     public function getRol() { return $this->rol; }
     public function getAvatar() { return $this->avatar; }
+
 }

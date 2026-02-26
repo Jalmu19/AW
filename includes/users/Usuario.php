@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config.php';
+include '../config.php';
 
 class Usuario {
 
@@ -89,7 +89,7 @@ class Usuario {
         return $conn->query($query);
     }
 
-    private static function actualiza($usuario)
+    public static function actualiza($usuario)
     {
         // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();

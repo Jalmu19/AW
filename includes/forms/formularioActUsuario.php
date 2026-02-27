@@ -45,9 +45,23 @@ class formularioActUsuario extends Formulario
                 <label for="apellidos">Apellidos:</label>
                 <input id="apellidos" type="text" name="apellidos" />
             </div>
-             <div>
-                <label for="avatar">Avatar/foto:</label>
-                <input id="avatar" type="file" name="avatar" />
+              <div>
+                <input type="radio" name="tipoAvatar" value="defecto" checked> 
+                Usar avatar por defecto
+            </div>
+            <div>
+                <input type="radio" name="tipoAvatar" value="galeria"> 
+                Elegir de la galería:
+                <select name="avatarGaleria">
+                    <option value="opcion1.png">Opcion1</option>
+                    <option value="opcion2.png">Opcion2</option>
+                    <option value="opcion3.png">Opcion3</option>
+                </select>
+            </div>
+            <div>
+                <input type="radio" name="tipoAvatar" value="subida"> 
+                Subir mi propia foto:
+                <input type="file" name="avatarArchivo" accept="image/*">
             </div>
             <div>
                 <button type="submit" name="actualizar">Ok</button>

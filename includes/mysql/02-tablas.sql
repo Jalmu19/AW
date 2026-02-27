@@ -92,3 +92,4 @@ CREATE TABLE IF NOT EXISTS `Cocinero-Producto` (
     FOREIGN KEY (`nombre_producto`) REFERENCES `Producto`(`nombre`)   
     
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+

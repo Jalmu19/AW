@@ -89,14 +89,35 @@ class formularioActUsuario extends Formulario
 
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-         $correo = trim($datos['correo'] ?? '');
+        $correo = trim($datos['correo'] ?? '');
         $correo = filter_var($correo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $correo || empty($correo) ) {
             $this->errores['correo'] = 'El correo no puede estar vacío.';
         }
+
+        $avatar = "user_icon.png"; //Por defecto
+        $tipo = $datos['tipoAvatar'] ?? 'defecto';
+
+        if($tipo === 'galeria') {
+            $avatar = $datos['avatarGaleria'];
+        } 
+        elseif($tipo === 'subida') {
+            if(isset($_FILES['avatarArchivo']) && $_FILES['avatarArchivo']['error'] === UPLOAD_ERR_OK) {
+                $archivoTmp = $_FILES['avatarArchivo']['tmp_name'];
+                //time() para garantizar nombres únicos, evita que un usuario sobrescriba la foto de otro
+                $nombreArchivo = time() . "_" . $_FILES['avatarArchivo']['name'];
+                
+                if(move_uploaded_file($archivoTmp, RAIZ_APP . "/img/avatares/" . $nombreArchivo)) {
+                    $avatar = $nombreArchivo;
+                }
+                else {
+                    $this->errores['avatar'] = "Error al subir la imagen.";
+                }
+            }
+        }
         
         if (count($this->errores) === 0) {
-            $aux = new Usuario($nombreUsuario, $correo, $datos['nombre'], $datos['$apellidos'], $hash, $datos['rol'], $datos['avatar']);
+            $aux = new Usuario($nombreUsuario, $correo, $datos['nombre'], $datos['$apellidos'], $hash, $datos['rol'], $avatar);
             $usuario = Usuario::actualiza($aux);
         
             if (!$usuario) {

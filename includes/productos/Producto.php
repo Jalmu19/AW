@@ -23,7 +23,7 @@ class Producto {
     }
 
 
-    public static function buscaProducto($nombreUsuario)
+    public static function buscaProducto($nombre)
     {
        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -85,7 +85,7 @@ class Producto {
             $conn->real_escape_string($producto->descripcion),
             $conn->real_escape_string($producto->imagen),
             $conn->real_escape_string($producto->categoria),
-            $conn->real_escape_string($producto->nombre),
+            $conn->real_escape_string($producto->nombre)
         );
         return $conn->query($query);
     }

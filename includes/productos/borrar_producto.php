@@ -8,7 +8,7 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$nombre = filter_input(INPUT_GET, 'nombre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 if ($nombre) {
     if (Producto::borra($nombre)) {

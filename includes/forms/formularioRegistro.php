@@ -56,12 +56,10 @@ class FormularioRegistro extends Formulario
                 {$erroresCampos['password2']}
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="defecto" checked> 
-                Usar avatar por defecto
+                <input type="radio" name="tipoAvatar" value="defecto" checked> Usar avatar por defecto
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="galeria"> 
-                Elegir de la galería:
+                <input type="radio" name="tipoAvatar" value="galeria"> Elegir de la galería:
                 <select name="avatarGaleria">
                     <option value="opcion1.png">Opcion1</option>
                     <option value="opcion2.png">Opcion2</option>
@@ -69,8 +67,7 @@ class FormularioRegistro extends Formulario
                 </select>
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="subida"> 
-                Subir mi propia foto:
+                <input type="radio" name="tipoAvatar" value="subida"> Subir mi propia foto:
                 <input type="file" name="avatarArchivo" accept="image/*">
             </div>
             <div>

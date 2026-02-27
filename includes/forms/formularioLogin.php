@@ -48,13 +48,13 @@ class FormularioLogin extends Formulario
         $this->errores = [];
         $nombreUsuario = trim($datos['nombreUsuario'] ?? '');
         $nombreUsuario = filter_var($nombreUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $nombreUsuario || empty($nombreUsuario) ) {
+        if (!$nombreUsuario || empty($nombreUsuario) ) {
             $this->errores['nombreUsuario'] = 'El nombre de usuario no puede estar vacío';
         }
         
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $password || empty($password) ) {
+        if (!$password || empty($password) ) {
             $this->errores['password'] = 'La contraseña no puede estar vacía.';
         }
         

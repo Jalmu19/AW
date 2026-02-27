@@ -1,7 +1,5 @@
 <?php
 
-require_once (__DIR__. '/../config.php');
-
 class Usuario {
 
     // Roles jerárquicos: Cliente(1) < Camarero(2) < Cocinero(3) < Gerente(4)
@@ -103,6 +101,45 @@ class Usuario {
             $conn->real_escape_string($usuario->nombreUsuario)
         );
         return $conn->query($query);
+    }
+
+    public static function borra($nombreUsuario)
+    {
+        $result = false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = "DELETE FROM Usuarios WHERE nombreUsuario = ?";
+        $stmt = $conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error en la preparación: " . $conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("s", $nombreUsuario); //para que sepa que es un string
+
+        if ($stmt->execute()) {
+            $result = true;
+        }
+
+        $stmt->close();
+        return $result;
+    }
+
+    public static function cambiaRol($nombreUsuario, $nuevoRol)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = "UPDATE Usuarios SET rol = ? WHERE nombreUsuario = ?";
+        $stmt = $conn->prepare($query);
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("is", $nuevoRol, $nombreUsuario);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
     }
 
     //getters

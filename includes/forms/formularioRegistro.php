@@ -41,11 +41,6 @@ class FormularioRegistro extends Formulario
                 {$erroresCampos['email']}
             </div>
             <div>
-                <label>Avatar:</label>
-                <input type="file" name="avatar" accept="image/*">
-                {$erroresCampos['avatar']}
-            </div>
-            <div>
                 <label for="nombreUsuario">Nombre de usuario:</label>
                 <input id="nombreUsuario" type="text" name="nombreUsuario" value="$nombreUsuario" required>
                 {$erroresCampos['nombreUsuario']}
@@ -59,6 +54,24 @@ class FormularioRegistro extends Formulario
                 <label for="password2">Reintroduce la contraseña:</label>
                 <input id="password2" type="password" name="password2" required>
                 {$erroresCampos['password2']}
+            </div>
+            <div>
+                <input type="radio" name="tipoAvatar" value="defecto" checked> 
+                Usar avatar por defecto
+            </div>
+            <div>
+                <input type="radio" name="tipoAvatar" value="galeria"> 
+                Elegir de la galería:
+                <select name="avatarGaleria">
+                    <option value="opcion1.png">Opcion1</option>
+                    <option value="opcion2.png">Opcion2</option>
+                    <option value="opcion3.png">Opcion3</option>
+                </select>
+            </div>
+            <div>
+                <input type="radio" name="tipoAvatar" value="subida"> 
+                Subir mi propia foto:
+                <input type="file" name="avatarArchivo" accept="image/*">
             </div>
             <div>
                 <button type="submit" name="registro">Registrar</button>
@@ -110,9 +123,25 @@ class FormularioRegistro extends Formulario
         }
 
         // Lógica del Avatar
-        $avatar = RAIZ_APP."/img/user_icon.png"; // Valor por defecto
-        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-            $avatar = $_FILES['avatar']['name'];
+        $avatar = "user_icon.png"; //Por defecto
+        $tipo = $datos['tipoAvatar'] ?? 'defecto';
+
+        if($tipo === 'galeria') {
+            $avatar = $datos['avatarGaleria'];
+        } 
+        elseif($tipo === 'subida') {
+            if(isset($_FILES['avatarArchivo']) && $_FILES['avatarArchivo']['error'] === UPLOAD_ERR_OK) {
+                $archivoTmp = $_FILES['avatarArchivo']['tmp_name'];
+                //time() para garantizar nombres únicos, evita que un usuario sobrescriba la foto de otro
+                $nombreArchivo = time() . "_" . $_FILES['avatarArchivo']['name'];
+                
+                if(move_uploaded_file($archivoTmp, RAIZ_APP . "/img/avatares/" . $nombreArchivo)) {
+                    $avatar = $nombreArchivo;
+                }
+                else {
+                    $this->errores['avatar'] = "Error al subir la imagen.";
+                }
+            }
         }
 
         if (count($this->errores) === 0) {

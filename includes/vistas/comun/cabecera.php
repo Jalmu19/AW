@@ -24,12 +24,12 @@ function perfil() {
 
 <header>
     <div class="menu-hamburguesa">
-        <img src="<?= $rutaApp ?>/img/menu_icon.png" alt="Menú" width= "30">
+        <img src="<?= RUTA_IMGS ?>menu_icon.png" alt="Menú" width= "30">
     </div>
 
     <div class="logo-central">
         <a href="<?=__DIR__?>../../registro.php">
-            <img src="logo_bistro.png" alt="Bistro FDI Logo" width= "80"/>
+            <img src= "<?= RUTA_IMGS ?>logo_bistro.png" alt="Bistro FDI Logo" width= "80"/>
         </a>
     </div>
         

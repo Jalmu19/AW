@@ -20,5 +20,5 @@ if ($nombreUsuario) {
     }
 }
 
-header('Location: listar_users.php');
+header('Location: listar_usuario.php');
 exit();

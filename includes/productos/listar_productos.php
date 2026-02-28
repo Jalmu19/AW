@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__).'/config.php';
+require_once RAIZ_APP.'/includes/tables/tablaProductos.php';
 
 $app = Aplicacion::getInstance();
 
@@ -22,22 +23,16 @@ $contenidoPrincipal = "<h1>Gestión de Productos</h1>";
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
+$columnas = [
+    'imagen'      => 'Foto',
+    'nombre'      => 'Nombre',
+    'precio'      => 'Precio',
+    'categoria'   => 'Categoría',
+    'descripcion' => 'Descripción'
+];
 
- $contenidoPrincipal .= "<img src="$fila['imagen']" alt="foto_producto">" 
-$contenidoPrincipal .= "<table>";
-while ($fila = $result->fetch_assoc()) {
-    $contenidoPrincipal .= "<tr>
-        <td>{$fila['nombre']}</td>
-        <td>{$fila['precio']}</td>
-        <td>{$fila['descripcion']}</td>
-        <td>{$fila['imagen']}</td>
-        <td>{$fila['categoria']}</td>
-        <td>
-            <a href='actualizar_producto.php?id={$fila['nombre']}'>Editar</a>
-            <a href='borrar_producto.php?id={$fila['nombre']}' onclick='return confirm(\"¿Seguro?\")'>Borrar</a>
-        </td>
-    </tr>";
-}
-$contenidoPrincipal .= "</table>";
+$tabla = new TablaProductos($columnas, $result);
+$contenidoPrincipal .= $tabla->genera();
 
+$tituloPagina = "Administración de Productos";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

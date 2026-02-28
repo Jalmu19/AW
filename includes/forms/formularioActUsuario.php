@@ -5,7 +5,7 @@ require_once RAIZ_APP.'/includes/users/Usuario.php';
 class formularioActUsuario extends Formulario
 {
     public function __construct() {
-        parent::__construct('formLogin', ['urlRedireccion' => 'index.php']);
+        parent::__construct('formEditarPerfil', ['action' => 'micuenta.php']);
     }
     
     protected function generaCamposFormulario(&$datos)
@@ -45,13 +45,11 @@ class formularioActUsuario extends Formulario
                 <label for="apellidos">Apellidos:</label>
                 <input id="apellidos" type="text" name="apellidos" />
             </div>
-              <div>
-                <input type="radio" name="tipoAvatar" value="defecto" checked> 
-                Usar avatar por defecto
+            <div>
+                <input type="radio" name="tipoAvatar" value="borrar"> Eliminar y usar avatar por defecto
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="galeria"> 
-                Elegir de la galería:
+                <input type="radio" name="tipoAvatar" value="galeria"> Elegir de la galería:
                 <select name="avatarGaleria">
                     <option value="opcion1.png">Opcion1</option>
                     <option value="opcion2.png">Opcion2</option>
@@ -59,8 +57,7 @@ class formularioActUsuario extends Formulario
                 </select>
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="subida"> 
-                Subir mi propia foto:
+                <input type="radio" name="tipoAvatar" value="subida"> Subir mi propia foto:
                 <input type="file" name="avatarArchivo" accept="image/*">
             </div>
             <div>
@@ -95,10 +92,10 @@ class formularioActUsuario extends Formulario
             $this->errores['correo'] = 'El correo no puede estar vacío.';
         }
 
-        $avatar = "user_icon.png"; //Por defecto
-        $tipo = $datos['tipoAvatar'] ?? 'defecto';
-
-        if($tipo === 'galeria') {
+        if($tipo === 'borrar'){
+            $avatar = "user_icon.png"; //Por defecto
+        }
+        elseif($tipo === 'galeria') {
             $avatar = $datos['avatarGaleria'];
         } 
         elseif($tipo === 'subida') {

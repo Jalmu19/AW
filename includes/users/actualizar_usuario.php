@@ -14,7 +14,7 @@ $usuario = Usuario::buscaUsuario($nombreUsuario);
 
 if (!$usuario) {
     $app->putRequestAttribute('error', 'El usuario no existe.');
-    header('Location: listar_users.php');
+    header('Location: listar_usuario.php');
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nuevoRol) {
         if (Usuario::cambiaRol($nombreUsuario, $nuevoRol)) {
             $app->putRequestAttribute('mensaje', "Rol de '$nombreUsuario' actualizado con éxito.");
-            header('Location: listar_users.php');
+            header('Location: listar_usuario.php');
             exit();
         } 
         else {
@@ -66,7 +66,7 @@ $contenidoPrincipal = <<<EOS
         </div>
         <br>
         <button type="submit">Guardar Cambios</button>
-        <a href="listar_users.php">Cancelar</a>
+        <a href="listar_usuario.php">Cancelar</a>
     </fieldset>
 </form>
 EOS;

@@ -5,8 +5,8 @@ class Usuario {
     // Roles jerárquicos: Cliente(1) < Camarero(2) < Cocinero(3) < Gerente(4)
     public const CLIENT_ROLE = 1;
     public const WAITER_ROLE = 2;
-    public const COOK_ROLE   = 3;
-    public const ADMIN_ROLE  = 4;
+    public const COOK_ROLE = 3;
+    public const ADMIN_ROLE = 4;
 
     private $nombreUsuario;
     private $email;

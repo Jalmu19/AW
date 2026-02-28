@@ -1,8 +1,10 @@
 <?php
+require_once dirname(__DIR__).'/config.php';
 require_once RAIZ_APP.'/includes/tables/tabla.php';
 require_once RAIZ_APP.'/includes/users/Usuario.php';
 
 class TablaUsuarios extends Tabla {
+    
     protected function formateaContenido($campo, $valor, $fila) {
         if ($campo === 'rol') {
             $roles = [

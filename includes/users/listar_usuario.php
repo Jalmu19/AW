@@ -29,7 +29,9 @@ $columnas = [
     'rol'           => 'Rango'
 ];
 
-$tabla = new TablaUsuarios($columnas, $result);
+$accion = true;
+
+$tabla = new TablaUsuarios($columnas, $result, $accion);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Administración de Usuarios";

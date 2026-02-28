@@ -5,7 +5,8 @@ require_once RAIZ_APP.'/includes/perfil/pedidosProcesoUsuario.php';
 
 
 $app = Aplicacion::getInstance();
-$ruta = RUTA_IMGS;
+$ruta_img = RUTA_IMGS;
+$ruta_pedidos = RUTA_APP."/includes/miCuenta/";
 
 //solo usuarios logueados
 if (!$app->isCurrentUserLogged()) {
@@ -27,7 +28,7 @@ $contenidoPrincipal = <<<EOS
     <div>
         <a href="index.php">← Volver al inicio</a>
         <div>
-            <img src="{$ruta}{$usuario->getAvatar()}" alt="Avatar" class="avatar-grande">
+            <img src="{$ruta_img}{$usuario->getAvatar()}" alt="Avatar" class="avatar-grande">
             <div>
                 <h1>Hola, {$usuario->getNombreUsuario()}</h1>
                 <a href="editarPerfil.php">Editar mis datos</a>
@@ -38,11 +39,11 @@ $contenidoPrincipal = <<<EOS
     <div>
         <h2>Gestión de Pedidos</h2>
         <div>
-            <a href="pedidosProcesoUsuario.php">
+            <a href={$ruta_pedidos}."pedidosEnProceso.php">
                 <h3>Pedidos en Proceso</h3>
                 <p>Consulta el estado actual de tus pedidos activos</p>
             </a>
-            <a href="pedidosHistorialUsuario.php">
+            <a href={$ruta_pedidos}."historialPedididos.php">
                 <h3>Historial de Pedidos</h3>
                 <p>Revisa tus pedidos anteriores y facturas</p>
             </a>

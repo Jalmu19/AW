@@ -31,7 +31,9 @@ $columnas = [
     'descripcion' => 'Descripción'
 ];
 
-$tabla = new TablaProductos($columnas, $result);
+$accion = true;
+
+$tabla = new TablaProductos($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
 $tituloPagina = "Administración de Productos";

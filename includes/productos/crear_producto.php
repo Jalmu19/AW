@@ -1,0 +1,36 @@
+<?php
+require_once dirname(__DIR__).'/config.php';
+require_once RAIZ_APP.'/includes/forms/formularioCrearProducto.php';
+
+$app = Aplicacion::getInstance();
+
+//solo gerente
+if (!$app->isCurrentUserAdmin()) {
+    $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');
+    header('Location: index.php');
+    exit();
+}
+
+
+$form = new FormularioProducto();
+
+$htmlForm = $form->gestiona();
+
+$tituloPagina = 'Añadir Producto';
+
+$contenidoPrincipal = <<<EOS
+<div>
+    <div>
+        <a href="listar_productos.php">← Volver al listado</a>
+    </div>
+
+    <h1>Gestión de Inventario: Nuevo Producto</h1>
+    <p>Rellena todos los campos para dar de alta un producto en la carta.</p>
+    
+    <div>
+        $htmlForm
+    </div>
+</div>
+EOS;
+
+require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

@@ -3,7 +3,7 @@
 /**
  * Parámetros de conexión a la BD
  */
-define('BD_HOST', 'localhost');
+define('BD_HOST', 'vm002.db.swarm.test');// sevidor de la base de datos, no localhost
 define('BD_NAME', 'awp2');
 define('BD_USER', 'awp2');
 define('BD_PASS', 'awpass');

@@ -7,7 +7,7 @@ $app = Aplicacion::getInstance();
 //solo gerente
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');
-    header('Location: index.php');
+    header('Location:'.RUTA_APP.'/index.php');
     exit();
 }
 

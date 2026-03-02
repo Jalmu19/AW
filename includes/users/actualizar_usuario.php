@@ -4,7 +4,7 @@ require_once dirname(__DIR__).'/config.php';
 //solo el gerente
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'Acceso denegado: se requieren permisos de Gerente.');
-    header('Location: index.php');
+    header('Location:'.RUTA_APP.'/index.php');
     exit();
 }
 

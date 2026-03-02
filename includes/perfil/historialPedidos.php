@@ -8,7 +8,7 @@ $ruta = RUTA_APP;
 
 //solo usuarios logueados
 if (!$app->isCurrentUserLogged()) {
-    header('Location: login.php');
+    header('Location:' .RUTA_APP.'/login.php');
     exit();
 }
 

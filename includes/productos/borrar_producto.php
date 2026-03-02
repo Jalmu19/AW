@@ -4,7 +4,7 @@ require_once dirname(__DIR__).'/config.php';
 //solo el gerente puede borrar productos
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');
-    header('Location: index.php');
+    header('Location:'.RUTA_APP.'/index.php');
     exit();
 }
 

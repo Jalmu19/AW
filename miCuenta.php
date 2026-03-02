@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/includes/perfil/pedidosHistorialUsuario.php';
-require_once RAIZ_APP.'/includes/perfil/pedidosProcesoUsuario.php';
+require_once RAIZ_APP.'/includes/perfil/historialPedidos.php';
+require_once RAIZ_APP.'/includes/perfil/pedidosEnProceso.php';
 
 
 $app = Aplicacion::getInstance();

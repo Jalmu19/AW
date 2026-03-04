@@ -4,6 +4,11 @@ require_once __DIR__.'/includes/config.php';
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Camarero";
 
+$rutaAcciones = RUTA_APP .'/includes/acciones_camarero/';
+$Completar = $rutaAcciones . "completar_pedido.php";
+$Entregar  = $rutaAcciones . "entregar_pedido.php";
+$Cobrar    = $rutaAcciones . "cobrar_pedido.php";
+
 //solo camareros, cocineros o gerentes
 if (!$app->isCurrentUserLogged() || $app->isCurrentUserClient()) {
     $app->putRequestAttribute('error', 'No tienes permisos para acceder.');
@@ -22,19 +27,19 @@ $contenidoPrincipal = <<<EOS
 
     <div>
         
-        <form action="completar_pedido.php" method="get">
+        <form action= "$Completar" method="get">
             <button type="submit">
                 Completar Pedidos
             </button>
         </form>
 
-        <form action="entregar_pedido.php" method="get">
+        <form action= "$Entregar" method="get">
             <button type="submit">
                 Entregar Pedidos
             </button>
         </form>
 
-        <form action="cobrar_pedido.php" method="get">
+        <form action= "$Cobrar" method="get">
             <button type="submit">
                 Cobrar Cuenta
             </button>

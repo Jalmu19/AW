@@ -63,10 +63,57 @@ class Pedido {
         return false;
     }
 
-    private function insertar_pedido(){}
-    private function crear_pedido(){}
-    private function actualizar_pedido(){}
-    private function borrar_pedido(){}
+    //private function insertar_pedido(){}
+    private function crear_pedido($pedido){
+        
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("INSERT INTO Pedidos(nombreUsuario,productos,precio_total,fecha,tipo) 
+                        VALUES (%s, %s, %f, %s, %s)",
+                        $conn->real_escape_string($pedido->nombreUsuario),
+                        $conn->real_escape_string($pedido->productos),
+                        $conn->real_escape_string($pedido->precio_total),
+                        $conn->real_escape_string($pedido->fecha),
+                        $conn->real_escape_string($pedido->tipo));
+        if($conn->query($query)){
+            return "Nuevo pedido creado con éxito";
+            //return true
+        }
+        else
+            return "No ha sido posible crear el pedido";
+        //return false
+
+
+    }
+    private function actualizar_pedido($id, $pedidoAct){
+
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $pedido = self->buscarPedido($id);
+        if($pedido === FALSE){
+            return "No se ha podido actualizar el pedido";
+            //return true
+        }
+        $query = sprintf("UPDATE Pedido SET productos=%s, precio_total=%f, fecha=%s, tipo='%s'  WHERE id = $id",
+                        $conn->real_escape_string($pedidoAct->productos),
+                        $conn->real_escape_string($pedidoAct->precio_total),
+                        $conn->real_escape_string($pedidoAct->fecha),
+                        $conn->real_escape_string($pedidoAct->tipo));
+
+        return $conn->query($query);
+
+
+
+    }
+    private function borrar_pedido($id){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $pedido = self->buscarPedido($id);
+        if($pedido === FALSE){
+            return "No se ha podido actualizar el pedido";
+            //return true
+        }
+        $query = sprintf("DELETE Pedido WHERE id = $id");
+
+        return $conn->query($query);
+    }
 
    
     //getters

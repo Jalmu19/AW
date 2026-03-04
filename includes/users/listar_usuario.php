@@ -35,6 +35,9 @@ $tabla = new TablaUsuarios($columnas, $result, $accion);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Administración de Usuarios";
+$contenidoPrincipal .=  <<<EOS 
+    <a href="index.php">← Volver al inicio</a> 
+EOS;
 $contenidoPrincipal .= $htmlTabla;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

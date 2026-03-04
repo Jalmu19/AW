@@ -7,7 +7,7 @@ $app = Aplicacion::getInstance();
 //solo el gerente
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');
-    header('Location:'.RUTA_APP.'/index.php');
+    header('Location: ' . RUTA_APP . '/index.php');
     exit();
 }
 
@@ -34,6 +34,13 @@ $columnas = [
 $accion = true;
 
 $tabla = new TablaProductos($columnas, $result, $accion);
+$contenidoPrincipal .= <<<EOS
+    <form action="crear_producto.php" method="get">
+        <button type="submit">
+           Añadir Producto
+        </button>
+    </form>
+EOS;
 $contenidoPrincipal .= $tabla->genera();
 
 $tituloPagina = "Administración de Productos";

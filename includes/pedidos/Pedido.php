@@ -137,7 +137,7 @@ class Pedido {
 
     //Completar pedido (camarero): ListoCocina->Terminado
     public static function completarPedido($id) {
-        $conn = \Aplicacion::getInstance()->getConexionBd();
+        $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Pedidos SET estado='%s' WHERE id=%d",
             self::ESTADO_TERMINADO,
             $id

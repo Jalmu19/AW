@@ -17,8 +17,9 @@ class Producto {
     private $descripcion;
     private $imagen;
     private $categoria;
+    private $cocinable;
 
-    private function __construct($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria)
+    private function __construct($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria, $cocinable)
     {
         $this->nombre = $nombre;
         $this->precio = $precio;
@@ -28,6 +29,7 @@ class Producto {
         $this->descripcion = $descripcion;
         $this->imagen = $imagen;
         $this->categoria = $categoria;
+        $this->cocinable = $cocinable;
     }
 
 

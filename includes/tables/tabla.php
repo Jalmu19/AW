@@ -35,7 +35,8 @@ abstract class Tabla {
             while ($fila = $this->datos->fetch_assoc()) {
                 $html .= $this->generaFila($fila);
             }
-        } else {
+        } 
+        else {
             foreach ($this->datos as $fila) {
                 $html .= $this->generaFila($fila);
             }

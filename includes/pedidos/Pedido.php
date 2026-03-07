@@ -21,7 +21,14 @@ class Pedido {
 
     private $id; //numero pedido
     private $nombreUsuario;
-    private $productos; // array con producto y cantidad
+    /**
+     * @var array $productos 
+     * Estructura: Array asociativo ["NombreProducto" => Cantidad]
+     * Ejemplo: ["Agua" => 2, "Hamburguesa" => 1]
+     * En la base de datos (columna 'productos') se guarda como un string JSON 
+     * mediante json_encode() y se recupera con json_decode($datos, true).
+     */
+    private $productos;
     private $precio_total;
     private $estado;
     private $fecha;
@@ -37,19 +44,25 @@ class Pedido {
         $this->fecha = $fecha;
         $this->tipo = $tipo;
     }
+
     private function buscarPedido($id){
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Pedidos WHERE id='%s'", $id);
         $rs = $conn->query($query);
         if ($rs && $rs->num_rows === 1) {
             $f = $rs->fetch_assoc();
-            $pedido = new Pedido($f['nombreUsuario'], $f['productos'], $f['precio_total'], $f['estado'], $f['fecha'], $f['tipo']);
+            
+            // CONVERSIÓN: De JSON (texto) a Array Asociativo
+            $productosArray = json_decode($f['productos'], true); 
+            
+            // Creamos el objeto con el array ya convertido
+            $pedido = new Pedido($f['id'], $f['nombreUsuario'], $productosArray, $f['precio_total'], $f['estado'], $f['fecha'], $f['tipo']);
             $rs->free();
             return $pedido;
         }
         return false;
-
     }
+
     private function buscarPedidoPorEstado($estado){
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Pedidos WHERE estadod='%s'", $estado);
@@ -64,26 +77,24 @@ class Pedido {
     }
 
     //private function insertar_pedido(){}
-    private function crear_pedido($pedido){
-        
+     private function crear_pedido($pedido){
         $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        // CONVERSIÓN: De Array a JSON (texto)
+        $productosJson = json_encode($pedido->productos);
+
         $query = sprintf("INSERT INTO Pedidos(nombreUsuario,productos,precio_total,fecha,tipo) 
-                        VALUES (%s, %s, %f, %s, %s)",
+                        VALUES ('%s', '%s', %f, '%s', '%s')",
                         $conn->real_escape_string($pedido->nombreUsuario),
-                        $conn->real_escape_string($pedido->productos),
-                        $conn->real_escape_string($pedido->precio_total),
+                        $conn->real_escape_string($productosJson),
+                        $pedido->precio_total,
                         $conn->real_escape_string($pedido->fecha),
                         $conn->real_escape_string($pedido->tipo));
-        if($conn->query($query)){
-            return "Nuevo pedido creado con éxito";
-            //return true
-        }
-        else
-            return "No ha sido posible crear el pedido";
-        //return false
-
-
+        
+        return $conn->query($query) ? "Nuevo pedido creado con éxito" : "No ha sido posible crear el pedido";
     }
+
+
     private function actualizar_pedido($id, $pedidoAct){
 
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -99,10 +110,8 @@ class Pedido {
                         $conn->real_escape_string($pedidoAct->tipo));
 
         return $conn->query($query);
-
-
-
     }
+
     private function borrar_pedido($id){
         $conn = Aplicacion::getInstance()->getConexionBd();
         $pedido = self->buscarPedido($id);
@@ -114,6 +123,7 @@ class Pedido {
 
         return $conn->query($query);
     }
+    
     public static function terminar_pedido($idPedido) {
 
         $conn = Aplicacion::getInstance()->getConexionBd();

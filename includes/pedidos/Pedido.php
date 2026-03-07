@@ -131,7 +131,7 @@ class Pedido {
         $query = sprintf(
             "UPDATE Pedidos SET estado='%s' WHERE id='%s'",
             $conn->real_escape_string(self::ESTADO_LISTO_COCINA),
-            $conn->real_escape_string($idPedido)
+            $idPedido
         );
     }
 
@@ -139,7 +139,7 @@ class Pedido {
     public static function completarPedido($id) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Pedidos SET estado='%s' WHERE id=%d",
-            self::ESTADO_TERMINADO,
+            $conn->real_escape_string(self::ESTADO_TERMINADO),
             $id
         );
         return $conn->query($query);

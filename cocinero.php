@@ -13,7 +13,7 @@ if (!$app->isCurrentUserCook() && !$app->isCurrentUserAdmin()) {
 // Si se marca un pedido como terminado
 if (isset($_POST['pedido_terminado'])) {
     $idPedido = $_POST['pedido_terminado'];
-    Pedido::terminar_pedido($idPedido);
+    Pedido::terminarCocinarPedido($idPedido);
     header('Location: ' . $_SERVER['PHP_SELF']); // refresca la página
     exit();
 }

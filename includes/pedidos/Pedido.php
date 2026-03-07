@@ -123,17 +123,25 @@ class Pedido {
 
         return $conn->query($query);
     }
-    
-    public static function terminar_pedido($idPedido) {
 
+    //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
+    public static function terminarCocinarPedido($idPedido) {
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = sprintf(
             "UPDATE Pedidos SET estado='%s' WHERE id='%s'",
-            $conn->real_escape_string(self::ESTADO_TERMINADO),
+            $conn->real_escape_string(self::ESTADO_LISTO_COCINA),
             $conn->real_escape_string($idPedido)
         );
+    }
 
+    //Completar pedido (camarero): ListoCocina->Terminado
+    public static function completarPedido($id) {
+        $conn = \Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE Pedidos SET estado='%s' WHERE id=%d",
+            self::ESTADO_TERMINADO,
+            $id
+        );
         return $conn->query($query);
     }
    
@@ -190,6 +198,50 @@ class Pedido {
         }
         
         return $pedidosCocinero;
+    }
+
+    //Pedidos que tiene que completar el camarero y los productos que son
+    public static function pedidosParaCompletar() {
+        $conn = \Aplicacion::getInstance()->getConexionBd();
+        
+        //Pedidos estado listoCocina
+        $query = "SELECT id, productos FROM Pedidos WHERE estado = '" . self::ESTADO_LISTO_COCINA . "'";
+        $rs = $conn->query($query);
+        
+        $listaFinal = [];
+        
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) {
+                //Guardamos el id del pedido
+                $idPedido = $f['id']; 
+                
+                //Decodificamos los productos (que están en formato JSON)
+                $productosArr = json_decode($f['productos'], true);
+                $textoProductos = "";
+                
+                if ($productosArr) {
+                    foreach ($productosArr as $nombre => $cantidad) {
+                        //Productos no cocinables
+                        $queryProd = sprintf("SELECT cocinable FROM Producto WHERE nombre='%s'", 
+                                            $conn->real_escape_string($nombre));
+                        $resProd = $conn->query($queryProd);
+                        $datosProd = $resProd->fetch_assoc();
+                        
+                        //Si el producto es no cocinable lo añadimos a la lista
+                        if ($datosProd && $datosProd['cocinable'] == 0) {
+                            $textoProductos .= "$cantidad x $nombre<br>";
+                        }
+                    }
+                }
+                
+                $listaFinal[] = [
+                    'id'        => $idPedido, //id pedido
+                    'productos' => !empty($textoProductos) ? rtrim($textoProductos, '<br>') : ""
+                ];
+            }
+            $rs->free();
+        }
+        return $listaFinal;
     }
 
 }

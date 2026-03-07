@@ -11,13 +11,11 @@ class Categoria {
 
     private $nombre;
     private $descripcion;
-    private $imagen;
 
-    private function __construct($nombre, $descripcion, $imagen)
+    private function __construct($nombre, $descripcion)
     {
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
-        $this->imagen = $imagen;
     }
 
     public static function buscaCategoria($nombre)
@@ -29,7 +27,7 @@ class Categoria {
         $rs = $conn->query($query);
         if ($rs && $rs->num_rows === 1) {
             $f = $rs->fetch_assoc();
-            $categoria = new Categoria($f['nombre'], $f['descripcion'], $f['imagen']);
+            $categoria = new Categoria($f['nombre'], $f['descripcion']);
             $rs->free();
             return $categoria;
         }
@@ -37,9 +35,9 @@ class Categoria {
     }
 
     // función crear
-    public static function crea($nombre, $descripcion, $imagen = null)
+    public static function crea($nombre, $descripcion)
     {
-        $categoria = new Categoria($nombre, $descripcion, $imagen);
+        $categoria = new Categoria($nombre, $descripcion);
         return $categoria->guarda();
     }
 
@@ -55,10 +53,9 @@ class Categoria {
     private static function inserta($categoria)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("INSERT INTO Categoria(nombre, descripcion, imagen) VALUES ('%s', '%s', '%s')",
+        $query = sprintf("INSERT INTO Categoria(nombre, descripcion) VALUES ('%s', '%s')",
             $conn->real_escape_string($categoria->nombre),
-            $conn->real_escape_string($categoria->descripcion),
-            $conn->real_escape_string($categoria->imagen)
+            $conn->real_escape_string($categoria->descripcion)
         );
         return $conn->query($query);
     }
@@ -66,9 +63,8 @@ class Categoria {
     public static function actualiza($categoria)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE Categoria SET descripcion='%s', imagen='%s' WHERE nombre='%s'",
+        $query = sprintf("UPDATE Categoria SET descripcion='%s' WHERE nombre='%s'",
             $conn->real_escape_string($categoria->descripcion),
-            $conn->real_escape_string($categoria->imagen),
             $conn->real_escape_string($categoria->nombre)
         );
         return $conn->query($query);
@@ -100,6 +96,5 @@ class Categoria {
     // getters
     public function getNombre() { return $this->nombre; }
     public function getDescripcion() { return $this->descripcion; }
-    public function getImagen() { return $this->imagen; }
 
 }

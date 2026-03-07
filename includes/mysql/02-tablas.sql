@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
     `nombre` varchar(15) NOT NULL,
     `apellidos` varchar(30)  NOT NULL,
     `email` varchar(30)  NOT NULL,
-    `contraseña_hash` varchar(30) NOT NULL,
+    `contraseña_hash` varchar(255) NOT NULL,
     `rol` ENUM('gerente', 'camarero', 'cocinero', 'cliente') NOT NULL,
     `nombre_usuario` varchar(30) NOT NULL,
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
     `cocinero` varchar(30) NOT NULL,
 
     PRIMARY KEY(`fecha_hora`, `num_pedido`),
-    KEY `num_pedido` (`num_pedido`) --para acelerar busquedas
+    KEY `num_pedido` (`num_pedido`), --para acelerar busquedas
     FOREIGN KEY (`cliente`) REFERENCES `Usuario`(`nombre_usuario`)
     FOREIGN KEY (`camarero`) REFERENCES `Usuario`(`nombre_usuario`)
     FOREIGN KEY (`cocinero`) REFERENCES `Usuario`(`nombre_usuario`)
@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
 CREATE TABLE IF NOT EXISTS `Categoria` (
     `nombre` varchar(15) NOT NULL,
     `descripcion` varchar(50) NOT NULL,
-    `imagen` varchar(50) NOT NULL,
 
     `gerente` varchar(30) NOT NULL,
 
@@ -61,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Producto` (
     `ofertado` boolean NOT NULL,
     `descripcion` varchar(50) NOT NULL,
     `imagen` varchar(50) NOT NULL,
-
+    `cocinable` boolean NOT NULL,
     `categoria` varchar(30) NOT NULL,
 
     PRIMARY KEY(`nombre`),
@@ -74,11 +73,11 @@ CREATE TABLE IF NOT EXISTS `Pedido-Producto` (
     `nombre` varchar(15) NOT NULL,
     `fecha_hora` date NOT NULL,
     `num_pedido` int NOT NULL,
+    `preparado` boolean NOT NULL,
 
     PRIMARY KEY(`nombre`, `fecha_hora`, `num_pedido`),
     FOREIGN KEY (`nombre`) REFERENCES `Producto`(`nombre`)
-    FOREIGN KEY (`fecha_hora`) REFERENCES `Pedido`(`fecha_hora`)
-    FOREIGN KEY (`num_pedido`) REFERENCES `Pedido`(`num_pedido`)
+    FOREIGN KEY (`fecha_hora`,  `num_pedido`) REFERENCES  `Pedido`(`fecha_hora`, `num_pedido`)
     
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

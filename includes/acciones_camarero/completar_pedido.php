@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido'])) {
     } else {
         $app->putRequestAttribute('error', "Error al completar el pedido #$id.");
     }
+
+    header('Location: ' . $_SERVER['PHP_SELF']); //refrescar página
+    exit();
 }
 
 //Recuperar mensajes del objeto Aplicacion 

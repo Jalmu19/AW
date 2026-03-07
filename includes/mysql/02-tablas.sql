@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
 
 CREATE TABLE IF NOT EXISTS `Cocinero_Producto` (
     `cocinero` varchar(15) NOT NULL,
-    `nombre_producto`varchar(15)  int NOT NULL,
+    `nombre_producto`varchar(15)  NOT NULL,
 
     PRIMARY KEY(`cocinero`, `nombre_producto`),
     FOREIGN KEY (`cocinero`) REFERENCES `Usuario`(`nombre_usuario`)

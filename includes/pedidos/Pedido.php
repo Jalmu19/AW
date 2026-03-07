@@ -110,11 +110,22 @@ class Pedido {
             return "No se ha podido actualizar el pedido";
             //return true
         }
-        $query = sprintf("DELETE Pedido WHERE id = $id");
+        $query = sprintf("DELETE FROM Pedido WHERE id = $id");
 
         return $conn->query($query);
     }
+    public static function terminar_pedido($idPedido) {
 
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = sprintf(
+            "UPDATE Pedidos SET estado='%s' WHERE id='%s'",
+            $conn->real_escape_string(self::ESTADO_TERMINADO),
+            $conn->real_escape_string($idPedido)
+        );
+
+        return $conn->query($query);
+    }
    
     //getters
     public function getId() { return $this->id; }
@@ -123,5 +134,52 @@ class Pedido {
     public function getNombreUsuario(){return $this->nombreUsuario; }
     public function getPrecioTotal(){return $this->precio_total; }
     public function getProductos(){return $this->productos; }
+
+    public static function getPedidosCocinero() {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        // Obtenemos todos los pedidos que no estén terminados
+        $sql = "SELECT * FROM Pedido WHERE estado != '".self::ESTADO_TERMINADO."'";
+        $rs = $conn->query($sql);
+
+        $pedidosCocinero = [];
+
+        if ($rs) {
+            while ($pedido = $rs->fetch_assoc()) {
+                $numPedido = $pedido['num_pedido'];
+                $fecha = $pedido['fecha_hora'];
+
+                // Obtenemos los productos cocinables de este pedido
+                $sqlProd = "
+                    SELECT p.nombre, p.nombre as id
+                    FROM Producto p
+                    JOIN Pedido_Producto pp
+                    ON pp.nombre = p.nombre
+                    AND pp.num_pedido = '$numPedido'
+                    AND pp.fecha_hora = '$fecha'
+                    WHERE p.cocinable = 1
+                ";
+                $rsProd = $conn->query($sqlProd);
+
+                $productos = [];
+                if ($rsProd) {
+                    while ($prod = $rsProd->fetch_assoc()) {
+                        $productos[] = $prod;
+                    }
+                }
+
+                // Solo añadimos pedidos que tengan productos cocinables
+                if (count($productos) > 0) {
+                    $pedidosCocinero[] = [
+                        'pedido' => $numPedido,
+                        'productos' => $productos
+                    ];
+                }
+            }
+            $rs->free();
+        }
+        
+        return $pedidosCocinero;
+    }
 
 }

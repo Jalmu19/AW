@@ -1,4 +1,5 @@
 <?php
+namespace BistroFDI\productos;
 
 class Producto {
     // Categorias de producto: Entrante(1), Primer plato(2), Segundo plato(3), Postre(4)
@@ -43,6 +44,22 @@ class Producto {
             $producto = new Producto($f['nombre'], $f['precio'], $f['disponibilidad'], $f['iva'], $f['ofertado'], $f['descripcion'], $f['imagen'], $f['categoria']);
             $rs->free();
             return $producto;
+        }
+        return false;
+    }
+    public static function listarProductos()
+    {
+       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT nombre, precio, disponibilidad,imagen FROM Producto ");
+        $rs = $conn->query($query);
+        $productos = [];
+        if ($rs ) {
+            for($fila = $rs->fetch_assoc()){
+                $productos[] = $fila;
+            }
+            $rs->free();
+            return $productos;
         }
         return false;
     }

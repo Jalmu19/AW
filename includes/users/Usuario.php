@@ -1,4 +1,5 @@
 <?php
+namespace BistroFDI\users;
 
 class Usuario {
 

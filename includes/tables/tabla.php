@@ -1,4 +1,5 @@
 <?php
+namespace BistroFDI\tables;
 
 abstract class Tabla {
     protected $columnas;

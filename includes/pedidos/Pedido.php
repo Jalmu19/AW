@@ -1,5 +1,5 @@
 <?php
-
+namespace BistroFDI\pedidos;
 // INTERACTUA CON LA BBDD
 
 

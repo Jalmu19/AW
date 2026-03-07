@@ -1,6 +1,8 @@
 <?php
+namespace BistroFDI\categorias;
+
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP.'/includes/tables/tablaCategorias.php';
+use BistroFDI\tables\tablaCategorias;
 
 $app = Aplicacion::getInstance();
 

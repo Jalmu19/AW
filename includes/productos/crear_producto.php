@@ -1,6 +1,8 @@
 <?php
+namespace BistroFDI\productos;
+
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP.'/includes/forms/formularioCrearProducto.php';
+use BistroFDI\forms\formularioCrearProducto;
 
 $app = Aplicacion::getInstance();
 

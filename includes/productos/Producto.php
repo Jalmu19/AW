@@ -1,6 +1,13 @@
 <?php
 
 class Producto {
+    // Categorias de producto: Entrante(1), Primer plato(2), Segundo plato(3), Postre(4)
+    public const ENTRANTE = 1;
+    public const PRIMER_PLATO = 2;
+    public const SEGUNDO_PLATO = 3;
+    public const POSTRE = 4;
+
+
     private $nombre;
     private $precio;
     private $disponibilidad;
@@ -73,7 +80,7 @@ class Producto {
         return $conn->query($query);
     }
 
-    public static function actualiza($producto)
+   /* public static function actualiza($producto)
     {
         // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -88,14 +95,30 @@ class Producto {
             $conn->real_escape_string($producto->nombre)
         );
         return $conn->query($query);
+    }*/
+
+    public static function actualiza($producto)
+    {
+        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE Producto SET precio=%f, descripcion='%s', imagen='%s', categoria='%s' WHERE nombre='%s'",
+            $conn->real_escape_string($producto->precio),
+            $conn->real_escape_string($producto->descripcion),
+            $conn->real_escape_string($producto->imagen),
+            $conn->real_escape_string($producto->categoria),
+            $conn->real_escape_string($producto->nombre)
+        );
+        return $conn->query($query);
     }
+
+
 
     public static function borra($nombre)
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $query = "DELETE FROM Producto WHERE nombre = ?";
+        $query = "UPDATE Producto SET ofertado = falseWHERE nombre = ?";
         $stmt = $conn->prepare($query);
 
         if (!$stmt) {

@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS `Usuario`;
 DROP TABLE IF EXISTS `Categoria`;
 DROP TABLE IF EXISTS `Producto`;
 DROP TABLE IF EXISTS `Pedido`;
-DROP TABLE IF EXISTS `Pedido-Producto`
-DROP TABLE IF EXISTS `Cocinero-Producto`
+DROP TABLE IF EXISTS `Pedido_Producto`
+DROP TABLE IF EXISTS `Cocinero_Producto`
 
 
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 
 
 CREATE TABLE IF NOT EXISTS `Pedido` (
-    `fecha_hora` date NOT NULL,
+    `fecha_hora` datetime NOT NULL,
     `num_pedido` int NOT NULL,
     `tipo` varchar(30) NOT NULL,
     `total` float,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `Producto` (
     `nombre` varchar(15) NOT NULL,
     `precio` float NOT NULL,
     `disponibilidad` boolean NOT NULL,
-    `iva` float(30) NOT NULL,
+    `iva` float NOT NULL,
     `ofertado` boolean NOT NULL,
     `descripcion` varchar(50) NOT NULL,
     `imagen` varchar(50) NOT NULL,
@@ -69,9 +69,9 @@ CREATE TABLE IF NOT EXISTS `Producto` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE IF NOT EXISTS `Pedido-Producto` (
+CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
     `nombre` varchar(15) NOT NULL,
-    `fecha_hora` date NOT NULL,
+    `fecha_hora` datetime NOT NULL,
     `num_pedido` int NOT NULL,
     `preparado` boolean NOT NULL,
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Pedido-Producto` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE IF NOT EXISTS `Cocinero-Producto` (
+CREATE TABLE IF NOT EXISTS `Cocinero_Producto` (
     `cocinero` varchar(15) NOT NULL,
     `nombre_producto`varchar(15)  int NOT NULL,
 

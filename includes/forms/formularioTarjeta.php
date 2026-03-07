@@ -2,10 +2,10 @@
 require_once RAIZ_APP.'/includes/forms/formulario.php';
 require_once RAIZ_APP.'/includes/users/Usuario.php';
 
-class FormularioTarjeta
+class FormularioTarjeta extends Formulario
 {
-    public function __construct() {
-       
+     public function __construct() {
+        parent::__construct('formEditarPerfil', ['action' => 'micuenta.php']);
     }
     
     protected function camposFormulario()
@@ -36,27 +36,39 @@ class FormularioTarjeta
     protected function procesaFormulario(&$datos)
     {
         $this->errores = [];
-        $nombreUsuario = trim($datos['nombreUsuario'] ?? '');
-        $nombreUsuario = filter_var($nombreUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if (!$nombreUsuario || empty($nombreUsuario) ) {
-            $this->errores['nombreUsuario'] = 'El nombre de usuario no puede estar vacío';
+        $tarjeta = (string) $datos['numTarjeta'];
+        $tarjeta = filter_var($tarjeta, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        //errores en el numero de tarjeta
+        if (strlen($tarjeta) < 12 || strlen($tarjeta) > 12) {
+            $this->errores['numTarjeta'] = 'No coincide el numero de dígitos con los que se piden';
         }
         
-        $password = trim($datos['password'] ?? '');
-        $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if (!$password || empty($password) ) {
-            $this->errores['password'] = 'La contraseña no puede estar vacía.';
+        $fecha = explode('/',  $datos['fCaducidad']);//separo en mes y año
+       
+        if ( 1 < sizeof($fecha) || sizeof($fecha) > 2 ) {
+            $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
         }
-        
-        if (count($this->errores) === 0) {
-            $usuario = Usuario::login($nombreUsuario, $password);
-        
-            if (!$usuario) {
-                $this->errores[] = "El usuario o la contraseña no coinciden";
-            } else {
-                $app = Aplicacion::getInstance();
-                $app->loginUser($usuario);
+        else{
+            //comprobaciones en las fechas
+            $mes = $fecha[0];
+            $mes = filter_var($mes, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $anyo = $fecha[1];
+            $anyo = filter_var($anyo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if(!(in_array($mes, [01,02,03,04,05,06,07,08,09,10,11,12]) && (strlen($anyo)<2 ||strlen($anyo)>2))){
+                 $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
             }
         }
+
+        $cve = to_string($datos['cve']);//cve
+        $cve = filter_var($cve, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if ( !in_array(sizeof($cve), [3])) {
+                $this->errores['cve'] = 'CVE incorrecto';
+            }
+        
+        }
+        
+        
     }
 }

@@ -4,7 +4,7 @@ require_once __DIR__.'/includes/config.php';
 require_once RAIZ_APP.'/includes/forms/formularioTarjeta.php';
 
 $form = new formularioTarjeta();
-$htmlFormTarjeta = $form->gestiona();
+$htmlFormTarjeta = $form->camposFormulario();
 
 $tituloPagina = 'Pago bancario';
 

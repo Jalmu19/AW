@@ -46,6 +46,22 @@ class Producto {
         }
         return false;
     }
+    public static function listarProductos()
+    {
+       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT nombre, precio, disponibilidad,imagen FROM Producto ");
+        $rs = $conn->query($query);
+        $productos = [];
+        if ($rs ) {
+            for($fila = $rs->fetch_assoc()){
+                $productos[] = $fila;
+            }
+            $rs->free();
+            return $productos;
+        }
+        return false;
+    }
 
     //función crear
     public static function crea($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria)

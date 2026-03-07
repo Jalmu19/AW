@@ -9,7 +9,7 @@ class Aplicacion
     /** 
      * @var string Clave para almacenar los atributos de la petición en la sesión
      */
-    const REQUEST_ATTRIBUTES = 'requestAtts';
+    const REQUEST_ATTRIBUTES = 'attsPeticion';
 
     // Patrón Singleton
     /**

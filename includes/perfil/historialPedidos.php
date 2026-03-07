@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP.'/includes/tables/TablaHistorialPedidos.php';
+use BistroFDI\tables\TablaHistorialPedidos;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;

@@ -1,6 +1,8 @@
 <?php
-require_once RAIZ_APP.'/includes/forms/formulario.php';
-require_once RAIZ_APP.'/includes/users/Usuario.php';
+namespace BistroFDI\forms;
+
+require_once dirname(__DIR__).'/config.php';
+use BistroFDI\users\Usuario;
 
 class formularioActUsuario extends Formulario
 {

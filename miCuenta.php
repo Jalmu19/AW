@@ -1,12 +1,11 @@
 <?php
-require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/includes/perfil/historialPedidos.php';
-require_once RAIZ_APP.'/includes/perfil/pedidosEnProceso.php';
 
+require_once __DIR__.'/includes/config.php';
+use BistroFDI\users\Usuario;
 
 $app = Aplicacion::getInstance();
 $ruta_img = RUTA_IMGS;
-$ruta_pedidos = RUTA_APP."/includes/miCuenta/";
+$ruta = RUTA_APP."/includes/perfil/";
 
 //solo usuarios logueados
 if (!$app->isCurrentUserLogged()) {
@@ -32,7 +31,7 @@ $contenidoPrincipal = <<<EOS
             <img src="{$ruta_img}{$usuario->getAvatar()}" alt="Avatar">
             <div>
                 <h1>Hola, {$usuario->getNombreUsuario()}</h1>
-                <a href="editarPerfil.php">Editar mis datos</a>
+                <a href="{$ruta}editarPerfil.php">Editar mis datos</a>
             </div>
         </div>
     </div>
@@ -40,11 +39,11 @@ $contenidoPrincipal = <<<EOS
     <div>
         <h2>Gestión de Pedidos</h2>
         <div>
-            <a href={$ruta_pedidos}."pedidosEnProceso.php">
+            <a href="{$ruta}pedidosEnProceso.php">
                 <h3>Pedidos en Proceso</h3>
                 <p>Consulta el estado actual de tus pedidos activos</p>
             </a>
-            <a href={$ruta_pedidos}."historialPedididos.php">
+            <a href="{$ruta}historialPedidos.php">
                 <h3>Historial de Pedidos</h3>
                 <p>Revisa tus pedidos anteriores y facturas</p>
             </a>
@@ -54,3 +53,4 @@ $contenidoPrincipal = <<<EOS
 EOS;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';
+

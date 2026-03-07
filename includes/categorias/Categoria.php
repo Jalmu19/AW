@@ -1,4 +1,5 @@
 <?php
+namespace BistroFDI\categorias;
 
 class Categoria {
 

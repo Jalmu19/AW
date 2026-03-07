@@ -1,6 +1,8 @@
 <?php
+namespace BistroFDI\users;
+
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP.'/includes/tables/tablaUsuarios.php';
+use BistroFDI\tables\tablaUsuarios;
 
 $app = Aplicacion::getInstance();
 

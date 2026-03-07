@@ -1,6 +1,7 @@
 <?php
-require_once RAIZ_APP.'/includes/forms/formulario.php';
-require_once RAIZ_APP.'/includes/users/Usuario.php';
+namespace BistroFDI\forms;
+
+require_once dirname(__DIR__).'/config.php';
 
 class FormularioTarjeta extends Formulario
 {
@@ -57,7 +58,7 @@ class FormularioTarjeta extends Formulario
             $anyo = filter_var($anyo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if(!(in_array($mes, [01,02,03,04,05,06,07,08,09,10,11,12]) && (strlen($anyo)<2 ||strlen($anyo)>2))){
-                 $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
+                $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
             }
         }
 
@@ -66,9 +67,6 @@ class FormularioTarjeta extends Formulario
             if ( !in_array(sizeof($cve), [3])) {
                 $this->errores['cve'] = 'CVE incorrecto';
             }
-        
-        }
-        
-        
+        } 
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/includes/forms/formularioLogin.php';
+use BistroFDI\forms\FormularioLogin;
 
 $form = new FormularioLogin();
 $htmlFormLogin = $form->gestiona();

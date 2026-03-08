@@ -7,13 +7,13 @@ INSERT INTO Producto VALUES('tiramisu', 10.0, true, 21, true, 'tiramisu italiano
 INSERT INTO Producto VALUES('brownie', 10.0, true, 21, true, 'brownie de chocolate','../img/productos/brownie.png',true, 'postre');
 INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','../img/productos/coca_cola.png', false,'bebida');
 
-INSERT INTO Usuarios VALUES('martita', 'Marta', 'Pérez Gómez', 'marta@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cliente', '../img/avatar.png');
-INSERT INTO Usuarios VALUES('jose', 'Jose', 'Sánchez López', 'jose@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cliente','../img/avatar.png');
-INSERT INTO Usuarios VALUES('ana', 'Ana', 'Fernández Martín', 'ana@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Camarero','../img/avatar.png');
-INSERT INTO Usuarios VALUES('juan', 'Juan', 'Pérez Ruiz', 'juan@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Camarero', '../img/avatar.png');
-INSERT INTO Usuarios VALUES('silvia','Silvia', 'Díaz Moreno', 'silvia@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cocinero', '../img/avatar.png');
-INSERT INTO Usuarios VALUES('marcos','Marcos', 'Alonso Gutierrez', 'marcos@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cocinero', '../img/avatar.png');
-INSERT INTO Usuarios VALUES('emma', 'Emma', 'Ortiz Gómez', 'emma@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Gerente', '../img/avatar.png');
+INSERT INTO Usuarios VALUES('martita', 'Marta', 'Pérez Gómez', 'marta@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cliente', '../img/avatar24.png');
+INSERT INTO Usuarios VALUES('jose', 'Jose', 'Sánchez López', 'jose@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cliente','../img/avatar11.png');
+INSERT INTO Usuarios VALUES('ana', 'Ana', 'Fernández Martín', 'ana@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Camarero','../img/avatar22.png');
+INSERT INTO Usuarios VALUES('juan', 'Juan', 'Pérez Ruiz', 'juan@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Camarero', '../img/avatar13.png');
+INSERT INTO Usuarios VALUES('silvia','Silvia', 'Díaz Moreno', 'silvia@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cocinero', '../img/avatar2.png');
+INSERT INTO Usuarios VALUES('marcos','Marcos', 'Alonso Gutierrez', 'marcos@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Cocinero', '../img/avatar7.png');
+INSERT INTO Usuarios VALUES('emma', 'Emma', 'Ortiz Gómez', 'emma@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Gerente', '../img/avatar4.png');
 
 INSERT INTO Categoria VALUES('entrante', 'entrantes', 'emma');
 INSERT INTO Categoria VALUES('primer plato', 'primeros platos', 'emma');

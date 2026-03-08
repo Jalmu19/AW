@@ -1,11 +1,11 @@
 <?php
 namespace BistroFDI\pedidos;
-// INTERACTUA CON LA BBDD
 
+use BistroFDI\Aplicacion;
 
 class Pedido {
 
-    //estados
+    // Estados
     public const ESTADO_NUEVO = 'Nuevo';
     public const ESTADO_RECIBIDO = 'Recibido';
     public const ESTADO_PREPARACION = 'En preparacion';
@@ -15,233 +15,181 @@ class Pedido {
     public const ESTADO_ENTREGADO = 'Entregado';
     public const ESTADO_CANCELADO = 'Cancelado';
 
-    //tipos
+    // Tipos
     public const TIPO_DOMICILIO = 'A domicilio';
     public const TIPO_LOCAL = 'En local';
 
-    private $id; //numero pedido
-    private $nombreUsuario;
-    /**
-     * @var array $productos 
-     * Estructura: Array asociativo ["NombreProducto" => Cantidad]
-     * Ejemplo: ["Agua" => 2, "Hamburguesa" => 1]
-     * En la base de datos (columna 'productos') se guarda como un string JSON 
-     * mediante json_encode() y se recupera con json_decode($datos, true).
-     */
-    private $productos;
-    private $precio_total;
+    private $num_pedido; 
+    private $fecha_hora;
+    private $cliente;
+    private $camarero;
+    private $cocinero;
+    private $total;
     private $estado;
-    private $fecha;
     private $tipo;
-    //clave primaria (id, fecha)
+    private $productos; // Array de productos: [['nombre' => 'Agua', 'cantidad' => 2, 'preparado' => 0], ...] de la tabla Pedido_Producto.
 
-    private function __construct($id, $nombreUsuario, $productos, $precio_total, $estado, $fecha, $tipo) {
-        $this->id = $id;
-        $this->nombreUsuario = $nombreUsuario;
-        $this->productos = $productos;
-        $this->precio_total = $precio_total;
+    private function __construct($num_pedido, $fecha_hora, $cliente, $camarero, $cocinero, $total, $estado, $tipo, $productos = []) {
+        $this->num_pedido = $num_pedido;
+        $this->fecha_hora = $fecha_hora;
+        $this->cliente = $cliente;
+        $this->camarero = $camarero;
+        $this->cocinero = $cocinero;
+        $this->total = $total;
         $this->estado = $estado;
-        $this->fecha = $fecha;
         $this->tipo = $tipo;
+        $this->productos = $productos;
     }
 
-    private function buscarPedido($id){
+    //crea un pedido
+    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $camarero, $cocinero, $productosArr) {
+        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $camarero, $cocinero, $total, $estado, $tipo, $productosArr);
+        return self::inserta($pedido);
+    }
+
+    //insertar un pedido
+    private static function inserta($pedido) {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Pedidos WHERE id='%s'", $id);
+        
+        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente, camarero, cocinero) 
+            VALUES ('%s', %d, '%s', %f, '%s', '%s', '%s', '%s')",
+            $conn->real_escape_string($pedido->fecha_hora),
+            $pedido->num_pedido,
+            $conn->real_escape_string($pedido->tipo),
+            $pedido->total,
+            $conn->real_escape_string($pedido->estado),
+            $conn->real_escape_string($pedido->cliente),
+            $conn->real_escape_string($pedido->camarero),
+            $conn->real_escape_string($pedido->cocinero)
+        );
+
+        if (!$conn->query($query)) return false;
+
+        //insertar productos en Pedido_Producto
+        foreach ($pedido->productos as $p) {
+            $queryProd = sprintf("INSERT INTO Pedido_Producto (nombre, fecha_hora, num_pedido, cantidad, preparado) 
+                VALUES ('%s', '%s', %d, %d, %d)",
+                $conn->real_escape_string($p['nombre']),
+                $conn->real_escape_string($pedido->fecha_hora),
+                $pedido->num_pedido,
+                $p['cantidad'],
+                $p['preparado'] ?? 0
+            );
+            $conn->query($queryProd);
+        }
+        return true;
+    }
+
+    //buscar pedido
+    public static function buscarPedido($num_pedido, $fecha_hora) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM Pedido WHERE num_pedido=%d AND fecha_hora='%s'", 
+            $num_pedido, $conn->real_escape_string($fecha_hora));
+        
         $rs = $conn->query($query);
         if ($rs && $rs->num_rows === 1) {
             $f = $rs->fetch_assoc();
             
-            // CONVERSIÓN: De JSON (texto) a Array Asociativo
-            $productosArray = json_decode($f['productos'], true); 
+            // Cargar productos y sus cantidades
+            $productos = [];
+            $queryProd = sprintf("SELECT * FROM Pedido_Producto WHERE num_pedido=%d AND fecha_hora='%s'", 
+                $num_pedido, $conn->real_escape_string($fecha_hora));
+            $rsProd = $conn->query($queryProd);
+            while($p = $rsProd->fetch_assoc()) {
+                $productos[] = $p;
+            }
             
-            // Creamos el objeto con el array ya convertido
-            $pedido = new Pedido($f['id'], $f['nombreUsuario'], $productosArray, $f['precio_total'], $f['estado'], $f['fecha'], $f['tipo']);
+            $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['camarero'], $f['cocinero'], $f['total'], $f['estado'], $f['tipo'], $productos);
             $rs->free();
             return $pedido;
         }
         return false;
     }
 
-    private function buscarPedidoPorEstado($estado){
+    //actualizar estado
+    public static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Pedidos WHERE estadod='%s'", $estado);
+        $query = sprintf("UPDATE Pedido SET estado='%s' WHERE num_pedido=%d AND fecha_hora='%s'",
+            $conn->real_escape_string($nuevoEstado), $num_pedido, $conn->real_escape_string($fecha_hora));
+        return $conn->query($query);
+    }
+
+    //borrar pedido
+    public static function borra($num_pedido, $fecha_hora) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        // Primero borrar productos por integridad (claves foráneas)
+        $query1 = sprintf("DELETE FROM Pedido_Producto WHERE num_pedido=%d AND fecha_hora='%s'", 
+            $num_pedido, $conn->real_escape_string($fecha_hora));
+        $conn->query($query1);
+
+        // Luego borrar el pedido
+        $query2 = sprintf("DELETE FROM Pedido WHERE num_pedido=%d AND fecha_hora='%s'", 
+            $num_pedido, $conn->real_escape_string($fecha_hora));
+        return $conn->query($query2);
+    }
+
+    //(completar pedido camarero): productos no cocinables de los pedidos
+    public static function pedidosParaCompletar() {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        //usamos GROUP_CONCAT para dar forma a la lista (ej: 2x Agua)
+        $query = "SELECT p.num_pedido as id, 
+                         GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
+                  FROM Pedido p
+                  JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                  JOIN Producto prod ON pp.nombre = prod.nombre
+                  WHERE p.estado = '" . self::ESTADO_LISTO_COCINA . "' AND prod.cocinable = 0
+                  GROUP BY p.num_pedido, p.fecha_hora";
+        
         $rs = $conn->query($query);
-        if ($rs && $rs->num_rows === 1) {
-            $f = $rs->fetch_assoc();
-            $pedido = new Pedido($f['nombreUsuario'], $f['productos'], $f['precio_total'], $f['estado'], $f['fecha'], $f['tipo']);
+        $lista = [];
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) { $lista[] = $f; }
             $rs->free();
-            return $pedido;
         }
-        return false;
+        return $lista;
     }
 
-    //private function insertar_pedido(){}
-     private function crear_pedido($pedido){
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        
-        // CONVERSIÓN: De Array a JSON (texto)
-        $productosJson = json_encode($pedido->productos);
-
-        $query = sprintf("INSERT INTO Pedidos(nombreUsuario,productos,precio_total,fecha,tipo) 
-                        VALUES ('%s', '%s', %f, '%s', '%s')",
-                        $conn->real_escape_string($pedido->nombreUsuario),
-                        $conn->real_escape_string($productosJson),
-                        $pedido->precio_total,
-                        $conn->real_escape_string($pedido->fecha),
-                        $conn->real_escape_string($pedido->tipo));
-        
-        return $conn->query($query) ? "Nuevo pedido creado con éxito" : "No ha sido posible crear el pedido";
-    }
-
-
-    private function actualizar_pedido($id, $pedidoAct){
-
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $pedido = self->buscarPedido($id);
-        if($pedido === FALSE){
-            return "No se ha podido actualizar el pedido";
-            //return true
-        }
-        $query = sprintf("UPDATE Pedido SET productos=%s, precio_total=%f, fecha=%s, tipo='%s'  WHERE id = $id",
-                        $conn->real_escape_string($pedidoAct->productos),
-                        $conn->real_escape_string($pedidoAct->precio_total),
-                        $conn->real_escape_string($pedidoAct->fecha),
-                        $conn->real_escape_string($pedidoAct->tipo));
-
-        return $conn->query($query);
-    }
-
-    private function borrar_pedido($id){
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $pedido = self->buscarPedido($id);
-        if($pedido === FALSE){
-            return "No se ha podido actualizar el pedido";
-            //return true
-        }
-        $query = sprintf("DELETE FROM Pedido WHERE id = $id");
-
-        return $conn->query($query);
-    }
-
-    //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
-    public static function terminarCocinarPedido($idPedido) {
-        $conn = Aplicacion::getInstance()->getConexionBd();
-
-        $query = sprintf(
-            "UPDATE Pedidos SET estado='%s' WHERE id='%s'",
-            $conn->real_escape_string(self::ESTADO_LISTO_COCINA),
-            $idPedido
-        );
-    }
-
-    //Completar pedido (camarero): ListoCocina->Terminado
-    public static function completarPedido($id) {
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE Pedidos SET estado='%s' WHERE id=%d",
-            $conn->real_escape_string(self::ESTADO_TERMINADO),
-            $id
-        );
-        return $conn->query($query);
-    }
-   
-    //getters
-    public function getId() { return $this->id; }
-    public function getFecha() { return $this->fecha; }
-    public function getEstado() { return $this->estado; }
-    public function getNombreUsuario(){return $this->nombreUsuario; }
-    public function getPrecioTotal(){return $this->precio_total; }
-    public function getProductos(){return $this->productos; }
-
+    //(cocinero): productos para cocinar de los pedidos
     public static function getPedidosCocinero() {
         $conn = Aplicacion::getInstance()->getConexionBd();
-
-        // Obtenemos todos los pedidos que no estén terminados
-        $sql = "SELECT * FROM Pedido WHERE estado != '".self::ESTADO_TERMINADO."'";
+        $sql = "SELECT num_pedido, fecha_hora FROM Pedido 
+                WHERE estado IN ('".self::ESTADO_PREPARACION."', '".self::ESTADO_COCINANDO."')";
         $rs = $conn->query($sql);
 
         $pedidosCocinero = [];
-
         if ($rs) {
-            while ($pedido = $rs->fetch_assoc()) {
-                $numPedido = $pedido['num_pedido'];
-                $fecha = $pedido['fecha_hora'];
+            while ($f = $rs->fetch_assoc()) {
+                $sqlProd = sprintf("SELECT pp.nombre, pp.cantidad, pp.preparado FROM Pedido_Producto pp
+                    JOIN Producto prod ON pp.nombre = prod.nombre
+                    WHERE pp.num_pedido = %d AND pp.fecha_hora = '%s' AND prod.cocinable = 1", 
+                    $f['num_pedido'], $conn->real_escape_string($f['fecha_hora']));
+                
+                $rsP = $conn->query($sqlProd);
+                $prods = [];
+                while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
 
-                // Obtenemos los productos cocinables de este pedido
-                $sqlProd = "
-                    SELECT p.nombre, p.nombre as id
-                    FROM Producto p
-                    JOIN Pedido_Producto pp
-                    ON pp.nombre = p.nombre
-                    AND pp.num_pedido = '$numPedido'
-                    AND pp.fecha_hora = '$fecha'
-                    WHERE p.cocinable = 1
-                ";
-                $rsProd = $conn->query($sqlProd);
-
-                $productos = [];
-                if ($rsProd) {
-                    while ($prod = $rsProd->fetch_assoc()) {
-                        $productos[] = $prod;
-                    }
-                }
-
-                // Solo añadimos pedidos que tengan productos cocinables
-                if (count($productos) > 0) {
-                    $pedidosCocinero[] = [
-                        'pedido' => $numPedido,
-                        'productos' => $productos
-                    ];
+                if (!empty($prods)) {
+                    $pedidosCocinero[] = ['id' => $f['num_pedido'], 'productos' => $prods];
                 }
             }
-            $rs->free();
         }
-        
         return $pedidosCocinero;
     }
 
-    //Pedidos que tiene que completar el camarero y los productos que son
-    public static function pedidosParaCompletar() {
-        $conn = \Aplicacion::getInstance()->getConexionBd();
-        
-        //Pedidos estado listoCocina
-        $query = "SELECT id, productos FROM Pedidos WHERE estado = '" . self::ESTADO_LISTO_COCINA . "'";
-        $rs = $conn->query($query);
-        
-        $listaFinal = [];
-        
-        if ($rs) {
-            while ($f = $rs->fetch_assoc()) {
-                //Guardamos el id del pedido
-                $idPedido = $f['id']; 
-                
-                //Decodificamos los productos (que están en formato JSON)
-                $productosArr = json_decode($f['productos'], true);
-                $textoProductos = "";
-                
-                if ($productosArr) {
-                    foreach ($productosArr as $nombre => $cantidad) {
-                        //Productos no cocinables
-                        $queryProd = sprintf("SELECT cocinable FROM Producto WHERE nombre='%s'", 
-                                            $conn->real_escape_string($nombre));
-                        $resProd = $conn->query($queryProd);
-                        $datosProd = $resProd->fetch_assoc();
-                        
-                        //Si el producto es no cocinable lo añadimos a la lista
-                        if ($datosProd && $datosProd['cocinable'] == 0) {
-                            $textoProductos .= "$cantidad x $nombre<br>";
-                        }
-                    }
-                }
-                
-                $listaFinal[] = [
-                    'id'        => $idPedido, //id pedido
-                    'productos' => !empty($textoProductos) ? rtrim($textoProductos, '<br>') : ""
-                ];
-            }
-            $rs->free();
-        }
-        return $listaFinal;
+    //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
+    public static function terminarCocinarPedido($num_pedido, $fecha_hora) {
+        return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_LISTO_COCINA);
     }
 
+    //Completar pedido (camarero): ListoCocina->Terminado
+    public static function completarPedido($num_pedido, $fecha_hora) {
+        return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_TERMINADO);
+    }
+
+    // Getters
+    public function getNumPedido() { return $this->num_pedido; }
+    public function getFechaHora() { return $this->fecha_hora; }
+    public function getEstado() { return $this->estado; }
+    public function getTotal() { return $this->total; }
 }

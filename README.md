@@ -1,2 +1,2 @@
 # AW
-De momento, las caroetas de mysql y clases esta vacia y no aparecen en el github online
+Proyecto de gestion de la web del restaurante BistroFDI

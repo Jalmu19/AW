@@ -1,7 +1,8 @@
 <?php
+namespace BistroFDI\forms;
+
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP . '/includes/forms/formulario.php';
-require_once RAIZ_APP . '/includes/categorias/Categoria.php';
+use BistroFDI\categorias\Categoria;
 
 class FormularioCategoria extends Formulario {
 

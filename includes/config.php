@@ -28,6 +28,32 @@ date_default_timezone_set('Europe/Madrid');
 require_once __DIR__ . '/Aplicacion.php';
 require_once __DIR__ . '/users/Usuario.php';
 
+//Función para autocargar clases PHP.
+spl_autoload_register(function ($class) {
+    // Prefijo del namespace del proyecto
+    $prefix = 'BistroFDI\\';
+
+    // Directorio base para el namespace raíz
+    $base_dir = __DIR__ . "/";
+
+    // Verificar si la clase usa nuestro namespace
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+
+    // Obtener la parte relativa de la clase
+    $relative_class = substr($class, $len);
+
+    // Convertir namespace en ruta de archivos
+    $file = str_replace('\\', '/', $base_dir) . str_replace("\\", '/', $relative_class) . '.php';
+
+    // Cargar el archivo si existe
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
+
 // Inicialización de la aplicación
 $app = Aplicacion::getInstance();
 $app->init(['host' => BD_HOST, 'bd'   => BD_NAME, 'user' => BD_USER, 'pass' => BD_PASS]);

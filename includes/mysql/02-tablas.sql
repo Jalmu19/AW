@@ -15,8 +15,6 @@ CREATE TABLE `Usuarios` (
     `rol` enum('Cliente','Camarero','Cocinero','Gerente') NOT NULL,
     `avatar` varchar(100) NOT NULL,
 
-    PRIMARY KEY(`nombreUsuario`)
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -30,8 +28,7 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
     `cliente` varchar(30) NOT NULL,
     `camarero` varchar(30) NOT NULL,
     `cocinero` varchar(30) NOT NULL,
-
-    PRIMARY KEY(`fecha_hora`, `num_pedido`),
+   
     KEY `num_pedido` (`num_pedido`),
     FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`),
     FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`),
@@ -71,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `Producto` (
 
 CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
     `nombre` varchar(15) NOT NULL,
+    `cantidad` int NOT NULL DEFAULT 1,
     `fecha_hora` datetime NOT NULL,
     `num_pedido` int NOT NULL,
     `preparado` boolean NOT NULL,
@@ -84,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
 
 CREATE TABLE IF NOT EXISTS `Cocinero_Producto` (
     `cocinero` varchar(15) NOT NULL,
-    `nombre_producto`varchar(15) NOT NULL,
+    `nombre_producto`varchar(15)  NOT NULL,
 
     PRIMARY KEY(`cocinero`, `nombre_producto`),
     FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`),

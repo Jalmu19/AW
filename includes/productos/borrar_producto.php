@@ -1,4 +1,6 @@
 <?php
+namespace BistroFDI\productos;
+
 require_once dirname(__DIR__).'/config.php';
 
 //solo el gerente puede borrar productos

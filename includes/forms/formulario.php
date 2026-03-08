@@ -1,5 +1,5 @@
 <?php
-
+namespace BistroFDI\forms;
 /**
  * Clase base para la gestión de formularios.
  */

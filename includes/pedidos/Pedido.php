@@ -121,7 +121,7 @@ class Pedido {
         return $conn->query($query2);
     }
 
-    //(completar pedido camarero): productos no cocinables de los pedidos
+    //(completar pedido camarero): id pedido, fecha y productos no cocinables de los pedidos
     public static function pedidosParaCompletar() {
         $conn = Aplicacion::getInstance()->getConexionBd();
         //usamos GROUP_CONCAT para dar forma a la lista (ej: 2x Agua)
@@ -137,6 +137,29 @@ class Pedido {
         $lista = [];
         if ($rs) {
             while ($f = $rs->fetch_assoc()) { $lista[] = $f; }
+            $rs->free();
+        }
+        return $lista;
+    }
+
+    //(cobrar pedido camarero): pedidos pendientes de cobro, incluyendo el total y la lista de productos.
+    public static function getPedidosParaCobrar() {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.total,
+                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
+                FROM Pedido p
+                JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                JOIN Producto prod ON pp.nombre = prod.nombre
+                WHERE p.estado = '" . self::ESTADO_RECIBIDO . "'
+                GROUP BY p.num_pedido, p.fecha_hora";
+        
+        $rs = $conn->query($query);
+        $lista = [];
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) { 
+                $lista[] = $f; 
+            }
             $rs->free();
         }
         return $lista;
@@ -177,6 +200,11 @@ class Pedido {
     //Completar pedido (camarero): ListoCocina->Terminado
     public static function completarPedido($num_pedido, $fecha_hora) {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_TERMINADO);
+    }
+
+    //Cobrar pedido (camarero): Recibido-> En preparación
+    public static function cobrarPedido($num_pedido, $fecha_hora) {
+        return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_PREPARACION);
     }
 
     // Getters

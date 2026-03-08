@@ -49,7 +49,7 @@ $tabla = new TablaCompletarPedidos($columnas, $result, true);
 
 $contenidoPrincipal .= <<<EOS
     <div>
-        <a href="camarero.php">← Volver al Panel de Camarero</a>
+        <a href="camarero.php">← Volver al Panel</a>
     </div>
 EOS;
 

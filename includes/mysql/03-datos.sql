@@ -22,11 +22,11 @@ INSERT INTO Categoria VALUES('postre', 'postres caseros', 'emma');
 INSERT INTO Categoria VALUES('bebida', 'bebidas', 'emma');
 
 
-INSERT INTO Pedido VALUES('12-02-2025 22:00:00', 1, 'cena', 22.50, 'Cocinando', 'martita', 'ana', 'silvia');
-INSERT INTO Pedido VALUES('13-02-2025 15:02:00', 2, 'comida', 12.25, 'Cocinando', 'martita', 'ana', 'marcos');
-INSERT INTO Pedido VALUES('15-02-2025 12:24:00', 3,'comida' , 30.20, 'Cocinando', 'martita', 'juan', 'marcos');
-INSERT INTO Pedido VALUES('16-02-2025 20:46:00', 4,'cena' , 7.40, 'Cocinando', 'jose', 'juan', 'silvia');
-INSERT INTO Pedido VALUES('17-02-2025 19:37:00', 5, 'cena', 10.50, 'Cocinando', 'jose', 'ana', 'silvia');
+INSERT INTO Pedido VALUES('12-02-2025 22:00:00', 1, 'en local', 22.50, 'Cocinando', 'martita', 'ana', 'silvia');
+INSERT INTO Pedido VALUES('13-02-2025 15:02:00', 2, 'en local', 12.25, 'Cocinando', 'martita', 'ana', 'marcos');
+INSERT INTO Pedido VALUES('15-02-2025 12:24:00', 3,'a domicilio' , 30.20, 'Cocinando', 'martita', 'juan', 'marcos');
+INSERT INTO Pedido VALUES('16-02-2025 20:46:00', 4,'a domicilio' , 7.40, 'Cocinando', 'jose', 'juan', 'silvia');
+INSERT INTO Pedido VALUES('17-02-2025 19:37:00', 5, 'a domicilio', 10.50, 'Cocinando', 'jose', 'ana', 'silvia');
 
 INSERT INTO Pedido_Producto VALUES('pasta', '12-02-2025 22:00:00', 1, false);
 INSERT INTO Pedido_Producto VALUES('pollo', '13-02-2025 15:02:00', 2, false);

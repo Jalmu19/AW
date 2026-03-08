@@ -20,19 +20,15 @@ class Pedido {
     private $num_pedido; 
     private $fecha_hora;
     private $cliente;
-    private $camarero;
-    private $cocinero;
     private $total;
     private $estado;
     private $tipo;
     private $productos; // Array de productos: [['nombre' => 'Agua', 'cantidad' => 2, 'preparado' => 0], ...] de la tabla Pedido_Producto.
 
-    private function __construct($num_pedido, $fecha_hora, $cliente, $camarero, $cocinero, $total, $estado, $tipo, $productos = []) {
+    private function __construct($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productos = []) {
         $this->num_pedido = $num_pedido;
         $this->fecha_hora = $fecha_hora;
         $this->cliente = $cliente;
-        $this->camarero = $camarero;
-        $this->cocinero = $cocinero;
         $this->total = $total;
         $this->estado = $estado;
         $this->tipo = $tipo;
@@ -40,8 +36,8 @@ class Pedido {
     }
 
     //crea un pedido
-    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $camarero, $cocinero, $productosArr) {
-        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $camarero, $cocinero, $total, $estado, $tipo, $productosArr);
+    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $productosArr) {
+        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productosArr);
         return self::inserta($pedido);
     }
 
@@ -49,16 +45,14 @@ class Pedido {
     private static function inserta($pedido) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         
-        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente, camarero, cocinero) 
-            VALUES ('%s', %d, '%s', %f, '%s', '%s', '%s', '%s')",
+        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente) 
+            VALUES ('%s', %d, '%s', %f, '%s', '%s')",
             $conn->real_escape_string($pedido->fecha_hora),
             $pedido->num_pedido,
             $conn->real_escape_string($pedido->tipo),
             $pedido->total,
             $conn->real_escape_string($pedido->estado),
-            $conn->real_escape_string($pedido->cliente),
-            $conn->real_escape_string($pedido->camarero),
-            $conn->real_escape_string($pedido->cocinero)
+            $conn->real_escape_string($pedido->cliente)
         );
 
         if (!$conn->query($query)) return false;
@@ -97,7 +91,7 @@ class Pedido {
                 $productos[] = $p;
             }
             
-            $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['camarero'], $f['cocinero'], $f['total'], $f['estado'], $f['tipo'], $productos);
+            $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['total'], $f['estado'], $f['tipo'], $productos);
             $rs->free();
             return $pedido;
         }
@@ -131,7 +125,7 @@ class Pedido {
     public static function pedidosParaCompletar() {
         $conn = Aplicacion::getInstance()->getConexionBd();
         //usamos GROUP_CONCAT para dar forma a la lista (ej: 2x Agua)
-        $query = "SELECT p.num_pedido as id, 
+        $query = "SELECT p.num_pedido as id, p.fecha_hora,
                          GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
                   FROM Pedido p
                   JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora

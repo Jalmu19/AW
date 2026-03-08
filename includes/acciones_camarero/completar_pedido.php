@@ -6,17 +6,19 @@ use BistroFDI\pedidos\Pedido;
 
 $app = Aplicacion::getInstance();
 
-//Solo personal autorizado
+//solo personal autorizado (Camarero, Cocinero o Gerente)
 if (!$app->isCurrentUserLogged() || $app->isCurrentUserClient()) {
     $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');
-    header('Location:'.RUTA_APP.'/index.php');
+    header('Location: ' . RUTA_APP . '/index.php');
     exit();
 }
 
-//Procesar la acción de "Completar" de la tabla 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido'])) {
+//procesar la acción de "Completar" enviada desde la tabla 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido']) && isset($_POST['fechaHora'])) {
     $id = $_POST['idPedido'];
-    if (Pedido::completarPedido($id)) { //actualizamos el estado del pedido
+    $fecha = $_POST['fechaHora'];
+
+    if (Pedido::completarPedido($id, $fecha)) { 
         $app->putRequestAttribute('mensaje', "Pedido #$id completado con éxito.");
     } else {
         $app->putRequestAttribute('error', "Error al completar el pedido #$id.");
@@ -26,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido'])) {
     exit();
 }
 
-//Recuperar mensajes del objeto Aplicacion 
-//(si ha tenido éxito o no la acción de completar el pedido)
+//recuperar mensajes (éxito/error al completar los pedidos)
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
@@ -48,7 +49,7 @@ $tabla = new TablaCompletarPedidos($columnas, $result, true);
 
 $contenidoPrincipal .= <<<EOS
     <div>
-        <a href="camarero.php">← Volver al Panel</a>
+        <a href="camarero.php">← Volver al Panel de Camarero</a>
     </div>
 EOS;
 

@@ -99,7 +99,7 @@ class Pedido {
     }
 
     //actualizar estado
-    public static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
+    private static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Pedido SET estado='%s' WHERE num_pedido=%d AND fecha_hora='%s'",
             $conn->real_escape_string($nuevoEstado), $num_pedido, $conn->real_escape_string($fecha_hora));
@@ -121,17 +121,16 @@ class Pedido {
         return $conn->query($query2);
     }
 
-    //(completar pedido camarero): id pedido, fecha y productos no cocinables de los pedidos
+    //(completar pedido camarero): id pedido, fecha, tipo y productos no cocinables de los pedidos
     public static function pedidosParaCompletar() {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        //usamos GROUP_CONCAT para dar forma a la lista (ej: 2x Agua)
-        $query = "SELECT p.num_pedido as id, p.fecha_hora,
-                         GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
-                  FROM Pedido p
-                  JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
-                  JOIN Producto prod ON pp.nombre = prod.nombre
-                  WHERE p.estado = '" . self::ESTADO_LISTO_COCINA . "' AND prod.cocinable = 0
-                  GROUP BY p.num_pedido, p.fecha_hora";
+        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.tipo,
+                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
+                FROM Pedido p
+                JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                JOIN Producto prod ON pp.nombre = prod.nombre
+                WHERE p.estado = '" . self::ESTADO_LISTO_COCINA . "' AND prod.cocinable = 0
+                GROUP BY p.num_pedido, p.fecha_hora";
         
         $rs = $conn->query($query);
         $lista = [];
@@ -152,6 +151,30 @@ class Pedido {
                 JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
                 JOIN Producto prod ON pp.nombre = prod.nombre
                 WHERE p.estado = '" . self::ESTADO_RECIBIDO . "'
+                GROUP BY p.num_pedido, p.fecha_hora";
+        
+        $rs = $conn->query($query);
+        $lista = [];
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) { 
+                $lista[] = $f; 
+            }
+            $rs->free();
+        }
+        return $lista;
+    }
+
+    //(entregar pedido camarero): id pedido(tipo = en local), cliente, productos
+    public static function getPedidosParaEntregarLocal() {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.cliente,
+                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
+                FROM Pedido p
+                JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                JOIN Producto prod ON pp.nombre = prod.nombre
+                WHERE p.estado = '" . self::ESTADO_TERMINADO . "' 
+                AND p.tipo = '" . self::TIPO_LOCAL . "'
                 GROUP BY p.num_pedido, p.fecha_hora";
         
         $rs = $conn->query($query);
@@ -205,6 +228,11 @@ class Pedido {
     //Cobrar pedido (camarero): Recibido-> En preparación
     public static function cobrarPedido($num_pedido, $fecha_hora) {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_PREPARACION);
+    }
+    
+    //Entregar pedido (camarero): Terminado-> Entregado
+    public static function entregarPedido($num_pedido, $fecha_hora) {
+        return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_ENTREGADO);
     }
 
     // Getters

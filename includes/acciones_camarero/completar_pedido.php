@@ -40,6 +40,7 @@ if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
 $columnas = [
     'id'        => 'ID Pedido',
+    'tipo'      => 'Tipo',
     'productos' => 'Productos que faltan'
 ];
 

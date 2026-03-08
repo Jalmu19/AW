@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `Producto` (
 
 CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
     `nombre` varchar(15) NOT NULL,
+    `cantidad` int NOT NULL DEFAULT 1,
     `fecha_hora` datetime NOT NULL,
     `num_pedido` int NOT NULL,
     `preparado` boolean NOT NULL,

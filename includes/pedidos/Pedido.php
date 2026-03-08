@@ -1,8 +1,6 @@
 <?php
 namespace BistroFDI\pedidos;
 
-use BistroFDI\Aplicacion;
-
 class Pedido {
 
     // Estados

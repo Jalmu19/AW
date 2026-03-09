@@ -1,10 +1,15 @@
 <?php
+namespace BistroFDI\users;
 
-require_once __DIR__.'/includes/config.php';
-require_once RAIZ_APP.'/includes/productos/Producto.php';
+require_once dirname(__DIR__).'/config.php';
+use BistroFDI\tables\tablaProductos;
 
-
-$listaProductos = Producto::listarProductos();
+$columnas = [
+    'imagen'      => 'Foto',
+    'nombre'      => 'Nombre',
+    'precio'      => 'Precio'
+];
+$tabla = new TablaProductos($columnas, Producto::listarProductos(), False);
 
 $tituloPagina = 'Bienvenido a Bistro FDI';
 
@@ -12,7 +17,7 @@ $contenidoPrincipal = <<<EOS
 <h1>Bistro FDI</h1>
 <fieldset>
     <legend>Carta</legend>
-    <?=$listaProductos?>
+    <?=$$tabla?>
 </fieldset>
 EOS;
 

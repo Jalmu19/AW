@@ -34,7 +34,7 @@ $columnas = [
 ];
 
 //NO queremos columna de acciones (false)
-$tabla = new TablaPedidosProceso($columnas, $result, false);
+$tabla = new TablaPedidos($columnas, $result, false);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Pedidos en Curso";

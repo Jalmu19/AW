@@ -36,7 +36,7 @@ $columnas = [
 ];
 
 //NO queremos columna de acciones (false)
-$tabla = new TablaHistorialPedidos($columnas, $result, false);
+$tabla = new TablaPedidos($columnas, $result, false);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Mi Historial de Pedidos";

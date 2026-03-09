@@ -13,7 +13,9 @@ CREATE TABLE `Usuarios` (
     `email` varchar(20) NOT NULL,
     `password` varchar(80) NOT NULL,
     `rol` enum('Cliente','Camarero','Cocinero','Gerente') NOT NULL,
-    `avatar` varchar(100) NOT NULL,
+    `avatar` varchar(100) NOT NULL
+
+    PRIMARY KEY ( `nombreUsuario`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -23,11 +25,11 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
     `num_pedido` int NOT NULL,
     `tipo` varchar(30) NOT NULL,
     `total` float,
-    `estado` varchar(11) NOT NULL,
+    `estado` varchar(25) NOT NULL,
 
-    `cliente` varchar(30) NOT NULL,
-    `camarero` varchar(30) NOT NULL,
-    `cocinero` varchar(30) NOT NULL,
+    `cliente` varchar(10) NOT NULL,
+    `camarero` varchar(10) NOT NULL,
+    `cocinero` varchar(10) NOT NULL,
    
     KEY `num_pedido` (`num_pedido`),
     FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`),
@@ -58,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Producto` (
     `descripcion` varchar(50) NOT NULL,
     `imagen` varchar(50) NOT NULL,
     `cocinable` boolean NOT NULL,
-    `categoria` varchar(30) NOT NULL,
+    `categoria` varchar(15) NOT NULL,
 
     PRIMARY KEY(`nombre`),
     FOREIGN KEY (`categoria`) REFERENCES `Categoria`(`nombre`)
@@ -81,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `Pedido_Producto` (
 
 
 CREATE TABLE IF NOT EXISTS `Cocinero_Producto` (
-    `cocinero` varchar(15) NOT NULL,
+    `cocinero` varchar(10) NOT NULL,
     `nombre_producto`varchar(15)  NOT NULL,
 
     PRIMARY KEY(`cocinero`, `nombre_producto`),

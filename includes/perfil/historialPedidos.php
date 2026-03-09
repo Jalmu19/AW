@@ -1,7 +1,8 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\tables\TablaHistorialPedidos;
+use BistroFDI\pedidos\Pedido;
+use BistroFDI\tables\TablaPedidos;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;
@@ -13,22 +14,12 @@ if (!$app->isCurrentUserLogged()) {
 }
 
 $conn = $app->getConexionBd();
-$nombreUsuario = $app->getCurrentUserName();
 
-//consulta de pedidos terminados
-$query = "SELECT id, productos, precio_total, estado, fecha, tipo 
-          FROM Pedidos 
-          WHERE nombreUsuario = ? AND estado = 'Entregado'
-          ORDER BY fecha DESC";
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $nombreUsuario);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = Pedido::historialPedidoUsuario($app->getCurrentUserName());
 
 $columnas = [
     'id'           => 'Nº Pedido',
-    'fecha'        => 'Fecha',
+    'fecha_hora'        => 'Fecha',
     'tipo'         => 'Tipo',
     'productos'    => 'Detalle',
     'precio_total' => 'Importe',
@@ -42,7 +33,7 @@ $htmlTabla = $tabla->genera();
 $tituloPagina = "Mi Historial de Pedidos";
 $contenidoPrincipal = <<<EOS
     <h1>Historial de Pedidos</h1>
-    <a href={$ruta}."/miCuenta.php">← Volver a mi cuenta</a>
+    <a href="{$ruta}/miCuenta.php">← Volver a mi cuenta</a>
     <div>
         $htmlTabla
     </div>

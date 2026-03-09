@@ -1,7 +1,8 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\tables\TablaPedidosProceso;
+use BistroFDI\pedidos\Pedido;
+use BistroFDI\tables\TablaPedidos;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;
@@ -13,23 +14,11 @@ if (!$app->isCurrentUserLogged()) {
 }
 
 $conn = $app->getConexionBd();
-$nombreUsuario = $app->getCurrentUserName();
 
-//consulta de pedidos activos
-$query = "SELECT id, productos, precio_total, estado 
-          FROM Pedidos 
-          WHERE nombreUsuario = ? AND estado NOT IN ('Nuevo', 'Recibido', 'Entregado', 'Cancelado')
-          ORDER BY id ASC";
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $nombreUsuario);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = Pedido::pedidosProcesoUsuario($app->getCurrentUserName());
 
 $columnas = [
-    'id'           => 'ID Pedido',
-    'productos'    => 'Productos',
-    'precio_total' => 'Total',
+    'num_pedido'   => 'ID Pedido',
     'estado'       => 'Estado Actual'
 ];
 
@@ -40,7 +29,7 @@ $htmlTabla = $tabla->genera();
 $tituloPagina = "Pedidos en Curso";
 $contenidoPrincipal = <<<EOS
     <h1>Estado de mis Pedidos</h1>
-    <a href={$ruta}."/miCuenta.php">← Volver a mi cuenta</a>
+    <a href="{$ruta}/miCuenta.php">← Volver a mi cuenta</a>
     <div>
         $htmlTabla
     </div>

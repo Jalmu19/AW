@@ -270,11 +270,36 @@ class Pedido {
                 while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
 
                 if (!empty($prods)) {
-                    $pedidosCocinero[] = ['id' => $f['num_pedido'], 'productos' => $prods];
+                    $pedidosCocinero[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 'productos' => $prods];
                 }
             }
         }
         return $pedidosCocinero;
+    }
+
+    public static function marcarProductoPedido($nombre_producto, $num_pedido, $fecha_hora){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $sql1 = sprintf(
+            "UPDATE Pedido_Producto 
+            SET preparado = 1 
+            WHERE nombre='%s' AND num_pedido=%d AND fecha_hora='%s'",
+            $conn->real_escape_string($nombre_producto),
+            $num_pedido,
+            $conn->real_escape_string($fecha_hora)
+        );
+        $conn->query($sql1);
+
+        $sql2 = sprintf(
+            "UPDATE Pedido 
+            SET estado='%s' 
+            WHERE num_pedido=%d AND fecha_hora='%s'",
+            Pedido::ESTADO_COCINANDO,
+            $num_pedido,
+            $conn->real_escape_string($fecha_hora)
+        );
+        $conn->query($sql2);
+
     }
 
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina

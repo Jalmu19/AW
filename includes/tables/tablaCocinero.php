@@ -13,10 +13,18 @@ class TablaCocinero extends Tabla {
 
             foreach ($valor as $producto) {
                 $html .= '
-                    <label>
-                        <input type="checkbox" name="producto[]" value="'.$producto['id'].'">
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="num_pedido" value="'.$fila['num_pedido'].'">
+                        <input type="hidden" name="fecha_hora" value="'.$fila['fecha_hora'].'">
+                    
+                        <label>
+                        <input type="checkbox" name="producto_preparado"
+                               value="'.$producto['nombre'].'"
+                               onclick="this.form.submit();">
                         '.htmlspecialchars($producto['nombre']).'
-                    </label><br>
+                        </label><br>
+                    </form>
+
                 ';
             }
 
@@ -28,15 +36,18 @@ class TablaCocinero extends Tabla {
 
     protected function generaAcciones($fila) {
 
-        $idPedido = $fila['pedido'];
+        $numPedido = $fila['num_pedido'];
+        $fechaHora = $fila['fecha_hora'];
 
         // Añadimos un botón para terminar el pedido una vez que el cocinero vea que ha
         // marcado todos los productos que tenía por cocinar
         return '
             <form method="POST">
-                <input type="hidden" name="pedido_terminado" value="'.$idPedido.'">
+                <input type="hidden" name="pedido_terminado" value="'.$numPedido.'">
+                <input type="hidden" name="fecha_hora" value="'.$fechaHora.'">
                 <button type="submit">Terminar pedido</button>
             </form>
+
         ';
     }
 }

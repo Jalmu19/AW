@@ -12,16 +12,28 @@ if (!$app->isCurrentUserCook() && !$app->isCurrentUserAdmin()) {
 
 // Si se marca un pedido como terminado
 if (isset($_POST['pedido_terminado'])) {
-    $idPedido = $_POST['pedido_terminado'];
-    Pedido::terminarCocinarPedido($idPedido);
+    $numPedido = $_POST['pedido_terminado'];
+    $fechaHora = $_POST['fecha_hora'];
+    Pedido::terminarCocinarPedido($numPedido, $fechaHora);
     header('Location: ' . $_SERVER['PHP_SELF']); // refresca la página
     exit();
 }
 
+// Si se marca un producto como preparado
+if (isset($_POST['producto_preparado'])) {
+    $numPedido = (int) $_POST['num_pedido'];
+    $fechaHora = $_POST['fecha_hora'];
+    $nombreProducto = $_POST['producto_preparado'];
+    Pedido::marcarProductoPedido($nombreProducto, $numPedido, $fechaHora);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+
 require_once RAIZ_APP . '/includes/tables/tablaCocinero.php';
 
 $columnas = [
-    'num_pedido' => 'Número de Pedido',
+    'num_pedido' => 'Número del Pedido',
     'productos' => 'Productos'
 ];
 

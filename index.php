@@ -4,12 +4,18 @@ use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 
+
 $tituloPagina = "Panel Principal";
 $contenidoPrincipal = "<h1>Bienvenido a la Gestión del Restaurante</h1>";
 
-//clientes y usuarios no logged in
-if(!$app->isCurrentUserLogged() || $app->isCurrentUserClient()){
+//usuarios no logged in
+if(!$app->isCurrentUserLogged()){
     header('Location: login.php');
+}
+
+//clientes
+if($app->isCurrentUserClient()){
+    header('Location: miCuenta.php');
 }
 
 //camareros

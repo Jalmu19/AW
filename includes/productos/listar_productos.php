@@ -1,5 +1,4 @@
 <?php
-namespace BistroFDI\productos;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaProductos;
@@ -34,20 +33,23 @@ $columnas = [
     'descripcion' => 'Descripción'
 ];
 
-$accion = true;
 
-$tabla = new TablaProductos($columnas, $result, $accion);
+$tituloPagina = "Administración de Productos";
+
 $contenidoPrincipal .=  <<<EOS 
     <a href="index.php">← Volver al inicio</a> 
 EOS;
-$contenidoPrincipal .= <<<EOS
-    <form action="crear_producto.php" method="get">
+ $contenidoPrincipal .= <<<EOS
+   <form action="crear_producto.php" method="get">
         <button type="submit">
            Añadir Producto
         </button>
     </form>
 EOS;
+
+$accion = true;
+$tabla = new TablaProductos($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
-$tituloPagina = "Administración de Productos";
+
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

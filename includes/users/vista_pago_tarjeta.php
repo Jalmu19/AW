@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI\users;
+
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\forms\formularioTarjeta;

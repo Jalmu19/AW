@@ -1,5 +1,4 @@
 <?php
-namespace BistroFDI\pedidos;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaPedidos;

@@ -102,6 +102,64 @@ class Pedido {
         return false;
     }
 
+    //pedidos en proceso de un usuario concreto
+    public function pedidosProcesoUsuario($nombreUsuario){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = "SELECT num_pedido, fecha_hora, estado 
+                FROM Pedido 
+                WHERE cliente = ? 
+                AND estado NOT IN ('" . self::ESTADO_ENTREGADO . "', '" . self::ESTADO_CANCELADO . "')
+                ORDER BY fecha_hora DESC";
+
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            return [];
+        }
+
+        $stmt->bind_param("s", $nombreUsuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $lista = [];
+        while ($fila = $result->fetch_assoc()) {
+            $lista[] = $fila;
+        }
+        
+        $stmt->close();
+        return $lista;
+    }
+
+    //historial de pedidos de un usuario concreto
+    public function historialPedidoUsuario($nombreUsuario){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.total as precio_total, p.estado, p.tipo,
+                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
+                FROM Pedido p
+                JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                WHERE p.cliente = ? AND p.estado = '" . self::ESTADO_ENTREGADO . "'
+                GROUP BY p.num_pedido, p.fecha_hora
+                ORDER BY p.fecha_hora DESC";
+
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            return [];
+        }
+
+        $stmt->bind_param("s", $nombreUsuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $lista = [];
+        while ($fila = $result->fetch_assoc()) {
+            $lista[] = $fila;
+        }
+
+        $stmt->close();
+        return $lista;
+    }
+
     //actualizar estado
     private static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
         $conn = Aplicacion::getInstance()->getConexionBd();

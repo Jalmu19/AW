@@ -277,6 +277,34 @@ class Pedido {
         return $pedidosCocinero;
     }
 
+    public static function getTodosLosPedidos(){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $sql = "SELECT * FROM Pedido";
+        $rs = $conn->query($sql);
+
+        $pedidos = [];
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) {
+                $sqlProd = sprintf("SELECT pp.nombre, pp.cantidad, pp.preparado FROM Pedido_Producto pp
+                    JOIN Producto prod ON pp.nombre = prod.nombre
+                    WHERE pp.num_pedido = %d AND pp.fecha_hora = '%s' AND prod.cocinable = 1", 
+                    $f['num_pedido'], $conn->real_escape_string($f['fecha_hora']));
+                
+                $rsP = $conn->query($sqlProd);
+                $prods = [];
+                while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
+
+                if (!empty($prods)) {
+                    $pedidos[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 
+                                    'tipo' => $f['tipo'], 'total' => $f['total'], 'estado' => $f['estado'], 
+                                    'cliente' => $f['cliente'], 'cocinero' => $f['cocinero'], 'productos' => $prods];
+                }
+            }
+        }
+        return $pedidos;
+    }
+
+
     public static function marcarProductoPedido($nombre_producto, $num_pedido, $fecha_hora){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
@@ -322,9 +350,11 @@ class Pedido {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_ENTREGADO);
     }
 
+
     // Getters
     public function getNumPedido() { return $this->num_pedido; }
     public function getFechaHora() { return $this->fecha_hora; }
     public function getEstado() { return $this->estado; }
     public function getTotal() { return $this->total; }
+    
 }

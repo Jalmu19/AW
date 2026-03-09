@@ -57,15 +57,19 @@ class Pedido {
 
         if (!$conn->query($query)) return false;
 
-        //insertar productos en Pedido_Producto
+        // Insertar productos en Pedido_Producto
         foreach ($pedido->productos as $p) {
+            //si producto no cocinable-> preparado = 1
+            //si producto cocinable-> preparado = 0 
             $queryProd = sprintf("INSERT INTO Pedido_Producto (nombre, fecha_hora, num_pedido, cantidad, preparado) 
-                VALUES ('%s', '%s', %d, %d, %d)",
+                SELECT '%s', '%s', %d, %d, NOT cocinable 
+                FROM Producto 
+                WHERE nombre = '%s'",
                 $conn->real_escape_string($p['nombre']),
                 $conn->real_escape_string($pedido->fecha_hora),
                 $pedido->num_pedido,
                 $p['cantidad'],
-                $p['preparado'] ?? 0
+                $conn->real_escape_string($p['nombre'])
             );
             $conn->query($queryProd);
         }

@@ -5,7 +5,7 @@ require_once dirname(__DIR__).'/config.php';
 use BistroFDI\productos\Producto;
 use BistroFDI\categorias\Categoria;
 
-class FormularioProducto extends Formulario {
+class FormularioCrearProducto extends Formulario {
 
     public function __construct() {
         parent::__construct('formProducto', [
@@ -30,9 +30,8 @@ class FormularioProducto extends Formulario {
         $resCategorias = Categoria::listaCategorias();
         $optionsCategorias = "<option value=''>Seleccione una categoría</option>";
         if ($resCategorias) {
-            while ($cat = $resCategorias->fetch_assoc()) {
-                $sel = ($cat['nombre'] === $cat_seleccionada) ? 'selected' : '';
-                $optionsCategorias .= "<option value='{$cat['nombre']}' $sel>{$cat['nombre']}</option>";
+            foreach ($resCategorias as $cat) {
+                $optionsCategorias .= "<option value='{$cat}'>{$cat}</option>";
             }
         }
 
@@ -76,6 +75,7 @@ class FormularioProducto extends Formulario {
             <div>
                 <label><input type="checkbox" name="disponibilidad" checked> Disponible</label>
                 <label><input type="checkbox" name="ofertado"> En oferta</label>
+                <label><input type="checkbox" name="cocinable"> Cocinable </label>
             </div>
 
             <button type="submit" name="registro" class="btn-primario">Crear Producto</button>
@@ -127,7 +127,7 @@ class FormularioProducto extends Formulario {
 
         //creacion
         if (count($this->errores) === 0) {
-            $exito = Producto::crea($nombre, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen, $categoria);
+            $exito = Producto::crea($nombre, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen , $categoria, $datos['cocinable]']);
             if (!$exito) {
                 $this->errores[] = "Error de base de datos: No se pudo insertar el producto.";
             }

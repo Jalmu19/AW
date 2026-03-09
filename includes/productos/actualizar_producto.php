@@ -10,27 +10,25 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$form = new FormularioProducto();
+$form = new FormularioActProducto();
 
 $htmlForm = $form->gestiona();
 
 $tituloPagina = "Actualizar Producto";
 
+$contenidoPrincipal .= <<<EOS
+    <a href="listar_productos.php">← Volver al listado</a> 
+EOS;
 
-$contenidoPrincipal = <<<EOS
-<h1>Modificar precio del producto</h1>
-   <div>
-    <div>
-        <a href="listar_productos.php">← Volver al listado</a>
-    </div>
+$contenidoPrincipal .= <<<EOS
 
-    <h1>Gestión de Inventario: Actualizar Producto</h1>
+    <h2>Gestión de Inventario: Actualizar Producto</h2>
     <p>Rellena todos los campos para actualizar el producto en la carta.</p>
     
     <div>
         $htmlForm
     </div>
-</div>
+
 EOS;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

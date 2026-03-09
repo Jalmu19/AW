@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI;
+namespace BistroFDI\categorias;
 use BistroFDI\Aplicacion;
 
 class Categoria {
@@ -93,6 +93,22 @@ class Categoria {
 
         $stmt->close();
         return $result;
+    }
+
+    public static function listaCategorias(){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT nombre FROM Categoria");
+
+        $rs = $conn->query($query);
+        $categoria = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()){
+                $categoria[] = $fila['nombre'];
+            }
+            $rs->free();
+            return $categoria;
+        }
+        return false;
     }
 
     // getters

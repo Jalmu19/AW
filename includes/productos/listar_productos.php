@@ -36,9 +36,10 @@ $columnas = [
 
 $tituloPagina = "Administración de Productos";
 
-$contenidoPrincipal .=  <<<EOS 
-    <a href="index.php">← Volver al inicio</a> 
+$contenidoPrincipal .= <<<EOS
+    <a href="../../index.php">← Volver al inicio</a> 
 EOS;
+
  $contenidoPrincipal .= <<<EOS
    <form action="crear_producto.php" method="get">
         <button type="submit">

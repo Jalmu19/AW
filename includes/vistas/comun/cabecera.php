@@ -1,4 +1,7 @@
 <?php
+
+use BistroFDI\Aplicacion;
+
 function perfil() {
     $app = Aplicacion::getInstance();
     $html = '';
@@ -25,7 +28,7 @@ function perfil() {
 <header>
     <div class="logo-central">
         <a href="<?=__DIR__?>../../registro.php">
-            <img src= "<?= RUTA_IMGS ?>logo_bistro.png" alt="Bistro FDI Logo" width= "80"/>
+            <img src= "img/logo_bistro.png" alt="Bistro FDI Logo" width= "80"/>
         </a>
     </div>
         

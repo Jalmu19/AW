@@ -14,7 +14,7 @@ if (!$app->isCurrentUserAdmin()) {
 }
 
 
-$form = new FormularioProducto();
+$form = new FormularioCrearProducto();
 
 $htmlForm = $form->gestiona();
 

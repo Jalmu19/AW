@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI;
+namespace BistroFDI\productos;
 use BistroFDI\Aplicacion;
 
 class Producto {
@@ -58,7 +58,7 @@ class Producto {
         $rs = $conn->query($query);
         $productos = [];
         if ($rs ) {
-            for($fila = $rs->fetch_assoc()){
+            while($fila = $rs->fetch_assoc()){
                 $productos[] = $fila;
             }
             $rs->free();
@@ -68,9 +68,10 @@ class Producto {
     }
 
     //función crear
-    public static function crea($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria)
+    public static function crea($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria, $cocinable)
     {
-        $producto = new Producto($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria);
+        $imagen = '../img/productos/' . $imagen;
+        $producto = new Producto($nombre, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $imagen, $categoria, $cocinable);
         return $producto->guarda();
     }
 
@@ -87,7 +88,7 @@ class Producto {
     {
         // $conn =  (BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("INSERT INTO Producto(nombre, precio, disponibilidad, iva, ofertado, descripcion, imagen, categoria) VALUES ('%s', %f, %s, %f, %s, '%s', '%s', '%s')",
+        $query = sprintf("INSERT INTO Producto(nombre, precio, disponibilidad, iva, ofertado, descripcion, imagen, categoria, cocinable) VALUES ('%s', %f, %s, %f, %s, '%s', '%s', '%s' ,'%s')",
             $conn->real_escape_string($producto->nombre),
             $conn->real_escape_string($producto->precio),
             $conn->real_escape_string($producto->disponibilidad),
@@ -95,27 +96,13 @@ class Producto {
             $conn->real_escape_string($producto->ofertado),
             $conn->real_escape_string($producto->descripcion),
             $conn->real_escape_string($producto->imagen),
-            $conn->real_escape_string($producto->categoria)
+            $conn->real_escape_string($producto->categoria),
+            $conn->real_escape_string($producto->cocinable)
+            
         );
         return $conn->query($query);
     }
 
-   /* public static function actualiza($producto)
-    {
-        // $conn =  (BD_HOST, BD_USER, BD_PASS, BD_NAME);
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE Producto SET precio=%f, disponibilidad=%s, iva=%f, ofertado=%s, descripcion='%s', imagen='%s', categoria='%s' WHERE nombre='%s'",
-            $conn->real_escape_string($producto->precio),
-            $conn->real_escape_string($producto->disponibilidad),
-            $conn->real_escape_string($producto->iva),
-            $conn->real_escape_string($producto->ofertado),
-            $conn->real_escape_string($producto->descripcion),
-            $conn->real_escape_string($producto->imagen),
-            $conn->real_escape_string($producto->categoria),
-            $conn->real_escape_string($producto->nombre)
-        );
-        return $conn->query($query);
-    }*/
 
     public static function actualiza($producto)
     {
@@ -138,7 +125,7 @@ class Producto {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $query = "UPDATE Producto SET ofertado = falseWHERE nombre = ?";
+        $query = "UPDATE Producto SET ofertado = false WHERE nombre = ?";
         $stmt = $conn->prepare($query);
 
         if (!$stmt) {

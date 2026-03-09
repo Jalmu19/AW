@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?= $tituloPagina ?></title>
-        <link rel="stylesheet" type="text/css" href="CSS/estilo.css" />
+        <link rel="stylesheet" type="text/css" href="<?= RUTA_APP ?>/css/estilo.css" />
     </head>
     <body>
         <div id="contenedor">
@@ -23,3 +23,4 @@
         </div>
     </body>
 </html>
+

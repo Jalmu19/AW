@@ -5,7 +5,7 @@ require_once dirname(__DIR__).'/config.php';
 use BistroFDI\productos\Producto;
 use BistroFDI\categorias\Categoria;
 
-class formularioAcProducto extends Formulario
+class formularioActProducto extends Formulario
 {
     public function __construct() {
         parent::__construct('formEditarProducto', ['action' => 'actualizar_producto.php',
@@ -18,14 +18,12 @@ class formularioAcProducto extends Formulario
         // Se reutiliza el nombre de producto introducido previamente o se deja en blanco
         $nombreProducto = $datos['nombre'] ?? '';
 
-
         //categorías 
         $resCategorias = Categoria::listaCategorias();
         $optionsCategorias = "<option value=''>Seleccione una categoría</option>";
         if ($resCategorias) {
-            while ($cat = $resCategorias->fetch_assoc()) {
-                $sel = ($cat['nombre'] === $cat_seleccionada) ? 'selected' : '';
-                $optionsCategorias .= "<option value='{$cat['nombre']}' $sel>{$cat['nombre']}</option>";
+            foreach ($resCategorias as $cat) {
+                $optionsCategorias .= "<option value='{$cat}'>{$cat}</option>";
             }
         }
 
@@ -40,13 +38,13 @@ class formularioAcProducto extends Formulario
             <legend>Actualizar producto</legend>
             <div>
                 <label for="nombre">Nombre:</label>
-                <input id="nombre" type="text" name="nombre" value="$nombre" required>
+                <input id="nombre" type="text" name="nombre" value="$nombreProducto" required>
                 {$erroresCampos['nombre']}
             </div>
 
             <div>
                 <label for="precio">Precio (€):</label>
-                <input id="precio" type="number" step="0.01" name="precio" value="$precio" required>
+                <input id="precio" type="number" step="0.01" name="precio" required>
                 {$erroresCampos['precio']}
             </div>
 
@@ -60,7 +58,7 @@ class formularioAcProducto extends Formulario
 
             <div>
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" required>$descripcion</textarea>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
                 {$erroresCampos['descripcion']}
             </div>
 
@@ -73,6 +71,7 @@ class formularioAcProducto extends Formulario
             <div>
                 <label><input type="checkbox" name="disponibilidad" checked> Disponible</label>
                 <label><input type="checkbox" name="ofertado"> En oferta</label>
+                <label><input type="checkbox" name="cocinable"> Cocinable </label>
             </div>
 
             <div>
@@ -122,7 +121,7 @@ class formularioAcProducto extends Formulario
         }
         
         if (count($this->errores) === 0) {
-            $aux = new Producto($nombre, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen, $categoria);
+            $aux = Producto::crea($nombreProducto, $precio, $datos['disponibilidad'], 10.0, $datos['ofertado'], $descripcion, $nombreImagen, $categoria, $datos['cocinable']);
             $producto = Producto::actualiza($aux);
         
             if (!$producto) {

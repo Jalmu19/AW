@@ -53,9 +53,9 @@ class formularioActUsuario extends Formulario
             <div>
                 <input type="radio" name="tipoAvatar" value="galeria"> Elegir de la galería:
                 <select name="avatarGaleria">
-                    <option value="opcion1.png">Opcion1</option>
-                    <option value="opcion2.png">Opcion2</option>
-                    <option value="opcion3.png">Opcion3</option>
+                    <option value="avatar2.png">Opcion1</option>
+                    <option value="avatar3.png">Opcion2</option>
+                    <option value="avatar4.png">Opcion3</option>
                 </select>
             </div>
             <div>
@@ -95,7 +95,7 @@ class formularioActUsuario extends Formulario
         }
 
         if($tipo === 'borrar'){
-            $avatar = "user_icon.png"; //Por defecto
+            $avatar = "avatar1.png"; //Por defecto
         }
         elseif($tipo === 'galeria') {
             $avatar = $datos['avatarGaleria'];

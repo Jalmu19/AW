@@ -3,6 +3,7 @@
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaProductos;
 use BistroFDI\Aplicacion;
+use BistroFDI\productos\Producto;
 
 $app = Aplicacion::getInstance();
 
@@ -13,8 +14,7 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$conn = $app->getConexionBd();
-$result = $conn->query("SELECT nombre, precio, descripcion, imagen, categoria FROM Producto");
+$result = Producto::listarProductos();
 
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');

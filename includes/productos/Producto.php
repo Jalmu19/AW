@@ -54,7 +54,7 @@ class Producto {
     {
              
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT nombre, precio, disponibilidad,imagen FROM Producto ");
+        $query = sprintf("SELECT nombre, precio, categoria, descripcion,imagen FROM Producto WHERE ofertado=true");
         $rs = $conn->query($query);
         $productos = [];
         if ($rs ) {

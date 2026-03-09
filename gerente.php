@@ -4,11 +4,10 @@ require_once __DIR__.'/includes/config.php';
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Gerente";
 
-$rutaAcciones = RUTA_APP .'/includes/tables/';
-$GestionarProducto = $rutaAcciones . "tablaProductos.php";
-$GestionarUsuarios  = $rutaAcciones . "tablaUsuarios.php";
-$GestionarCategorias    = $rutaAcciones . "tablaCategorias.php";
-$VisualizarPedidos    = $rutaAcciones . "tablaHistorialPedidos.php";
+$GestionarProducto = RUTA_APP .'/includes/productos/listar_productos.php';
+$GestionarUsuarios = RUTA_APP .'/includes/users/listar_usuario.php';
+$GestionarCategorias = RUTA_APP .'/includes/categorias/listar_categorias.php';
+$VisualizarPedidos = RUTA_APP .'/includes/pedidos/listar_pedidos.php';
 
 //solo gerentes
 if (!$app->isCurrentUserAdmin()) {

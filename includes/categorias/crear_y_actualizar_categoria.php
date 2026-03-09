@@ -1,8 +1,10 @@
 <?php
-namespace BistroFDI\categorias;
+
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\forms\formularioCategoria;
+use BistroFDI\Aplicacion;
+use BistroFDI\categorias\Categoria;
 
 $app = Aplicacion::getInstance(); 
 

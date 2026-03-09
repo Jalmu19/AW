@@ -1,5 +1,6 @@
 <?php
 namespace BistroFDI\users;
+use BistroFDI\Aplicacion;
 
 class Usuario {
 
@@ -41,7 +42,7 @@ class Usuario {
 
     public static function buscaUsuario($nombreUsuario)
     {
-       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
+              
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Usuarios WHERE nombreUsuario='%s'", 
             $conn->real_escape_string($nombreUsuario)
@@ -74,7 +75,7 @@ class Usuario {
 
     private static function inserta($usuario)
     {
-        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Usuarios(nombreUsuario, email, nombre, apellidos, password, rol, avatar) VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s')",
             $conn->real_escape_string($usuario->nombreUsuario),
@@ -90,7 +91,7 @@ class Usuario {
 
     public static function actualiza($usuario)
     {
-        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Usuarios SET email='%s', nombre='%s', apellidos='%s', password='%s', rol=%d, avatar='%s' WHERE nombreUsuario='%s'",
             $conn->real_escape_string($usuario->email),

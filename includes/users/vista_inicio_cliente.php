@@ -1,8 +1,9 @@
 <?php
-namespace BistroFDI\users;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaProductos;
+use BistroFDI\productos\Producto;
+use BistroFDI\users\Usuario;
 
 $columnas = [
     'imagen'      => 'Foto',

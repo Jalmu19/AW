@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
+use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 
@@ -8,7 +9,7 @@ $contenidoPrincipal = "<h1>Bienvenido a la Gestión del Restaurante</h1>";
 
 //clientes y usuarios no logged in
 if(!$app->isCurrentUserLogged() || $app->isCurrentUserClient()){
-    header('Location: carta.php');
+    header('Location: login.php');
 }
 
 //camareros

@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI\pedidos;
+use BistroFDI\pedidos\Pedido;
 
 
 require_once dirname(__DIR__).'/config.php';

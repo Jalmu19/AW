@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__).'/config.php';
 
+use BistroFDI\Aplicacion;
 use BistroFDI\tables\TablaCobrarPedidos;
 use BistroFDI\pedidos\Pedido;
 

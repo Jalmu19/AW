@@ -1,5 +1,6 @@
 <?php
-namespace BistroFDI\productos;
+namespace BistroFDI;
+use BistroFDI\Aplicacion;
 
 class Producto {
     // Categorias de producto: Entrante(1), Primer plato(2), Segundo plato(3), Postre(4)
@@ -35,7 +36,7 @@ class Producto {
 
     public static function buscaProducto($nombre)
     {
-       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
+             
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Producto WHERE nombre='%s'", 
             $conn->real_escape_string($nombre)
@@ -51,7 +52,7 @@ class Producto {
     }
     public static function listarProductos()
     {
-       // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);       
+             
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT nombre, precio, disponibilidad,imagen FROM Producto ");
         $rs = $conn->query($query);
@@ -84,7 +85,7 @@ class Producto {
 
     private static function inserta($producto)
     {
-        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        // $conn =  (BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Producto(nombre, precio, disponibilidad, iva, ofertado, descripcion, imagen, categoria) VALUES ('%s', %f, %s, %f, %s, '%s', '%s', '%s')",
             $conn->real_escape_string($producto->nombre),
@@ -101,7 +102,7 @@ class Producto {
 
    /* public static function actualiza($producto)
     {
-        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        // $conn =  (BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Producto SET precio=%f, disponibilidad=%s, iva=%f, ofertado=%s, descripcion='%s', imagen='%s', categoria='%s' WHERE nombre='%s'",
             $conn->real_escape_string($producto->precio),
@@ -118,7 +119,7 @@ class Producto {
 
     public static function actualiza($producto)
     {
-        // $conn = new mysqli(BD_HOST, BD_USER, BD_PASS, BD_NAME);
+        // $conn =  (BD_HOST, BD_USER, BD_PASS, BD_NAME);
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Producto SET precio=%f, descripcion='%s', imagen='%s', categoria='%s' WHERE nombre='%s'",
             $conn->real_escape_string($producto->precio),

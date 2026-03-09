@@ -1,5 +1,6 @@
 <?php
 namespace BistroFDI\users;
+use BistroFDI\Aplicacion;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaUsuarios;

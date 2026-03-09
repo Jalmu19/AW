@@ -1,5 +1,6 @@
 <?php
-namespace BistroFDI\categorias;
+namespace BistroFDI;
+use BistroFDI\Aplicacion;
 
 class Categoria {
 

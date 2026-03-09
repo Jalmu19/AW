@@ -3,6 +3,7 @@
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\pedidos\Pedido;
 use BistroFDI\tables\TablaPedidos;
+use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;

@@ -2,7 +2,7 @@
 namespace BistroFDI\forms;
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\users\Pedido;
+use BistroFDI\pedidos\Pedido;
 
 class formularioActPedido extends Formulario
 {

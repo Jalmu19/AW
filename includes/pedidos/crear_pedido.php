@@ -4,6 +4,7 @@ namespace BistroFDI\pedidos;
 //ES EL CARRITO DE LA COMPRA,
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\forms\formularioCrearPedido;
+use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 

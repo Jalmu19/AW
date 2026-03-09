@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI\users;
+namespace BistroFDI\users\Usuario;
 
 require_once dirname(__DIR__).'/config.php';
 

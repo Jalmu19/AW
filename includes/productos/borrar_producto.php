@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI\productos;
+use BistroFDI\productos\Producto;
 
 require_once dirname(__DIR__).'/config.php';
 

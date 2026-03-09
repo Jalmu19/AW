@@ -3,6 +3,7 @@ namespace BistroFDI\categorias;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaCategorias;
+use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 

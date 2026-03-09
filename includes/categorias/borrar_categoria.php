@@ -1,5 +1,5 @@
 <?php
-namespace BistroFDI\categorias;
+use BistroFDI\categorias\Categoria;
 
 require_once dirname(__DIR__).'/config.php';
 

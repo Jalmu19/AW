@@ -3,6 +3,7 @@ namespace BistroFDI\productos;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaProductos;
+use BistroFDI\Aplicacion;
 
 $app = Aplicacion::getInstance();
 

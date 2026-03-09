@@ -1,4 +1,9 @@
 <?php
+
+namespace BistroFDI;
+use BistroFDI\users\Usuario;
+
+
 /**
  * Clase que mantiene el estado global de la aplicación.
  */
@@ -147,7 +152,7 @@ class Aplicacion
 			$bdPass = $this->bdDatosConexion['pass'];
 			$bd = $this->bdDatosConexion['bd'];
 			
-			$conn = new mysqli($bdHost, $bdUser, $bdPass, $bd);
+			$conn = new \mysqli($bdHost, $bdUser, $bdPass, $bd);
 			if ( $conn->connect_errno ) {
 				echo "Error de conexión a la BD ({$conn->connect_errno}):  {$conn->connect_error}";
 				exit();

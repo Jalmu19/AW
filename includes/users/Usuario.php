@@ -144,6 +144,21 @@ class Usuario {
         return $result;
     }
 
+    public static function getTodosUsuarios() {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = "SELECT nombreUsuario, nombre, apellidos, rol FROM Usuarios";
+        $rs = $conn->query($query);
+        
+        $usuarios = [];
+        if ($rs) {
+            while ($fila = $rs->fetch_assoc()) {
+                $usuarios[] = $fila;
+            }
+            $rs->free();
+        }
+        return $usuarios;
+    }
+
     //getters
     public function getNombreUsuario() { return $this->nombreUsuario; }
     public function getNombre() { return $this->nombre; }

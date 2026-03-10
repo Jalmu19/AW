@@ -1,8 +1,9 @@
 <?php
-use BistroFDI\Aplicacion;
 
 require_once dirname(__DIR__).'/config.php';
+use BistroFDI\Aplicacion;
 use BistroFDI\tables\tablaUsuarios;
+use BistroFDI\users\Usuario;
 
 $app = Aplicacion::getInstance();
 
@@ -22,8 +23,7 @@ $contenidoPrincipal = "<h1>Gestión de Usuarios</h1>";
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
-$conn = $app->getConexionBd();
-$result = $conn->query("SELECT nombreUsuario, nombre, apellidos, rol FROM Usuarios");
+$result = Usuario::getTodosUsuarios();
 
 $columnas = [
     'nombreUsuario' => 'Usuario',

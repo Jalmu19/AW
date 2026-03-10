@@ -37,7 +37,7 @@ $columnas = [
 $tituloPagina = "Administración de Productos";
 
 $contenidoPrincipal .= <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
+    <a href="../../gerente.php">← Volver al panel principal</a> 
 EOS;
 
  $contenidoPrincipal .= <<<EOS

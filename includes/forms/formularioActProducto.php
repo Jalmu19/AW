@@ -8,15 +8,29 @@ use BistroFDI\categorias\Categoria;
 class formularioActProducto extends Formulario
 {
     public function __construct() {
-        parent::__construct('formEditarProducto', ['action' => 'actualizar_producto.php',
-                                                    'urlRedireccion' => 'listar_productos.php',
-                                                    'enctype' => 'multipart/form-data']);
+        parent::__construct('formProducto', [
+            'action' => 'actualizar_producto.php', 
+            'urlRedireccion' => 'listar_productos.php',
+            'enctype' => 'multipart/form-data'
+        ]);
     }
     
     protected function generaCamposFormulario(&$datos)
     {
-        // Se reutiliza el nombre de producto introducido previamente o se deja en blanco
-        $nombreProducto = $datos['nombre'] ?? '';
+        $nombreProducto =$datos['nombre'] ?? '';
+        $precio = $datos['precio'] ?? '';
+        $categoria = $datos['categoria'] ?? '';
+        $descripcion = $datos['descripcion'] ?? '';
+        $imagen = $datos['imagen'] ?? '';
+        $disponibilidad = $datos['disponibilidad'] ?? 0;
+        $ofertado = $datos['ofertado'] ?? 0;
+        $cocinable = $datos['cocinable'] ?? 0;
+
+        //valores de los checkboxes según valor del producto anterior
+        $checkedDisp = $disponibilidad ? 'checked' : '';
+        $checkedOfer = $ofertado ? 'checked' : '';
+        $checkedCoci = $cocinable ? 'checked' : '';
+
 
         //categorías 
         $resCategorias = Categoria::listaCategorias();
@@ -29,22 +43,19 @@ class formularioActProducto extends Formulario
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['nombre', 'precio', 'categoria', 'descripcion', 'imagen'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['precio', 'categoria', 'descripcion', 'imagen'], $this->errores, 'span', array('class' => 'error'));
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar producto</legend>
-            <div>
-                <label for="nombre">Nombre:</label>
-                <input id="nombre" type="text" name="nombre" value="$nombreProducto" required>
-                {$erroresCampos['nombre']}
-            </div>
-
+            
+            <input type="hidden" name="nombre" value="$nombreProducto">
+            
             <div>
                 <label for="precio">Precio (€):</label>
-                <input id="precio" type="number" step="0.01" name="precio" required>
+                <input id="precio" type="number" step="0.01" name="precio" value = "$precio" required>
                 {$erroresCampos['precio']}
             </div>
 
@@ -58,7 +69,7 @@ class formularioActProducto extends Formulario
 
             <div>
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+                <textarea id="descripcion" name="descripcion" rows="4" required>$descripcion</textarea>
                 {$erroresCampos['descripcion']}
             </div>
 
@@ -69,9 +80,10 @@ class formularioActProducto extends Formulario
             </div>
 
             <div>
-                <label><input type="checkbox" name="disponibilidad" checked> Disponible</label>
-                <label><input type="checkbox" name="ofertado"> En oferta</label>
-                <label><input type="checkbox" name="cocinable"> Cocinable </label>
+                <label><input type="checkbox" name="disponibilidad" $checkedDisp> Disponible</label>
+                <label><input type="checkbox" name="ofertado" $checkedOfer> En oferta</label>
+                <label><input type="checkbox" name="cocinable" $checkedCoci> Cocinable</label>
+
             </div>
 
             <div>
@@ -79,19 +91,17 @@ class formularioActProducto extends Formulario
             </div>
 
         </fieldset>
-        EOF;
+    EOF;
         return $html;
     }
 
     protected function procesaFormulario(&$datos)
     {
+
         $this->errores = [];
 
-        $nombreProducto = trim($datos['nombre'] ?? '');
-        $nombreProducto = filter_var($nombreProducto, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $nombreProducto || empty($nombreProducto) ) {
-            $this->errores['nombre'] = 'El nombre del producto no puede estar vacío';
-        }
+        $nombreProducto = $datos['nombre'] ?? '';
+
         
         $categoria = trim($datos['categoria'] ?? '');
         $categoria = filter_var($categoria, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -100,8 +110,8 @@ class formularioActProducto extends Formulario
         }
                
         $precio = filter_var(str_replace(',', '.', $datos['precio'] ?? 0), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        if ( ! $categoria || empty($categoria) ) {
-            $this->errores['categoria'] = 'El precio.';
+        if ( ! $precio || empty($precio) ) {
+            $this->errores['precio'] = 'El precio no puede estar vacío.';
         }
 
         $descripcion = trim($datos['descripcion'] ?? '');
@@ -111,7 +121,7 @@ class formularioActProducto extends Formulario
         }
 
         //imagen
-        $nombreImagen = 'producto_default.png'; 
+        $nombreImagen = $datos['imagen'] ?? 'producto_default.png'; 
         if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $nombreImagen = $_FILES['imagen']['name'];
             $rutaDestino = RAIZ_APP . '/img/productos/' . $nombreImagen;
@@ -119,11 +129,16 @@ class formularioActProducto extends Formulario
                 $this->errores['imagen'] = "Error al guardar la imagen en el servidor.";
             }
         }
+
+        $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
+        $ofertado = isset($datos['ofertado']) ? 1 : 0;
+        $cocinable = isset($datos['cocinable']) ? 1 : 0;
+
         
         if (count($this->errores) === 0) {
-            $aux = Producto::crea($nombreProducto, $precio, $datos['disponibilidad'], 10.0, $datos['ofertado'], $descripcion, $nombreImagen, $categoria, $datos['cocinable']);
+            $aux = new Producto($nombreProducto, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
             $producto = Producto::actualiza($aux);
-        
+
             if (!$producto) {
                 $this->errores[] = "El producto no se ha actualizado";
             }

@@ -2,6 +2,7 @@
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\forms\formularioActProducto;
+use BistroFDI\productos\Producto;
 
 //solo el gerente
 if (!$app->isCurrentUserAdmin()) {
@@ -10,25 +11,57 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
+
+$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if(! $nombre){
+    header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
+    exit();
+}
+
+$producto = Producto::buscaProducto($nombre);
+if(!$producto){
+    header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
+    exit();
+}
+
+$datos = [
+'nombre' => $producto->getNombre(),
+'precio' => $producto->getPrecio(),
+'categoria' => $producto->getCategoria(),
+'descripcion' => $producto->getDescripcion(),
+'imagen' => $producto->getImagen(),
+'disponibilidad' => $producto->getDisponibilidad(),
+'ofertado' => $producto->getOfertado(),
+'cocinable' => $producto->getCocinable()
+];
+
+
+
 $form = new FormularioActProducto();
 
-$htmlForm = $form->gestiona();
+$htmlForm = $form->gestiona($datos);    
 
-$tituloPagina = "Actualizar Producto";
+$tituloPagina = "Actualizar producto";
 
-$contenidoPrincipal .= <<<EOS
-    <a href="listar_productos.php">← Volver al listado</a> 
+$contenidoPrincipal = <<<EOS
+<div>
+<div>
+    <a href="listar_productos.php">← Volver al listado</a>
+</div>
+
+<h2>Gestión de Inventario: Actualizar $nombre </h2>
+<p>Rellena todos los campos para actualizar el producto en la carta.</p>
+
+<div>
+    $htmlForm
+</div>
+</div>
 EOS;
 
-$contenidoPrincipal .= <<<EOS
-
-    <h2>Gestión de Inventario: Actualizar Producto</h2>
-    <p>Rellena todos los campos para actualizar el producto en la carta.</p>
-    
-    <div>
-        $htmlForm
-    </div>
-
-EOS;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';
+
+ 
+
+
+

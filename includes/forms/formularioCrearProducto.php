@@ -114,6 +114,7 @@ class FormularioCrearProducto extends Formulario {
 
         $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
         $ofertado = isset($datos['ofertado']) ? 1 : 0;
+        $cocinable = isset($datos['cocinable']) ? 1 : 0;
 
         //imagen
         $nombreImagen = 'producto_default.png'; 
@@ -127,7 +128,7 @@ class FormularioCrearProducto extends Formulario {
 
         //creacion
         if (count($this->errores) === 0) {
-            $exito = Producto::crea($nombre, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen , $categoria, $datos['cocinable]']);
+            $exito = Producto::crea($nombre, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen , $categoria, $cocinable);
             if (!$exito) {
                 $this->errores[] = "Error de base de datos: No se pudo insertar el producto.";
             }

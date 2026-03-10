@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
+use BistroFDI\users\Usuario;
 
 //solo el gerente puede borrar usuarios
 if (!$app->isCurrentUserAdmin()) {

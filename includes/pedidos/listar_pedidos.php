@@ -3,6 +3,7 @@
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaPedidos;
 use BistroFDI\Aplicacion;
+use BistroFDI\pedidos\Pedido;
 
 $app = Aplicacion::getInstance();
 
@@ -13,7 +14,7 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$pedidos = Pedidos::getTodosLosPedidos();
+$pedidos = Pedido::getTodosLosPedidos();
 
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
@@ -39,8 +40,8 @@ $accion = false;
 $num_pedidos = $pedidos.sizeof();
 
 $tabla = new TablaProductos($columnas, $result, $accion);
-$contenidoPrincipal .=  <<<EOS 
-    <a href="index.php">← Volver al inicio</a> 
+$contenidoPrincipal .=  <<<EOS
+  <a href="../../index.php">← Volver al inicio</a> 
 EOS;
 $contenidoPrincipal .= <<<EOS
     Total: $num_pedidos pedidos         

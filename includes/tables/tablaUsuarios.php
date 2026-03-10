@@ -7,6 +7,11 @@ use BistroFDI\users\Usuario;
 class TablaUsuarios extends Tabla {
     
     protected function formateaContenido($campo, $valor, $fila) {
+        if ($campo === 'avatar') {
+            $rutaImg = RUTA_IMGS . 'avatares/' . $valor;
+            return "<img src='$rutaImg' alt='Usuario' style='width: 50px; height: auto;'>";
+        }
+
         if ($campo === 'rol') {
             $roles = [
                 Usuario::CLIENT_ROLE => 'Cliente',
@@ -16,13 +21,14 @@ class TablaUsuarios extends Tabla {
             ];
             return $roles[$valor] ?? 'Desconocido';
         }
+
         return parent::formateaContenido($campo, $valor, $fila);
     }
 
     protected function generaAcciones($fila) {
         $id = $fila['nombreUsuario'];
-        $urlEditar = RUTA_APP."/users/actualizar_usuario.php?id=$id";
-        $urlBorrar = RUTA_APP."/users/borrar_usuario.php?id=$id";
+        $urlEditar = "actualizar_usuario.php?id=$id";
+        $urlBorrar = "borrar_usuario.php?id=$id";
         
         return <<<EOS
             <a href="$urlEditar">Editar</a>

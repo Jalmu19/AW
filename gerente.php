@@ -48,7 +48,7 @@ $contenidoPrincipal = <<<EOS
 
         <form action= "$GestionarCategorias" method="get">
             <button type="submit">
-                Gestionar las categoráas
+                Gestionar las categorías
             </button>
         </form>
 

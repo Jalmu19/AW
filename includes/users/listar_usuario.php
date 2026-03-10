@@ -26,6 +26,7 @@ if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 $result = Usuario::getTodosUsuarios();
 
 $columnas = [
+    'avatar'        => 'Avatar',
     'nombreUsuario' => 'Usuario',
     'nombre'        => 'Nombre',
     'rol'           => 'Rango'
@@ -37,8 +38,8 @@ $tabla = new TablaUsuarios($columnas, $result, $accion);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Administración de Usuarios";
-$contenidoPrincipal .=  <<<EOS 
-    <a href="index.php">← Volver al inicio</a> 
+$contenidoPrincipal .= <<<EOS
+    <a href="../../index.php">← Volver al inicio</a> 
 EOS;
 $contenidoPrincipal .= $htmlTabla;
 

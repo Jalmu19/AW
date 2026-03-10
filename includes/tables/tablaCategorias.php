@@ -15,7 +15,7 @@ class TablaCategorias extends Tabla {
     protected function generaAcciones($fila) {
         $id = urlencode($fila['nombre']);
         
-        $urlEditar = "actualizar_categoria.php?id=$id";
+        $urlEditar = "crear_y_actualizar_categoria.php?id=$id";
         $urlBorrar = "borrar_categoria.php?id=$id";
         
         return <<<EOS

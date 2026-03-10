@@ -32,20 +32,24 @@ $columnas = [
     'descripcion' => 'Descripción'
 ];
 
-$accion = true;
 
-$tabla = new TablaProductos($columnas, $result, $accion);
-$contenidoPrincipal .=  <<<EOS 
-    <a href="index.php">← Volver al inicio</a> 
+
+$contenidoPrincipal .=  <<<EOS
+    <a href="../../index.php">← Volver al inicio</a> 
 EOS;
 $contenidoPrincipal .= <<<EOS
-    <form action="crear_categoria.php" method="get">
+    <form action="crear_y_actualizar_categoria.php" method="get">
         <button type="submit">
            Añadir Categoría
         </button>
     </form>
 EOS;
+
+
+$accion = true;
+$tabla = new TablaCategorias($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
 $tituloPagina = "Administración de Categorías";
+
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

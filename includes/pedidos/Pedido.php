@@ -1,5 +1,6 @@
 <?php
 namespace BistroFDI\pedidos;
+use BistroFDI\Aplicacion;
 
 class Pedido {
 
@@ -285,9 +286,9 @@ class Pedido {
         $pedidos = [];
         if ($rs) {
             while ($f = $rs->fetch_assoc()) {
-                $sqlProd = sprintf("SELECT pp.nombre, pp.cantidad, pp.preparado FROM Pedido_Producto pp
-                    JOIN Producto prod ON pp.nombre = prod.nombre
-                    WHERE pp.num_pedido = %d AND pp.fecha_hora = '%s' AND prod.cocinable = 1", 
+                $sqlProd = sprintf("SELECT Pedido_Producto.nombre, Pedido_Producto.cantidad, Pedido_Producto.preparado FROM Pedido_Producto
+                    JOIN Producto ON Pedido_Producto.nombre = Producto.nombre
+                    WHERE Pedido_Producto.num_pedido = %d AND Pedido_Producto.fecha_hora = '%s' AND Producto.cocinable = 1", 
                     $f['num_pedido'], $conn->real_escape_string($f['fecha_hora']));
                 
                 $rsP = $conn->query($sqlProd);

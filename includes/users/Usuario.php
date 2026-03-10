@@ -146,7 +146,7 @@ class Usuario {
 
     public static function getTodosUsuarios() {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = "SELECT nombreUsuario, nombre, apellidos, rol FROM Usuarios";
+        $query = "SELECT avatar, nombreUsuario, nombre, apellidos, rol FROM Usuarios";
         $rs = $conn->query($query);
         
         $usuarios = [];

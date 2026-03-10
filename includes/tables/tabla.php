@@ -62,11 +62,6 @@ abstract class Tabla {
 
 
     protected function formateaContenido($campo, $valor, $fila) {
-        if ($campo === 'imagen') {
-            $ruta = RUTA_APP . '/img/productos/' . $fila['imagen'];
-            return "<img src='$ruta' alt='Foto' style='width:80px; height:auto;'>";
-        }
-
         return htmlspecialchars($valor);
     }
 

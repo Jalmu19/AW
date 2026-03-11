@@ -1,6 +1,8 @@
 <?php
+
+namespace BistroFDI\tables;
 require_once dirname(__DIR__).'/config.php';
-require_once RAIZ_APP.'/includes/tables/tabla.php';
+
 
 class TablaCocinero extends Tabla {
 

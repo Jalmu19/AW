@@ -2,6 +2,7 @@
 require_once __DIR__.'/includes/config.php';
 use BistroFDI\Aplicacion;
 use BistroFDI\pedidos\Pedido;
+use BistroFDI\tables\TablaCocinero;
 
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Cocinero";
@@ -32,8 +33,6 @@ if (isset($_POST['producto_preparado'])) {
 }
 
 
-require_once RAIZ_APP . '/includes/tables/tablaCocinero.php';
-
 $columnas = [
     'num_pedido' => 'Número del Pedido',
     'productos' => 'Productos'
@@ -50,8 +49,14 @@ $tabla = $tablaCocinero->genera();
 
 // Mostramos en la plantilla
 $contenidoPrincipal = <<<EOS
-<h1>Pedidos</h1>
-$tabla
+<div>
+    <a href="index.php" class="btn-volver">← Volver al Inicio</a>
+</div>
+
+<div>
+    <h1>Pedidos</h1>
+    $tabla
+</div>
 EOS;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

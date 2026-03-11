@@ -12,8 +12,8 @@ function perfil() {
         $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
 
         $html = "<div>
-            Hola, $nombre 
-            <a href='perfil.php'><img src='$rutaImg' width='40'></a>
+            Hola, 
+            <a href='miCuenta.php'>$nombre<img src='$rutaImg' width='40'></a>
             <a href='logout.php'>Salir</a>
         </div>";
     } else {

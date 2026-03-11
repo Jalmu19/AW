@@ -20,7 +20,13 @@ if($app->isCurrentUserClient()){
 
 //camareros
 if ($app->isCurrentUserWaiter() || $app->isCurrentUserCook() || $app->isCurrentUserAdmin()) {
-    $contenidoPrincipal .= <<<EOS
+$contenidoPrincipal .= <<<EOS
+        <form action="carta.php" method="get">
+            <button type="submit">
+                Acceder como Cliente
+            </button>
+        </form>   
+
         <form action="camarero.php" method="get">
             <button type="submit">
                 Acceder como Camarero

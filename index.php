@@ -15,7 +15,7 @@ if(!$app->isCurrentUserLogged()){
 
 //clientes
 if($app->isCurrentUserClient()){
-    header('Location: z.php');
+    header('Location: carta.php');
 }
 
 //camareros

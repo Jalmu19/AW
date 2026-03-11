@@ -44,10 +44,18 @@ $columnas = [
     'productos' => 'Contenido'
 ];
 
+
+$contenidoPrincipal .= <<<EOS
+    <div>
+        <a href="../../camarero.php">← Volver al Panel</a>
+    </div>
+EOS;
+
+
 $pedidos = Pedido::getPedidosParaEntregarLocal();
 $tabla = new TablaEntregarPedidos($columnas, $pedidos, true);
 
 $contenidoPrincipal .= $tabla->genera();
-$contenidoPrincipal .= '<p><a href="camarero.php">← Volver al Panel</a></p>';
+
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

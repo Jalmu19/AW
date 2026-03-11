@@ -45,15 +45,16 @@ $columnas = [
     'productos' => 'Productos que faltan'
 ];
 
-$result = Pedido::pedidosParaCompletar();
-
-$tabla = new TablaCompletarPedidos($columnas, $result, true);
 
 $contenidoPrincipal .= <<<EOS
     <div>
-        <a href="camarero.php">← Volver al Panel</a>
+        <a href="../../camarero.php">← Volver al Panel</a>
     </div>
 EOS;
+
+$result = Pedido::pedidosParaCompletar();
+
+$tabla = new TablaCompletarPedidos($columnas, $result, true);
 
 $contenidoPrincipal .= $tabla->genera();
 

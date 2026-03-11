@@ -1,16 +1,21 @@
 <?php
 
-require_once dirname(__DIR__).'/config.php';
-use BistroFDI\tables\tablaProductos;
+require_once __DIR__.'/includes/config.php';
+use BistroFDI\Aplicacion;
+use BistroFDI\tables\TablaProductos;
 use BistroFDI\productos\Producto;
-use BistroFDI\users\Usuario;
+
+$app = Aplicacion::getInstance();
 
 $columnas = [
-    'imagen'      => 'Foto',
-    'nombre'      => 'Nombre',
-    'precio'      => 'Precio'
+    'imagen' => 'Foto',
+    'nombre' => 'Nombre',
+    'precio' => 'Precio'
 ];
-$tabla = new TablaProductos($columnas, Producto::listarProductos(), False);
+
+$tabla = new TablaProductos($columnas, Producto::listarProductos(), false);
+
+$htmlTabla = $tabla->genera();
 
 $tituloPagina = 'Bienvenido a Bistro FDI';
 
@@ -18,7 +23,7 @@ $contenidoPrincipal = <<<EOS
 <h1>Bistro FDI</h1>
 <fieldset>
     <legend>Carta</legend>
-    <?=$$tabla?>
+    $htmlTabla
 </fieldset>
 EOS;
 

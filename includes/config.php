@@ -1,5 +1,6 @@
 <?php
 
+use BistroFDI\Aplicacion;
 /**
  * Parámetros de conexión a la BD
  */

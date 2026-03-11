@@ -28,11 +28,11 @@ INSERT INTO Pedido VALUES('15-02-2025 12:24:00', 3,'a domicilio' , 30.20, 'Cocin
 INSERT INTO Pedido VALUES('16-02-2025 20:46:00', 4,'a domicilio' , 7.40, 'Cocinando', 'jose', 'juan', 'silvia');
 INSERT INTO Pedido VALUES('17-02-2025 19:37:00', 5, 'a domicilio', 10.50, 'Cocinando', 'jose', 'ana', 'silvia');
 
-INSERT INTO Pedido_Producto VALUES('pasta', '12-02-2025 22:00:00', 1, false);
-INSERT INTO Pedido_Producto VALUES('pollo', '13-02-2025 15:02:00', 2, false);
-INSERT INTO Pedido_Producto VALUES('brownie', '15-02-2025 12:24:00', 3, false);
-INSERT INTO Pedido_Producto VALUES('pollo', '16-02-2025 20:46:00', 4, false);
-INSERT INTO Pedido_Producto VALUES('salmon', '17-02-2025 19:37:00', 5, false);
+INSERT INTO Pedido_Producto VALUES('pasta', 1, '12-02-2025 22:00:00', 1, false);
+INSERT INTO Pedido_Producto VALUES('pollo', 2, '13-02-2025 15:02:00', 2, false);
+INSERT INTO Pedido_Producto VALUES('brownie', 1, '15-02-2025 12:24:00', 3, false);
+INSERT INTO Pedido_Producto VALUES('pollo', 1, '16-02-2025 20:46:00', 4, false);
+INSERT INTO Pedido_Producto VALUES('salmon', 1, '17-02-2025 19:37:00', 5, false);
 
 INSERT INTO Cocinero_Producto VALUES('silvia', 'pasta');
 INSERT INTO Cocinero_Producto VALUES('silvia', 'pollo');

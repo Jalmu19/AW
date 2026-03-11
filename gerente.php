@@ -10,12 +10,7 @@ $GestionarUsuarios = RUTA_APP .'/includes/users/listar_usuario.php';
 $GestionarCategorias = RUTA_APP .'/includes/categorias/listar_categorias.php';
 $VisualizarPedidos = RUTA_APP .'/includes/pedidos/listar_pedidos.php';
 
-/*
-$GestionarProducto = RUTA_APP . '/AW/includes/productos/listar_productos.php';
-$GestionarUsuarios = RUTA_APP . '/AW/includes/users/listar_usuario.php';
-$GestionarCategorias = RUTA_APP . '/AW/includes/categorias/listar_categorias.php';
-$VisualizarPedidos = RUTA_APP . '/AW/includes/pedidos/listar_pedidos.php';
-*/
+
 //solo gerentes
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permisos para acceder.');

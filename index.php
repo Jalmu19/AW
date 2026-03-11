@@ -15,24 +15,19 @@ if(!$app->isCurrentUserLogged()){
 
 //clientes
 if($app->isCurrentUserClient()){
-    header('Location: carta.php');
+    header('Location: z.php');
 }
 
 //camareros
 if ($app->isCurrentUserWaiter() || $app->isCurrentUserCook() || $app->isCurrentUserAdmin()) {
     $contenidoPrincipal .= <<<EOS
-        <form action="carta.php" method="get">
-            <button type="submit">
-                Acceder como Cliente
-            </button>
-        </form>
-
         <form action="camarero.php" method="get">
             <button type="submit">
                 Acceder como Camarero
             </button>
         </form>
-    EOS;
+EOS;
+
 }
 
 //cocineros
@@ -43,7 +38,7 @@ if ($app->isCurrentUserCook() || $app->isCurrentUserAdmin()) {
                 Acceder como Cocinero
             </button>
         </form>
-    EOS;
+EOS;
 }
 
 //gerente
@@ -54,7 +49,7 @@ if ($app->isCurrentUserAdmin()) {
                 Acceder como Gerente
             </button>
         </form>
-    EOS;
+EOS;
 }
 
 

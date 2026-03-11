@@ -10,6 +10,8 @@ class Usuario {
     public const COOK_ROLE = 3;
     public const ADMIN_ROLE = 4;
 
+
+
     private $nombreUsuario;
     private $email;
     private $nombre;
@@ -25,7 +27,7 @@ class Usuario {
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->password = $hash;
-        $this->rol = (int)$rol;
+        $this->rol = $rol;
         $this->avatar = $avatar;
     }
 

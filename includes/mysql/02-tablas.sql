@@ -12,7 +12,7 @@ CREATE TABLE `Usuarios` (
     `apellidos` varchar(50) NOT NULL,
     `email` varchar(20) NOT NULL,
     `password` varchar(80) NOT NULL,
-    `rol` enum('Cliente','Camarero','Cocinero','Gerente') NOT NULL,
+    `rol` int NOT NULL,
     `avatar` varchar(100) NOT NULL
 
     PRIMARY KEY ( `nombreUsuario`)
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `Pedido` (
     `camarero` varchar(10) NOT NULL,
     `cocinero` varchar(10) NOT NULL,
    
-    KEY `num_pedido` (`num_pedido`),
+    PRIMARY KEY (`fecha_hora` ,`num_pedido`),
     FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`),
     FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`),
     FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`)

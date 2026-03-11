@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\tables\tablaPedidos;
+use BistroFDI\tables\TablaHistorialPedidos;
 use BistroFDI\Aplicacion;
 use BistroFDI\pedidos\Pedido;
 
@@ -26,7 +26,7 @@ if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
 $columnas = [
-    'num_pedido'  => 'Num de pedido',
+    'num_pedido'  => 'Pedido',
     'fecha_hora' => 'Fecha y hora',
     'tipo'    => 'Tipo',
     'total'   => 'Precio total',
@@ -35,17 +35,17 @@ $columnas = [
     'cocinero' => 'Cocinero'
 ];
 
+
+$contenidoPrincipal .=  <<<EOS
+<div>
+  <a href="../../index.php">← Volver al inicio</a> 
+</div>
+EOS;
+
+
 $accion = false;
 
-$num_pedidos = $pedidos.sizeof();
-
-$tabla = new TablaProductos($columnas, $result, $accion);
-$contenidoPrincipal .=  <<<EOS
-  <a href="../../index.php">← Volver al inicio</a> 
-EOS;
-$contenidoPrincipal .= <<<EOS
-    Total: $num_pedidos pedidos         
-EOS;
+$tabla = new TablaHistorialPedidos($columnas, $pedidos, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
 $tituloPagina = "Visualización de Pedidos";

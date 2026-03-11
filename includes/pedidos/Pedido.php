@@ -385,6 +385,54 @@ class Pedido {
     return $productos;
 }
 
+
+public static function getPedidosGerente(): array
+{
+    $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
+
+    // Estados que el Gerente debe visualizar
+    $pendientes = [
+        self::ESTADO_RECIBIDO,
+        self::ESTADO_PREPARACION,
+        self::ESTADO_COCINANDO,
+        self::ESTADO_LISTO_COCINA,
+        self::ESTADO_TERMINADO
+    ];
+    $in = "'" . implode("','", $pendientes) . "'";
+
+    $sql = "
+        SELECT 
+            p.num_pedido,
+            p.fecha_hora,
+            p.estado,
+            p.cocinero,
+            u.avatar AS avatar_cocinero
+        FROM Pedido p
+        LEFT JOIN Usuarios u
+               ON p.cocinero = u.nombreUsuario
+        WHERE p.estado IN ($in)
+        ORDER BY p.fecha_hora DESC
+    ";
+
+    $rs = $conn->query($sql);
+    $out = [];
+
+    if ($rs) {
+        while ($f = $rs->fetch_assoc()) {
+            $out[] = [
+                'num_pedido'      => (int)$f['num_pedido'],
+                'fecha_hora'      => $f['fecha_hora'],
+                'estado'          => $f['estado'],
+                'cocinero'        => $f['cocinero'],        
+                'avatar_cocinero' => $f['avatar_cocinero'], 
+            ];
+        }
+        $rs->free();
+    }
+
+    return $out;
+}
+
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
     public static function terminarCocinarPedido($num_pedido, $fecha_hora) {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_LISTO_COCINA);

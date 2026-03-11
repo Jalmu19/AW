@@ -3,7 +3,7 @@ namespace BistroFDI\tables;
 
 require_once __DIR__ . '/tabla.php';
 
-class TablaPedidosGerenteSimple extends Tabla
+class TablaPedidosGerente extends Tabla
 {
     protected function formateaContenido($campo, $valor, $fila)
     {
@@ -46,7 +46,7 @@ class TablaPedidosGerenteSimple extends Tabla
              . "?num_pedido=" . urlencode($fila['num_pedido'])
              . "&fecha_hora=" . urlencode($fila['fecha_hora']);
 
-        return "$url>Ver detalle</a>";
+        return '<a href="' . htmlspecialchars($url, ENT_QUOTES) . '">Ver detalle</a>';
     }
 }
 ``

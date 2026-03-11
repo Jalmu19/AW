@@ -8,7 +8,7 @@ $tituloPagina = "Gestión de Gerente";
 $GestionarProducto = RUTA_APP .'/includes/productos/listar_productos.php';
 $GestionarUsuarios = RUTA_APP .'/includes/users/listar_usuario.php';
 $GestionarCategorias = RUTA_APP .'/includes/categorias/listar_categorias.php';
-$VisualizarPedidos = RUTA_APP .'/includes/tables/tablaPedidosGerente.php';
+$VisualizarPedidos = RUTA_APP .'/includes/acciones_gerente/list_ped_ger.php';
 
 
 //solo gerentes

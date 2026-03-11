@@ -254,6 +254,7 @@ class Pedido {
     //(cocinero): productos para cocinar de los pedidos
     public static function getPedidosCocinero() {
         $conn = Aplicacion::getInstance()->getConexionBd();
+        
         $sql = "SELECT num_pedido, fecha_hora FROM Pedido 
                 WHERE estado IN ('".self::ESTADO_PREPARACION."', '".self::ESTADO_COCINANDO."')";
         $rs = $conn->query($sql);
@@ -309,7 +310,7 @@ class Pedido {
     public static function marcarProductoPedido($nombre_producto, $num_pedido, $fecha_hora){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $sql1 = sprintf(
+        $sql = sprintf(
             "UPDATE Pedido_Producto 
             SET preparado = 1 
             WHERE nombre='%s' AND num_pedido=%d AND fecha_hora='%s'",
@@ -317,17 +318,7 @@ class Pedido {
             $num_pedido,
             $conn->real_escape_string($fecha_hora)
         );
-        $conn->query($sql1);
-
-        $sql2 = sprintf(
-            "UPDATE Pedido 
-            SET estado='%s' 
-            WHERE num_pedido=%d AND fecha_hora='%s'",
-            Pedido::ESTADO_COCINANDO,
-            $num_pedido,
-            $conn->real_escape_string($fecha_hora)
-        );
-        $conn->query($sql2);
+        $conn->query($sql);
 
     }
 
@@ -339,11 +330,12 @@ class Pedido {
         $sql = sprintf(
             "UPDATE Pedido 
             SET estado='%s', cocinero='%s'
-            WHERE num_pedido=%d AND fecha_hora='%s'",
+            WHERE num_pedido=%d AND fecha_hora='%s' AND estado='%s'",
             self::ESTADO_COCINANDO,
             $conn->real_escape_string($cocinero),
             $num_pedido,
-            $conn->real_escape_string($fecha_hora)
+            $conn->real_escape_string($fecha_hora),
+            self::ESTADO_PREPARACION // Solo se puede aceptar si estaba en preparación
         );
 
         return $conn->query($sql);

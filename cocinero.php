@@ -18,7 +18,7 @@ if (!$app->isCurrentUserCook() && !$app->isCurrentUserAdmin()) {
 if (isset($_POST['aceptar_pedido'])) {
     $numPedido = (int) $_POST['num_pedido'];
     $fechaHora = $_POST['fecha_hora'];
-    $cocinero = $app->usuarioLogueado()->getNombreUsuario();
+    $cocinero = $app->getCurrentUserName();
 
     Pedido::aceptarPedido($numPedido, $fechaHora, $cocinero);
     header("Location: ".$_SERVER['PHP_SELF']);

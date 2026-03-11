@@ -321,7 +321,6 @@ class Pedido {
         $conn->query($sql);
 
     }
-
     
     public static function aceptarPedido($num_pedido, $fecha_hora, $cocinero)
     {
@@ -340,6 +339,51 @@ class Pedido {
 
         return $conn->query($sql);
     }
+
+    public static function getEstadoProductosPedido(int $num_pedido, string $fecha_hora): array
+{
+    $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
+
+    $sql = sprintf(
+        "SELECT 
+            pp.nombre,
+            prod.cocinable,
+            pp.preparado
+         FROM Pedido_Producto pp
+         JOIN Producto prod ON pp.nombre = prod.nombre
+         WHERE pp.num_pedido = %d
+           AND pp.fecha_hora = '%s'
+         ORDER BY pp.nombre ASC",
+        $num_pedido,
+        $conn->real_escape_string($fecha_hora)
+    );
+
+    $rs = $conn->query($sql);
+    $productos = [];
+
+    if ($rs) {
+        while ($f = $rs->fetch_assoc()) {
+
+            $estado = '';
+
+            if ((int)$f['cocinable'] === 1) {
+                // Es cocinable → su estado depende de 'preparado'
+                $estado = ((int)$f['preparado'] === 1) ? 'Preparado' : 'Pendiente';
+            } else {
+                // No cocinable → no aplica preparado
+                $estado = 'No cocinable';
+            }
+
+            $productos[] = [
+                'nombre' => $f['nombre'],
+                'estado' => $estado
+            ];
+        }
+        $rs->free();
+    }
+
+    return $productos;
+}
 
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
     public static function terminarCocinarPedido($num_pedido, $fecha_hora) {

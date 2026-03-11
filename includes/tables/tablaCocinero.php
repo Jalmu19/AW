@@ -40,16 +40,31 @@ class TablaCocinero extends Tabla {
 
         $numPedido = $fila['num_pedido'];
         $fechaHora = $fila['fecha_hora'];
+        $estado = $fila['estado'];
+
+        $html = "";
+
+        // Botón para quedarse con el pedido, solo si está en estado "en preparación"
+        if($estado === 'En preparacion'){
+            $html .= "
+            <form method='POST'>
+                <input type='hidden' name='num_pedido' value='$numPedido'>
+                <input type='hidden' name='fecha_hora' value='$fechaHora'>
+                <button type="submit">Aceptar pedido</button>
+            </form>
+            ";
+        }
 
         // Añadimos un botón para terminar el pedido una vez que el cocinero vea que ha
         // marcado todos los productos que tenía por cocinar
-        return '
-            <form method="POST">
-                <input type="hidden" name="pedido_terminado" value="'.$numPedido.'">
-                <input type="hidden" name="fecha_hora" value="'.$fechaHora.'">
-                <button type="submit">Terminar pedido</button>
-            </form>
+        $html .= "
+        <form method="POST">
+            <input type="hidden" name="pedido_terminado" value='$numPedido'>
+            <input type="hidden" name="fecha_hora" value='$fechaHora'>
+            <button type="submit">Terminar pedido</button>
+        </form>
+        ";
 
-        ';
+        return $html;
     }
 }

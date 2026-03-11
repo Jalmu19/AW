@@ -331,6 +331,24 @@ class Pedido {
 
     }
 
+    
+    public static function aceptarPedido($num_pedido, $fecha_hora, $cocinero)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $sql = sprintf(
+            "UPDATE Pedido 
+            SET estado='%s', cocinero='%s'
+            WHERE num_pedido=%d AND fecha_hora='%s'",
+            self::ESTADO_COCINANDO,
+            $conn->real_escape_string($cocinero),
+            $num_pedido,
+            $conn->real_escape_string($fecha_hora)
+        );
+
+        return $conn->query($sql);
+    }
+
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
     public static function terminarCocinarPedido($num_pedido, $fecha_hora) {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_LISTO_COCINA);

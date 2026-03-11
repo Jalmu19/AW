@@ -13,6 +13,18 @@ if (!$app->isCurrentUserCook() && !$app->isCurrentUserAdmin()) {
     exit();
 }
 
+
+// Si se acepta un pedido
+if (isset($_POST['aceptar_pedido'])) {
+    $numPedido = (int) $_POST['num_pedido'];
+    $fechaHora = $_POST['fecha_hora'];
+    $cocinero = $app->usuarioLogueado()->getNombreUsuario();
+
+    Pedido::aceptarPedido($numPedido, $fechaHora, $cocinero);
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+}
+
 // Si se marca un pedido como terminado
 if (isset($_POST['pedido_terminado'])) {
     $numPedido = $_POST['pedido_terminado'];

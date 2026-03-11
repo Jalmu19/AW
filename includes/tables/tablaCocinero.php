@@ -55,8 +55,8 @@ class TablaCocinero extends Tabla {
             ";
         }
 
-        // Añadimos un botón para terminar el pedido una vez que el cocinero vea que ha
-        // marcado todos los productos que tenía por cocinar
+        // Añadimos un botón para poner el pedido a "listo cocina" una vez que 
+        // el cocinero ha marcado todos los productos que tenía por cocinar
         $html .= "
         <form method="POST">
             <input type="hidden" name="pedido_terminado" value='$numPedido'>

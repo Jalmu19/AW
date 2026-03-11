@@ -25,7 +25,7 @@ if (isset($_POST['aceptar_pedido'])) {
     exit();
 }
 
-// Si se marca un pedido como terminado
+// Si se marca un pedido como listo cocina
 if (isset($_POST['pedido_terminado'])) {
     $numPedido = $_POST['pedido_terminado'];
     $fechaHora = $_POST['fecha_hora'];

@@ -50,6 +50,7 @@ class Producto {
         }
         return false;
     }
+
     public static function listarProductos()
     {
              
@@ -65,6 +66,24 @@ class Producto {
             return $productos;
         }
         return false;
+    }
+
+    public static function listarPorCategoria($categoria)
+    {
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        
+        $query = sprintf("SELECT * FROM Producto WHERE categoria = '%s' AND disponibilidad = 1", $conn->real_escape_string($categoria));
+        
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while ($fila = $rs->fetch_assoc()) {
+                $productos[] = $fila;
+            }
+            $rs->free();
+        }
+        return $productos;
     }
 
     //función crear

@@ -7,7 +7,8 @@ use BistroFDI\productos\Producto;
 
 $app = Aplicacion::getInstance();
 
-require_once __DIR__.'/includes/config.php';
+//filtro
+$categoriaSeleccionada = $_GET['cat'] ?? 'Todos';
 
 $columnas = [
     'imagen' => 'Foto',
@@ -15,19 +16,34 @@ $columnas = [
     'precio' => 'Precio'
 ];
 
-$tabla = new TablaProductos($columnas, Producto::listarProductos(), false);
 
+if ($categoriaSeleccionada == 'Todos') {
+    $productos = Producto::listarProductos();
+} else {
+    $productos = Producto::listarPorCategoria($categoriaSeleccionada);
+}
+
+$tabla = new TablaProductos($columnas, $productos, false);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = 'Bienvenido a Bistro FDI';
 
-$tabla = new TablaProductos($columnas, Producto::listarProductos(), false);
-$tabla_generada = $tabla->genera();
+$filtrosHtml = <<<HTML
+<div>
+    <a href="carta.php?cat=Todos">Todos</a>
+    <a href="carta.php?cat=entrante">Entrantes</a>
+    <a href="carta.php?cat=primer plato">Primeros</a>
+    <a href="carta.php?cat=segundo plato">Segundos</a>
+    <a href="carta.php?cat=postre">Postres</a>
+    <a href="carta.php?cat=bebida">Bebidas</a>
+</div>
+HTML;
 
 $contenidoPrincipal = <<<EOS
 <h1>Bistro FDI</h1>
+$filtrosHtml
 <fieldset>
-    <legend>Carta</legend>
+    <legend>Carta - $categoriaSeleccionada</legend>
     $htmlTabla
 </fieldset>
 EOS;

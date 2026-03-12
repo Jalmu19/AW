@@ -1,8 +1,6 @@
 <?php
 namespace BistroFDI\tables;
 
-require_once __DIR__ . '/tabla.php';
-
 class TablaPedidosGerente extends Tabla
 {
     protected function formateaContenido($campo, $valor, $fila)

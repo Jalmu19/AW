@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/config.php';
 
 use BistroFDI\Aplicacion;
 use BistroFDI\pedidos\Pedido;
-use BistroFDI\tables\Tabla;
+use BistroFDI\tables\TablaEstProdPed;
 
 $app = Aplicacion::getInstance();
 
@@ -22,11 +22,7 @@ if ($num <= 0 || $fh === '') {
 } else {
 
     $productos = Pedido::getEstadoProductosPedido($num, $fh); 
-    $columnas = [
-        'nombre' => 'Producto',
-        'estado' => 'Estado'
-    ];
-    $tabla = new Tabla($columnas, $productos, false);
+    $tabla = new TablaEstProdPed($productos);
     $contenidoPrincipal = $tabla->genera();
 }
 

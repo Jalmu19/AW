@@ -9,8 +9,7 @@ class TablaPedidosGerente extends Tabla
 
             case 'num_pedido':
                 $num = htmlspecialchars($fila['num_pedido']);
-                $fh  = htmlspecialchars($fila['fecha_hora'] ?? '');
-                return $num . " (" . $fh . ")";
+                return $num;
 
             case 'estado':
                 $estado = htmlspecialchars($valor);

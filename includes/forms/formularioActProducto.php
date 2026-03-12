@@ -33,11 +33,13 @@ class formularioActProducto extends Formulario
 
 
         //categorías 
+        $categoriaActual = $datos['categoria'] ?? '';
         $resCategorias = Categoria::listaCategorias();
         $optionsCategorias = "<option value=''>Seleccione una categoría</option>";
         if ($resCategorias) {
             foreach ($resCategorias as $cat) {
-                $optionsCategorias .= "<option value='{$cat}'>{$cat}</option>";
+                $selected = ($cat == $categoriaActual) ? 'selected' : ''; 
+                $optionsCategorias .= "<option value='{$cat}' $selected>{$cat}</option>";
             }
         }
 
@@ -102,7 +104,11 @@ class formularioActProducto extends Formulario
 
         $nombreProducto = $datos['nombre'] ?? '';
 
-        
+        $productoActual = Producto::buscaProducto($nombreProducto);
+        if (!$productoActual) {
+            $this->errores[] = "El producto no existe.";
+        return;
+    }
         $categoria = trim($datos['categoria'] ?? '');
         $categoria = filter_var($categoria, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $categoria || empty($categoria) ) {
@@ -121,7 +127,7 @@ class formularioActProducto extends Formulario
         }
 
         //imagen
-        $nombreImagen = $datos['imagen'] ?? 'producto_default.png'; 
+        $nombreImagen = $productoActual->getImagen(); // Por defecto mantenemos la que ya tiene
         if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $nombreImagen = $_FILES['imagen']['name'];
             $rutaDestino = RAIZ_APP . '/img/productos/' . $nombreImagen;
@@ -130,13 +136,15 @@ class formularioActProducto extends Formulario
             }
         }
 
+        $iva = $productoActual->getIva();
+
         $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
         $ofertado = isset($datos['ofertado']) ? 1 : 0;
         $cocinable = isset($datos['cocinable']) ? 1 : 0;
 
         
         if (count($this->errores) === 0) {
-            $aux = new Producto($nombreProducto, $precio, $disponibilidad, 10.0, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
+            $aux = new Producto($nombreProducto, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
             $producto = Producto::actualiza($aux);
 
             if (!$producto) {

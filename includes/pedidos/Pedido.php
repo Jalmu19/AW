@@ -131,6 +131,79 @@ class Pedido {
         return $lista;
     }
 
+
+     //último pedido en estado nuevo
+    public function pedidosNuevosUsuario($nombreUsuario, $tipo){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = sprintf("SELECT num_pedido, fecha_hora, estado 
+                FROM Pedido 
+                WHERE cliente = '%s' AND estado = '%s'
+                ORDER BY fecha_hora DESC LIMIT 1", $nombreUsuario, self::NUEVO);
+
+        $resultado = $conn->query($query);
+
+        //si existe un pedido nuevo
+        if($resultado && $resultado->num_rows > 0){
+            $pedidoActual = $resultado->fetch_assoc();
+            $fecha_hora = $pedidoActual['fecha_hora'];
+            $num_pedido = $pedidoActual['num_pedido'];
+        }
+        else{ //si no, creamos uno
+            $num_pedido = mt_rand(100000, 999999); //numero aleatorio
+            $fecha_hora = date('Y-m-d H:i:s');
+            self::crea($fecha_hora,$num_pedido, $tipo, 0.0, self::NUEVO , $nombreUsuario, []);
+        }
+
+        return [$fecha_hora, $num_pedido];
+    }
+
+
+    public static function insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidad){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = sprintf("SELECT cantidad FROM Pedido_Producto 
+                        WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
+                        $nombreProduco, $fecha_hora, $num_pedido);
+
+        $res = $conn->query($query);
+        //si ya existe el producto, aumentamos la cantidad
+        if($res && $res->num_rows > 0){
+            $query2 = sprintf("UPDATE Pedido_Producto SET cantidad = cantidad + %d
+                               WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
+                               $cantidad, $nombreProducto, $fecha_hora, $num_pedido);
+            $conn->query($query2);
+        }
+        else{
+            $query3 = sprintf("INSERT INTO Pedido_Producto (nombre, cantidad, fecha_hora, num_pedido, preparado) 
+                                VALUES ('%s', %d, '%s', %d, 0)",
+                                $nombreProducto, $cantidad, $fecha_hora, $num_pedido);
+            $conn->query($query3);
+        } 
+    }
+
+    private static function actualizarTotalPedido($fecha_hora, $num_pedido){
+        $query = sprintf("SELECT SUM(p.precio * pp.cantidad) as total_calculado
+                        FROM Pedido_Producto pp
+                                JOIN Producto p ON pp.nombre = p.nombre
+                        WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d",
+                        $fecha_hora, $num_pedido);
+
+        $result = $db->query($query);
+        if ($result) {
+            $fila = $result->fetch_assoc();
+            $nuevoTotal = $fila['total_calculado'] ?? 0.0;
+
+            // Actualizamos el campo 'total' en la tabla Pedido
+            $queryUpdate = sprintf("UPDATE Pedido SET total = %f 
+                                    WHERE fecha_hora = '%s' AND num_pedido = %d",
+                                    $nuevoTotal, $fecha_hora, $num_pedido);
+            $db->query($queryUpdate);
+        }
+    }
+
+
+
     //historial de pedidos de un usuario concreto
     public function historialPedidoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();

@@ -3,6 +3,8 @@ namespace BistroFDI\tables;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\productos\Producto;
+use BistroFDI\Aplicacion;
+
 
 class TablaProductos extends Tabla {
 
@@ -25,15 +27,28 @@ class TablaProductos extends Tabla {
         return parent::formateaContenido($campo, $valor, $fila);
     }
 
+
     protected function generaAcciones($fila) {
-        $id = urlencode($fila['nombre']);
-        
-        $urlEditar = "actualizar_producto.php?id=$id";
-        $urlBorrar = "borrar_producto.php?id=$id";
-        
-        return <<<EOS
-            <a href="$urlEditar">Editar</a>
-            <a href="$urlBorrar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
-        EOS;
-    }
+            $app = Aplicacion::getInstance();
+
+            $id = urlencode($fila['nombre']);
+
+            if($app->isCurrentUserClient()){
+                $urlComprar = "añadir_carrito.php?id=$id";
+
+                return <<<EOS
+                    <a href="$urlComprar">Comprar</a>
+                EOS;
+            }
+
+            if($app->isCurrentUserAdmin()){         
+                $urlEditar = "actualizar_producto.php?id=$id";
+                $urlBorrar = "borrar_producto.php?id=$id";
+                
+                return <<<EOS
+                    <a href="$urlEditar">Editar</a>
+                    <a href="$urlBorrar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
+                EOS;
+        }
+        }
 }

@@ -7,14 +7,14 @@ use BistroFDI\Aplicacion;
 //define('BD_HOST', 'vm002.db.swarm.test');// sevidor de la base de datos, no localhost
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'awp2');
-define('BD_USER', 'root');
-define('BD_PASS', '');
+define('BD_USER', 'awp2');
+define('BD_PASS', 'awpass');
 
 /**
  * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación
  */
 define('RAIZ_APP', dirname(__DIR__));
-define('RUTA_APP', '/AW');
+define('RUTA_APP', '/AW/AW');
 define('RUTA_IMGS', RUTA_APP.'/img/');
 define('RUTA_CSS', RUTA_APP.'/css/');
 define('RUTA_JS', RUTA_APP.'/js/');

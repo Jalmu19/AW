@@ -24,9 +24,6 @@ if ($categoriaSeleccionada == 'Todos') {
     $productos = Producto::listarPorCategoria($categoriaSeleccionada);
 }
 
-$tabla = new TablaProductos($columnas, $productos, true);
-$htmlTabla = $tabla->genera();
-
 
 $filtrosHtml = <<<HTML
 <div>
@@ -41,13 +38,15 @@ HTML;
 
 
 
-
 if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
     $contenidoPrincipal .= <<<EOS
         <a href="index.php" class="btn-volver">← Volver al inicio</a>
 EOS;
 }
 
+
+$tabla = new TablaProductos($columnas, $productos, true);
+$htmlTabla = $tabla->genera();
 
 $contenidoPrincipal .= <<<EOS
 <h1>Bistro FDI</h1>

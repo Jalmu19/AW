@@ -8,10 +8,11 @@ class FormularioFinalizarPedido extends Formulario
 {
     private $numPedido;
     private $fechaHora;
-    private $url;
 
     public function __construct($numPedido, $fechaHora) {
-        parent::__construct('formFinalizar', ['action' => 'carrito.php', 'urlRedireccion' => $this->url]);
+        // Solo necesitamos pasar el ID del formulario y la acción.
+        // La redirección se decide dinámicamente en procesaFormulario.
+        parent::__construct('formFinalizar', ['action' => 'carrito.php']);
         $this->numPedido = $numPedido;
         $this->fechaHora = $fechaHora;
     }
@@ -55,10 +56,14 @@ class FormularioFinalizarPedido extends Formulario
         $Tipo = Pedido::actualizaTipo($numPedido, $fechaHora, $tipoEntrega);
 
         if ($Estado && $Tipo) {
+            // USAR $this->urlRedireccion (propiedad de la clase base Formulario)
+            // Y usar urlencode para la fecha porque tiene espacios y símbolos
+            $fechaEncoded = urlencode($fechaHora);
+            
             if ($metodoPago === 'tarjeta') {
-                $this->url = RUTA_APP . "/includes/users/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaHora";
+                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
             } else {
-                $this->url = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaHora";
+                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
             }
         } else {
             return ["Error al procesar el pedido en la base de datos. Inténtelo de nuevo."];

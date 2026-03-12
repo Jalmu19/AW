@@ -1,75 +1,65 @@
 <?php
 namespace BistroFDI\forms;
 
-require_once dirname(__DIR__).'/config.php';
+use BistroFDI\pedidos\Pedido;
 
 class FormularioTarjeta extends Formulario
 {
-     public function __construct() {
-        parent::__construct('formEditarPerfil', ['action' => 'pagar.php', 
-                                                'urlRedireccion' => 'vista_confirm_pedido.php']);
+    private $numPedido;
+    private $fechaHora;
+
+    public function __construct($numPedido, $fechaHora) {
+        parent::__construct('formTarjeta', ['action' => "vista_pago_tarjeta.php?id=$numPedido&fecha=" . urlencode($fechaHora)]);
+        
+        $this->numPedido = $numPedido;
+        $this->fechaHora = $fechaHora;
     }
     
-    protected function camposFormulario()
+    protected function generaCamposFormulario(&$datos)
     {
-        // Se genera el HTML asociado a los campos del formulario 
-        $html = <<<EOF
-         <fieldset>
+        // Recuperamos valores si el usuario ya los escribió y hubo un error de validación
+        $numTarjeta = $datos['numTarjeta'] ?? '';
+        $fCaducidad = $datos['fCaducidad'] ?? '';
+        $cve = $datos['cve'] ?? '';
+
+        return <<<EOF
+        <input type="hidden" name="num_pedido" value="{$this->numPedido}">
+        <input type="hidden" name="fecha_hora" value="{$this->fechaHora}">
+        <fieldset>
             <legend>Pago con tarjeta bancaria</legend>
             <div>
-                <form action = "" method ="post">
-                    Numero de trajeta:
-                    <input type="number" name="numTarjeta" value=""/>
-                    Fecha de caducidad
-                    <input type="text" name="FCaducidad" value="MM/YY"/>
-                    CVE
-                    <input type="number" name="cve" value=""/>
-                    <input type="submit" value="Enviar" />
-
-                </form>
-
+                <p>Número de tarjeta: <input type="text" name="numTarjeta" value="$numTarjeta" maxlength="12" required /></p>
+                <p>Fecha caducidad (MM/YY): <input type="text" name="fCaducidad" value="$fCaducidad" placeholder="MM/YY" required /></p>
+                <p>CVE: <input type="password" name="cve" value="$cve" maxlength="3";" required /></p>
+                <button type="submit">Finalizar Pago</button>
             </div>
-
         </fieldset>
         EOF;
-        return $html;
     }
-
-
 
     protected function procesaFormulario(&$datos)
     {
         $this->errores = [];
-        $tarjeta = (string) $datos['numTarjeta'];
-        $tarjeta = filter_var($tarjeta, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        //errores en el numero de tarjeta
-        if (strlen($tarjeta) < 12 || strlen($tarjeta) > 12) {
-            $this->errores['numTarjeta'] = 'No coincide el numero de dígitos con los que se piden';
-        }
-        
-        $fecha = explode('/',  $datos['fCaducidad']);//separo en mes y año
-       
-        if ( 1 < sizeof($fecha) || sizeof($fecha) > 2 ) {
-            $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
-        }
-        else{
-            //comprobaciones en las fechas
-            $mes = $fecha[0];
-            $mes = filter_var($mes, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $anyo = $fecha[1];
-            $anyo = filter_var($anyo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $numPedido = $datos['num_pedido'] ?? null;
+        $fechaHora = $datos['fecha_hora'] ?? null;
+        $tarjeta = trim($datos['numTarjeta'] ?? '');
+        $fCaducidad = trim($datos['fCaducidad'] ?? '');
 
-            if(!(in_array($mes, [01,02,03,04,05,06,07,08,09,10,11,12]) && (strlen($anyo)<2 ||strlen($anyo)>2))){
-                $this->errores['fCaducidad'] = 'Error en la fecha de caducidad';
+        //Validar tarjeta
+        if (strlen($tarjeta) !== 12 || !is_numeric($tarjeta)) {
+            $this->errores['numTarjeta'] = 'El número de tarjeta debe tener 12 dígitos.';
+        }
+
+        if (count($this->errores) === 0) {
+  
+            $estado = Pedido::cobrarPedido($numPedido, $fechaHora);
+
+            if ($estado) {
+                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=" . urlencode($fechaHora);
+            } else {
+                $this->errores[] = "Error crítico: No se pudo actualizar el pedido en la base de datos.";
             }
         }
-
-        $cve = to_string($datos['cve']);//cve
-        $cve = filter_var($cve, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if ( !in_array(sizeof($cve), [3])) {
-                $this->errores['cve'] = 'CVE incorrecto';
-            }
-        } 
     }
 }

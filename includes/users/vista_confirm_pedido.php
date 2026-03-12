@@ -1,18 +1,42 @@
 <?php
 
-//TODO: Como obtener el id y el estado de un pedido concreto
-require_once __DIR__.'/includes/config.php';
-//require_once RAIZ_APP.'/includes/forms/formularioTarjeta.php';
+require_once dirname(__DIR__).'/config.php';
 
-$tituloPagina = 'Confirmacion del pedido';
+use BistroFDI\Aplicacion;
+use BistroFDI\pedidos\Pedido;
 
-$contenidoPrincipal = <<<EOS
-<h1>Pedido confirmado</h1>
-<p>Identificador: <?= $identificador?> </p>
-<p>Estado: <?=$estado?></p>
-<a href= "<?=RAIZ_APP.'/index.php'?>">
-    <button type='button'>Volver al inicio</button>
-</a>
+$app = Aplicacion::getInstance();
+
+//coger los datos enviados por el formulario desde la URL (GET)
+$id = $_GET['id'] ?? 'Desconocido';
+$fecha = $_GET['fecha'] ?? null; 
+
+if ($id && $fecha) {
+    $pedido = Pedido::buscarPedido($id, $fecha); 
+    
+    if ($pedido) {
+        $estado = $pedido->getEstado(); 
+    }
+}
+
+$tituloPagina = 'Confirmación del pedido';
+$contenidoPrincipal = '';
+
+$contenidoPrincipal .= <<<EOS
+    <div>
+    <a href="../../carta.php">← Volver a la carta</a> 
+    </div>
 EOS;
 
-require RAIZ_APP.'/includes/vistas/plantillas/plantilla.php';
+$contenidoPrincipal .= <<<EOS
+<h1>¡Pedido confirmado!</h1>
+<p>Gracias por tu compra. Tu pedido ha sido registrado correctamente.</p>
+
+<div>
+    <p><strong>Número de Pedido:</strong> $id</p>
+    <p><strong>Estado actual:</strong> $estado</p>
+</div>
+
+EOS;
+
+require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

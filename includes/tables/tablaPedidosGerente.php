@@ -42,11 +42,11 @@ class TablaPedidosGerente extends Tabla
 
     protected function generaAcciones($fila)
     {
-        $url = RUTA_APP . "/includes/pedidos/ver_pedido.php"
+        $url = RUTA_APP . "/includes/acciones_gerente/ver_pedido.php"
              . "?num_pedido=" . urlencode($fila['num_pedido'])
              . "&fecha_hora=" . urlencode($fila['fecha_hora']);
 
         return '<a href="' . htmlspecialchars($url, ENT_QUOTES) . '">Ver detalle</a>';
     }
 }
-``
+

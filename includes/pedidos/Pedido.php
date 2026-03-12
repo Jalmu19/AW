@@ -255,7 +255,7 @@ class Pedido {
     public static function getPedidosCocinero() {
         $conn = Aplicacion::getInstance()->getConexionBd();
         
-        $sql = "SELECT num_pedido, fecha_hora FROM Pedido 
+        $sql = "SELECT num_pedido, fecha_hora, estado FROM Pedido 
                 WHERE estado IN ('".self::ESTADO_PREPARACION."', '".self::ESTADO_COCINANDO."')";
         $rs = $conn->query($sql);
 
@@ -272,7 +272,7 @@ class Pedido {
                 while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
 
                 if (!empty($prods)) {
-                    $pedidosCocinero[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 'productos' => $prods];
+                    $pedidosCocinero[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 'estado' => $f['estado'], 'productos' => $prods];
                 }
             }
         }

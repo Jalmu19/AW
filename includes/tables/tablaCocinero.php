@@ -50,7 +50,7 @@ class TablaCocinero extends Tabla {
             <form method='POST'>
                 <input type='hidden' name='num_pedido' value='$numPedido'>
                 <input type='hidden' name='fecha_hora' value='$fechaHora'>
-                <button type="submit">Aceptar pedido</button>
+                <button type='submit'>Aceptar pedido</button>
             </form>
             ";
         }
@@ -58,10 +58,10 @@ class TablaCocinero extends Tabla {
         // Añadimos un botón para poner el pedido a "listo cocina" una vez que 
         // el cocinero ha marcado todos los productos que tenía por cocinar
         $html .= "
-        <form method="POST">
-            <input type="hidden" name="pedido_terminado" value='$numPedido'>
-            <input type="hidden" name="fecha_hora" value='$fechaHora'>
-            <button type="submit">Terminar pedido</button>
+        <form method='POST'>
+            <input type='hidden' name='pedido_terminado' value='$numPedido'>
+            <input type='hidden' name='fecha_hora' value='$fechaHora'>
+            <button type='submit'>Terminar pedido</button>
         </form>
         ";
 

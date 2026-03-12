@@ -126,17 +126,16 @@ class Producto {
     {
         
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE Producto SET precio=%f, descripcion='%s', imagen='%s', categoria='%s', disponibilidad='%s', ofertado='%s', cocinable='%s' WHERE nombre='%s'",
-            $conn->real_escape_string($producto->precio),
+        $query = sprintf("UPDATE Producto SET precio=%f, descripcion='%s', imagen='%s', categoria='%s', disponibilidad=%d, ofertado=%d, cocinable=%d WHERE nombre='%s'",
+            $producto->precio, 
             $conn->real_escape_string($producto->descripcion),
             $conn->real_escape_string($producto->imagen),
             $conn->real_escape_string($producto->categoria),
-            $conn->real_escape_string($producto->disponibilidad),
-            $conn->real_escape_string($producto->ofertado),
-            $conn->real_escape_string($producto->cocinable),
+            $producto->disponibilidad, 
+            $producto->ofertado,      
+            $producto->cocinable,   
             $conn->real_escape_string($producto->nombre)
         );
-
         error_log("UPDATE ejecutado: $query");
         return $conn->query($query);
     }

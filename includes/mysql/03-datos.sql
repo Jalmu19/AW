@@ -1,11 +1,11 @@
-INSERT INTO Producto VALUES('croquetas', 7.0, true, 21, true, 'croquetas de jamón','../img/productos/croquetas.png',true,'entrante');
-INSERT INTO Producto VALUES('pasta', 10.0, true, 21, true, 'macarrones con salsa boloñesa','../img/productos/pasta.png',true,'primer plato');
-INSERT INTO Producto VALUES('salmorejo', 10.0, true, 21, true, 'salmorejo cordobés','../img/productos/salmorejo.png',true,'primer plato');
-INSERT INTO Producto VALUES('salmon', 10.0, true, 21, true, 'salmón al horno','../img/productos/salmon.png',true,'segundo plato');
-INSERT INTO Producto VALUES('pollo', 10.0, true, 21, true, 'pollo con patatas','../img/productos/pollo.png',true,'segundo plato');
-INSERT INTO Producto VALUES('tiramisu', 10.0, true, 21, true, 'tiramisu italiano','../img/productos/tiramisu.png',true,'postre');
-INSERT INTO Producto VALUES('brownie', 10.0, true, 21, true, 'brownie de chocolate','../img/productos/brownie.png',true, 'postre');
-INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','../img/productos/coca_cola.png', false,'bebida');
+INSERT INTO Producto VALUES('croquetas', 7.0, true, 21, true, 'croquetas de jamón','croquetas.png',true,'entrante');
+INSERT INTO Producto VALUES('pasta', 10.0, true, 21, true, 'macarrones con salsa boloñesa','pasta.png',true,'primer plato');
+INSERT INTO Producto VALUES('salmorejo', 10.0, true, 21, true, 'salmorejo cordobés','salmorejo.png',true,'primer plato');
+INSERT INTO Producto VALUES('salmon', 10.0, true, 21, true, 'salmón al horno','salmon.png',true,'segundo plato');
+INSERT INTO Producto VALUES('pollo', 10.0, true, 21, true, 'pollo con patatas','pollo.png',true,'segundo plato');
+INSERT INTO Producto VALUES('tiramisu', 10.0, true, 21, true, 'tiramisu italiano','tiramisu.png',true,'postre');
+INSERT INTO Producto VALUES('brownie', 10.0, true, 21, true, 'brownie de chocolate','brownie.png',true, 'postre');
+INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','coca_cola.png', false,'bebida');
 
 INSERT INTO Usuarios VALUES('martita', 'Marta', 'Pérez Gómez', 'marta@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 1, 'avatar24.png');
 INSERT INTO Usuarios VALUES('jose', 'Jose', 'Sánchez López', 'jose@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',1,'avatar11.png');

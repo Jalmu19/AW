@@ -41,7 +41,7 @@ HTML;
 if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
     $contenidoPrincipal .= <<<EOS
         <a href="index.php" class="btn-volver">← Volver al inicio</a>
-EOS;
+    EOS;
 }
 
 

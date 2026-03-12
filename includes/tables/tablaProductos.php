@@ -34,10 +34,14 @@ class TablaProductos extends Tabla {
             $id = urlencode($fila['nombre']);
 
             if($app->isCurrentUserClient()){
-                $urlComprar = "añadir_carrito.php?id=$id";
-
+                $urlComprar = "includes/compras/añadir_carrito.php?id=$id";
+                
                 return <<<EOS
-                    <a href="$urlComprar">Comprar</a>
+                    <form action="$urlComprar" method="GET">
+                        <input type="hidden" name="id" value="$id">
+                        <input type="number" name="cantidad" min="1" style="width: 40px;">
+                        <button type="submit">Comprar</button>
+                    </form>
                 EOS;
             }
 

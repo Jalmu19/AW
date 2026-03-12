@@ -1,7 +1,7 @@
 <?php
 use BistroFDI\users\Usuarios;
 use BistroFDI\Aplicacion;
-use BistroFDI\productos\Producto;
+use BistroFDI\pedidos\Pedido;
 
 require_once dirname(__DIR__).'/config.php';
 
@@ -15,10 +15,10 @@ if (!$app->isCurrentUserLogged()) {
 
 $nombreUsuario = $app->getCurrentUserName();
 $nombreProducto = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$tipoPedido = filter_input(INPUT_GET, 'tipo', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$cantidadAAñadir = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
+$tipoPedido = Pedido::TIPO_DOMICILIO;   //por defecto-> a domicilio
+$cantidadAAñadir = filter_input(INPUT_GET, 'cantidad', FILTER_VALIDATE_INT) ?: 1;
 
-if($nombreProducto && $tipo){
+if($nombreProducto && $tipoPedido){
 
     //buscar si el usuario tiene un pedido "abierto" (estado=recibido)
     //si no encuentra, crea un pedido nuevo
@@ -28,11 +28,10 @@ if($nombreProducto && $tipo){
     Pedido::insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidadAAñadir);
 
     //actualizar el precio
-    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido); 
-    
+    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido);  
 } 
 
-header('Location: carta.php');
+header('Location: ../../carta.php');
 exit();
 
 

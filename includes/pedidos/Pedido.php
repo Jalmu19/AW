@@ -21,12 +21,14 @@ class Pedido {
     private $num_pedido; 
     private $fecha_hora;
     private $cliente;
+    private $cocinero;
+    private $camarero;
     private $total;
     private $estado;
     private $tipo;
     private $productos; // Array de productos: [['nombre' => 'Agua', 'cantidad' => 2, 'preparado' => 0], ...] de la tabla Pedido_Producto.
 
-    private function __construct($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productos = []) {
+    private function __construct($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productos = [], $cocinero="NULL", $camarero="NULL") {
         $this->num_pedido = $num_pedido;
         $this->fecha_hora = $fecha_hora;
         $this->cliente = $cliente;
@@ -34,26 +36,34 @@ class Pedido {
         $this->estado = $estado;
         $this->tipo = $tipo;
         $this->productos = $productos;
+        $this->cocinero = $cocinero;
+        $this->camarero = $camarero;
     }
 
     //crea un pedido
-    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $productosArr) {
-        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productosArr);
+    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $productosArr, $cocinero, $camarero) {
+        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productosArr, $cocinero, $camarero);
         return self::inserta($pedido);
     }
 
     //insertar un pedido
     private static function inserta($pedido) {
         $conn = Aplicacion::getInstance()->getConexionBd();
+
+
+        $camarero = ($pedido->camarero && $pedido->camarero !== "NULL") ? "'" . $conn->real_escape_string($pedido->camarero) . "'" : "NULL";                
+        $cocinero = ($pedido->cocinero && $pedido->cocinero !== "NULL")? "'" . $conn->real_escape_string($pedido->cocinero) . "'" : "NULL";
         
-        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente) 
-            VALUES ('%s', %d, '%s', %f, '%s', '%s')",
+        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente, camarero, cocinero) 
+            VALUES ('%s', %d, '%s', %f, '%s', '%s',%s, %s)",
             $conn->real_escape_string($pedido->fecha_hora),
             $pedido->num_pedido,
             $conn->real_escape_string($pedido->tipo),
             $pedido->total,
             $conn->real_escape_string($pedido->estado),
-            $conn->real_escape_string($pedido->cliente)
+            $conn->real_escape_string($pedido->cliente),
+            $camarero,
+            $cocinero       
         );
 
         if (!$conn->query($query)) return false;
@@ -133,13 +143,13 @@ class Pedido {
 
 
      //último pedido en estado nuevo
-    public function pedidosNuevosUsuario($nombreUsuario, $tipo){
+    public static function pedidosNuevosUsuario($nombreUsuario, $tipo){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = sprintf("SELECT num_pedido, fecha_hora, estado 
                 FROM Pedido 
                 WHERE cliente = '%s' AND estado = '%s'
-                ORDER BY fecha_hora DESC LIMIT 1", $nombreUsuario, self::NUEVO);
+                ORDER BY fecha_hora DESC LIMIT 1", $nombreUsuario, self::ESTADO_NUEVO);
 
         $resultado = $conn->query($query);
 
@@ -150,9 +160,16 @@ class Pedido {
             $num_pedido = $pedidoActual['num_pedido'];
         }
         else{ //si no, creamos uno
-            $num_pedido = mt_rand(100000, 999999); //numero aleatorio
+
+            //saber el ultimo pedido
+            $queryUltimoPedido = sprintf("SELECT MAX(num_pedido) as ultimo FROM Pedido"); //devuelve el útlimo num usado
+            $resQueyUltimoPedido = $conn->query($queryUltimoPedido);
+            $filaMax = $resQueyUltimoPedido->fetch_assoc();
+            $num_pedido = ($filaMax['ultimo'] !== null) ? $filaMax['ultimo'] + 1 : 1;
+
+
             $fecha_hora = date('Y-m-d H:i:s');
-            self::crea($fecha_hora,$num_pedido, $tipo, 0.0, self::NUEVO , $nombreUsuario, []);
+            self::crea($fecha_hora,$num_pedido, $tipo, 0.0, self::ESTADO_NUEVO , $nombreUsuario, [], NULL, NULL);
         }
 
         return [$fecha_hora, $num_pedido];
@@ -164,7 +181,7 @@ class Pedido {
 
         $query = sprintf("SELECT cantidad FROM Pedido_Producto 
                         WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
-                        $nombreProduco, $fecha_hora, $num_pedido);
+                        $nombreProducto, $fecha_hora, $num_pedido);
 
         $res = $conn->query($query);
         //si ya existe el producto, aumentamos la cantidad
@@ -182,14 +199,16 @@ class Pedido {
         } 
     }
 
-    private static function actualizarTotalPedido($fecha_hora, $num_pedido){
+    public static function actualizarTotalPedido($fecha_hora, $num_pedido){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
         $query = sprintf("SELECT SUM(p.precio * pp.cantidad) as total_calculado
                         FROM Pedido_Producto pp
                                 JOIN Producto p ON pp.nombre = p.nombre
                         WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d",
                         $fecha_hora, $num_pedido);
 
-        $result = $db->query($query);
+        $result = $conn->query($query);
         if ($result) {
             $fila = $result->fetch_assoc();
             $nuevoTotal = $fila['total_calculado'] ?? 0.0;
@@ -198,7 +217,7 @@ class Pedido {
             $queryUpdate = sprintf("UPDATE Pedido SET total = %f 
                                     WHERE fecha_hora = '%s' AND num_pedido = %d",
                                     $nuevoTotal, $fecha_hora, $num_pedido);
-            $db->query($queryUpdate);
+            $conn->query($queryUpdate);
         }
     }
 
@@ -505,6 +524,29 @@ public static function getPedidosGerente(): array
 
     return $out;
 }
+
+
+    public static function getCarritoUsuario($nombreUsuario){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        $query = sprintf("SELECT Pedido.num_pedido, cantidad, Producto.nombre, total, precio FROM Pedido
+	                            JOIN Pedido_Producto ON Pedido.fecha_hora=Pedido_Producto.fecha_hora AND Pedido.num_pedido=Pedido_Producto.num_pedido
+                                JOIN Producto ON Pedido_Producto.nombre = Producto.nombre
+                            WHERE cliente='%s' AND estado='Nuevo'", $nombreUsuario);
+
+        $res = $conn->query($query);
+
+        $productos = [];
+        if ($res) {
+            while ($fila = $res->fetch_assoc()) {
+                $productos[] = $fila;
+            }
+            $res->free();
+        }
+        return $productos;     
+    }
+
+
 
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
     public static function terminarCocinarPedido($num_pedido, $fecha_hora) {

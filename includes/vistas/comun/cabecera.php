@@ -10,10 +10,12 @@ function perfil() {
         $avatar = $app->getCurrentUserAvatar();
         $nombre = $app->getCurrentUserRealName();
         $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
+        $fotoCarrito = RUTA_APP . '/img/carrito.png';
 
         $html = "<div>
             Hola, 
             <a href='miCuenta.php'>$nombre<img src='$rutaImg' width='40'></a>
+           <a href='includes/compras/carrito.php'>Mi carrito<img src='$rutaImg' width='40'></a>
             <a href='logout.php'>Salir</a>
         </div>";
     } else {

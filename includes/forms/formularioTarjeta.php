@@ -6,7 +6,8 @@ require_once dirname(__DIR__).'/config.php';
 class FormularioTarjeta extends Formulario
 {
      public function __construct() {
-        parent::__construct('formEditarPerfil', ['action' => 'micuenta.php']);
+        parent::__construct('formEditarPerfil', ['action' => 'pagar.php', 
+                                                'urlRedireccion' => 'vista_confirm_pedido.php']);
     }
     
     protected function camposFormulario()
@@ -33,6 +34,8 @@ class FormularioTarjeta extends Formulario
         EOF;
         return $html;
     }
+
+
 
     protected function procesaFormulario(&$datos)
     {

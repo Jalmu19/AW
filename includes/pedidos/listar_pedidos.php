@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\tables\TablaHistorialPedidos;
+use BistroFDI\tables\TablaPedidos;
 use BistroFDI\Aplicacion;
 use BistroFDI\pedidos\Pedido;
 
@@ -45,7 +45,7 @@ EOS;
 
 $accion = false;
 
-$tabla = new TablaHistorialPedidos($columnas, $pedidos, $accion);
+$tabla = new TablaPedidos($columnas, $pedidos, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
 $tituloPagina = "Visualización de Pedidos";

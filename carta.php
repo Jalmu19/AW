@@ -7,6 +7,7 @@ use BistroFDI\productos\Producto;
 
 $app = Aplicacion::getInstance();
 
+
 //filtro
 $categoriaSeleccionada = $_GET['cat'] ?? 'Todos';
 
@@ -23,10 +24,9 @@ if ($categoriaSeleccionada == 'Todos') {
     $productos = Producto::listarPorCategoria($categoriaSeleccionada);
 }
 
-$tabla = new TablaProductos($columnas, $productos, false);
+$tabla = new TablaProductos($columnas, $productos, true);
 $htmlTabla = $tabla->genera();
 
-$tituloPagina = 'Bienvenido a Bistro FDI';
 
 $filtrosHtml = <<<HTML
 <div>
@@ -39,7 +39,17 @@ $filtrosHtml = <<<HTML
 </div>
 HTML;
 
-$contenidoPrincipal = <<<EOS
+
+
+
+if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
+    $contenidoPrincipal .= <<<EOS
+        <a href="index.php" class="btn-volver">← Volver al inicio</a>
+EOS;
+}
+
+
+$contenidoPrincipal .= <<<EOS
 <h1>Bistro FDI</h1>
 $filtrosHtml
 <fieldset>
@@ -47,5 +57,9 @@ $filtrosHtml
     $htmlTabla
 </fieldset>
 EOS;
+
+
+
+$tituloPagina = 'Bienvenido a Bistro FDI';
 
 require RAIZ_APP.'/includes/vistas/plantillas/plantilla.php';

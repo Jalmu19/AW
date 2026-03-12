@@ -3,6 +3,7 @@
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\pedidos\Pedido;
 use BistroFDI\tables\TablaPedidos;
+use BistroFDI\aplicacion;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;
@@ -30,7 +31,6 @@ $columnas = [
 $tabla = new TablaPedidos($columnas, $result, false);
 $htmlTabla = $tabla->genera();
 
-$tituloPagina = "Mi Historial de Pedidos";
 $contenidoPrincipal = <<<EOS
     <h1>Historial de Pedidos</h1>
     <a href="{$ruta}/miCuenta.php">← Volver a mi cuenta</a>
@@ -39,4 +39,6 @@ $contenidoPrincipal = <<<EOS
     </div>
 EOS;
 
+
+$tituloPagina = "Mi Historial de Pedidos";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

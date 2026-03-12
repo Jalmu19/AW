@@ -36,29 +36,28 @@ $datos = [
 ];
 
 
-
 $form = new FormularioActProducto();
 
 $htmlForm = $form->gestiona($datos);    
 
-$tituloPagina = "Actualizar producto";
+$contenidoPrincipal = <<< EOS
+    <div>
+        <a href="listar_productos.php">← Volver al listado</a>
+    </div>
+EOS;
 
 $contenidoPrincipal = <<<EOS
 <div>
-<div>
-    <a href="listar_productos.php">← Volver al listado</a>
-</div>
+    <h2>Gestión de Inventario: Actualizar $nombre </h2>
+    <p>Rellena todos los campos para actualizar el producto en la carta.</p>
 
-<h2>Gestión de Inventario: Actualizar $nombre </h2>
-<p>Rellena todos los campos para actualizar el producto en la carta.</p>
-
-<div>
-    $htmlForm
-</div>
+    <div>
+        $htmlForm
+    </div>
 </div>
 EOS;
 
-
+$tituloPagina = "Actualizar producto";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';
 
  

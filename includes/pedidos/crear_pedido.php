@@ -2,13 +2,13 @@
 
 //ES EL CARRITO DE LA COMPRA,
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\forms\formularioCrearPedido;
 use BistroFDI\Aplicacion;
+use BistroFDI\users\Usuario;
 
 $app = Aplicacion::getInstance();
 
 //si no esta logueado
-if($app -> ){
+if(!$app->isCurrentUserLogged()){
     //no puede acceder
     $app->putRequestAttribute('error', 'No tienes acceso para realizar esta accion.');
     header('Location:'.RUTA_APP.'/index.php');
@@ -26,21 +26,6 @@ $contenidoPrincipal = <<<EOS
     </div>
 </div>
 EOS;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

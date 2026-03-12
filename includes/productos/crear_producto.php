@@ -18,14 +18,15 @@ $form = new FormularioCrearProducto();
 
 $htmlForm = $form->gestiona();
 
-$tituloPagina = 'Añadir Producto';
 
-$contenidoPrincipal = <<<EOS
-<div>
+$contenidoPrincipal = <<< EOS
     <div>
         <a href="listar_productos.php">← Volver al listado</a>
     </div>
+EOS;
 
+$contenidoPrincipal = <<<EOS
+<div>
     <h1>Gestión de Inventario: Nuevo Producto</h1>
     <p>Rellena todos los campos para dar de alta un producto en la carta.</p>
     
@@ -35,4 +36,5 @@ $contenidoPrincipal = <<<EOS
 </div>
 EOS;
 
+$tituloPagina = 'Añadir Producto';
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

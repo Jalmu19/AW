@@ -15,16 +15,18 @@ $form = new FormularioActPedido();
 
 $htmlForm = $form->gestiona();
 
-$tituloPagina = "Actualizar Pedido";
+
+$contenidoPrincipal = <<< EOS
+    <div>
+        <a href="listar_pedidos.php">← Volver al listado</a>
+    </div>
+EOS;
+
 
 
 $contenidoPrincipal = <<<EOS
 <h1>Modificar precio del producto</h1>
-   <div>
-    <div>
-        <a href="listar_pedidos.php">← Volver al listado</a>
-    </div>
-
+<div>
     <h1>Actualizar Pedido</h1>
     <p>Establece el estado del pedido a seleccionar.</p>   
     <div>
@@ -33,4 +35,6 @@ $contenidoPrincipal = <<<EOS
 </div>
 EOS;
 
+
+$tituloPagina = "Actualizar Pedido";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$tituloPagina = "Editar Rol";
+
 
 // Definimos los nombres de los roles para el select
 $roles = [
@@ -55,6 +55,13 @@ $options = "<option value='' disabled selected>Selecciona un nuevo rol</option>"
 foreach ($roles as $val => $nombre) {
     $options .= "<option value='$val'>$nombre</option>";
 }
+
+
+$contenidoPrincipal .= <<<EOS
+    <a href="../../index.php">← Volver al inicio</a> 
+EOS;
+
+
 
 $contenidoPrincipal = <<<EOS
 <h1>Modificar Rol del Usuario: $nombreUsuario</h1>
@@ -72,5 +79,8 @@ $contenidoPrincipal = <<<EOS
     </fieldset>
 </form>
 EOS;
+
+
+$tituloPagina = "Editar Rol";
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

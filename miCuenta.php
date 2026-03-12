@@ -42,12 +42,13 @@ $contenidoPrincipal = <<<EOS
         <div>
             <a href="{$ruta}pedidosEnProceso.php">
                 <h3>Pedidos en Proceso</h3>
-                <p>Consulta el estado actual de tus pedidos activos</p>
             </a>
+            <p>Consulta el estado actual de tus pedidos activos</p>
+
             <a href="{$ruta}historialPedidos.php">
                 <h3>Historial de Pedidos</h3>
-                <p>Revisa tus pedidos anteriores y facturas</p>
             </a>
+            <p>Revisa tus pedidos anteriores y facturas</p>
         </div>
     </div>
 </div>

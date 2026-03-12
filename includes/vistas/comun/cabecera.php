@@ -9,18 +9,25 @@ function perfil() {
     if ($app->isCurrentUserLogged()) {
         $avatar = $app->getCurrentUserAvatar();
         $nombre = $app->getCurrentUserRealName();
+
         $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
         $fotoCarrito = RUTA_APP . '/img/carrito.png';
+        $rutaPerfil = RUTA_APP . '/miCuenta.php';
+        $rutaLogout = RUTA_APP . '/logout.php';
+        $rutaCarrito = RUTA_APP. '/includes/compras/carrito.php';
 
         $html = "<div>
             Hola, 
-            <a href='miCuenta.php'>$nombre<img src='$rutaImg' width='40'></a>
-           <a href='includes/compras/carrito.php'>Mi carrito<img src='$rutaImg' width='40'></a>
-            <a href='logout.php'>Salir</a>
+            <a href='$rutaPerfil'>$nombre<img src='$rutaImg' width='40'></a>
+            <a href='$rutaCarrito'>Mi carrito<img src='$fotoCarrito' width='40'></a>
+            <a href='$rutaLogout'>Salir</a>
         </div>";
     } else {
+        $rutaRegistro = RUTA_APP . '/registro.php';
+        $rutaLogin = RUTA_APP . '/login.php';
+
         $html = "<div>
-            <a href='login.php'>Login</a> | <a href='registro.php'>Registro</a>
+            <a href='$rutaLogin'>Login</a> | <a href='$rutaRegistro'>Registro</a>
         </div>";
     }
     return $html;

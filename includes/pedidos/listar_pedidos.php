@@ -19,6 +19,12 @@ $pedidos = Pedido::getTodosLosPedidos();
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
+$contenidoPrincipal .=  <<<EOS
+    <div>
+    <a href="../../index.php">← Volver al inicio</a> 
+    </div>
+EOS;
+
 $contenidoPrincipal = "<h1>Visualización de Pedidos</h1>";
 
 // Concatenamos los mensajes a la variable principal para que salgan en el cuerpo de la página
@@ -34,14 +40,6 @@ $columnas = [
     'cliente' => 'Cliente',
     'cocinero' => 'Cocinero'
 ];
-
-
-$contenidoPrincipal .=  <<<EOS
-<div>
-  <a href="../../index.php">← Volver al inicio</a> 
-</div>
-EOS;
-
 
 $accion = false;
 

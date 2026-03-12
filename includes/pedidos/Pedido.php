@@ -433,97 +433,97 @@ class Pedido {
     }
 
     public static function getEstadoProductosPedido(int $num_pedido, string $fecha_hora): array
-{
-    $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
+    {
+        $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
 
-    $sql = sprintf(
-        "SELECT 
-            pp.nombre,
-            prod.cocinable,
-            pp.preparado
-         FROM Pedido_Producto pp
-         JOIN Producto prod ON pp.nombre = prod.nombre
-         WHERE pp.num_pedido = %d
-           AND pp.fecha_hora = '%s'
-         ORDER BY pp.nombre ASC",
-        $num_pedido,
-        $conn->real_escape_string($fecha_hora)
-    );
+        $sql = sprintf(
+            "SELECT 
+                pp.nombre,
+                prod.cocinable,
+                pp.preparado
+            FROM Pedido_Producto pp
+            JOIN Producto prod ON pp.nombre = prod.nombre
+            WHERE pp.num_pedido = %d
+            AND pp.fecha_hora = '%s'
+            ORDER BY pp.nombre ASC",
+            $num_pedido,
+            $conn->real_escape_string($fecha_hora)
+        );
 
-    $rs = $conn->query($sql);
-    $productos = [];
+        $rs = $conn->query($sql);
+        $productos = [];
 
-    if ($rs) {
-        while ($f = $rs->fetch_assoc()) {
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) {
 
-            $estado = '';
+                $estado = '';
 
-            if ((int)$f['cocinable'] === 1) {
-                // Es cocinable → su estado depende de 'preparado'
-                $estado = ((int)$f['preparado'] === 1) ? 'Preparado' : 'Pendiente';
-            } else {
-                // No cocinable → no aplica preparado
-                $estado = 'No cocinable';
+                if ((int)$f['cocinable'] === 1) {
+                    // Es cocinable → su estado depende de 'preparado'
+                    $estado = ((int)$f['preparado'] === 1) ? 'Preparado' : 'Pendiente';
+                } else {
+                    // No cocinable → no aplica preparado
+                    $estado = 'No cocinable';
+                }
+
+                $productos[] = [
+                    'nombre' => $f['nombre'],
+                    'estado' => $estado
+                ];
             }
-
-            $productos[] = [
-                'nombre' => $f['nombre'],
-                'estado' => $estado
-            ];
+            $rs->free();
         }
-        $rs->free();
+
+        return $productos;
     }
 
-    return $productos;
-}
 
+    public static function getPedidosGerente(): array
+    {
+        $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
 
-public static function getPedidosGerente(): array
-{
-    $conn = \BistroFDI\Aplicacion::getInstance()->getConexionBd();
+        // Estados que el Gerente debe visualizar
+        $pendientes = [
+            self::ESTADO_RECIBIDO,
+            self::ESTADO_PREPARACION,
+            self::ESTADO_COCINANDO,
+            self::ESTADO_LISTO_COCINA,
+            self::ESTADO_TERMINADO
+        ];
+        $in = "'" . implode("','", $pendientes) . "'";
 
-    // Estados que el Gerente debe visualizar
-    $pendientes = [
-        self::ESTADO_RECIBIDO,
-        self::ESTADO_PREPARACION,
-        self::ESTADO_COCINANDO,
-        self::ESTADO_LISTO_COCINA,
-        self::ESTADO_TERMINADO
-    ];
-    $in = "'" . implode("','", $pendientes) . "'";
+        $sql = "
+            SELECT 
+                p.num_pedido,
+                p.fecha_hora,
+                p.estado,
+                p.cocinero,
+                u.avatar AS avatar_cocinero
+            FROM Pedido p
+            LEFT JOIN Usuarios u
+                ON p.cocinero = u.nombreUsuario
+            WHERE p.estado IN ($in)
+            ORDER BY p.fecha_hora DESC
+        ";
 
-    $sql = "
-        SELECT 
-            p.num_pedido,
-            p.fecha_hora,
-            p.estado,
-            p.cocinero,
-            u.avatar AS avatar_cocinero
-        FROM Pedido p
-        LEFT JOIN Usuarios u
-               ON p.cocinero = u.nombreUsuario
-        WHERE p.estado IN ($in)
-        ORDER BY p.fecha_hora DESC
-    ";
+        $rs = $conn->query($sql);
+        $out = [];
 
-    $rs = $conn->query($sql);
-    $out = [];
-
-    if ($rs) {
-        while ($f = $rs->fetch_assoc()) {
-            $out[] = [
-                'num_pedido'      => (int)$f['num_pedido'],
-                'fecha_hora'      => $f['fecha_hora'],
-                'estado'          => $f['estado'],
-                'cocinero'        => $f['cocinero'],        
-                'avatar_cocinero' => $f['avatar_cocinero'], 
-            ];
+        if ($rs) {
+            while ($f = $rs->fetch_assoc()) {
+                $out[] = [
+                    'num_pedido'      => (int)$f['num_pedido'],
+                    'fecha_hora'      => $f['fecha_hora'],
+                    'estado'          => $f['estado'],
+                    'cocinero'        => $f['cocinero'],        
+                    'avatar_cocinero' => $f['avatar_cocinero'], 
+                ];
+            }
+            $rs->free();
         }
-        $rs->free();
-    }
 
-    return $out;
-}
+        return $out;
+    }
 
 
     public static function getCarritoUsuario($nombreUsuario){
@@ -574,5 +574,5 @@ public static function getPedidosGerente(): array
     public function getFechaHora() { return $this->fecha_hora; }
     public function getEstado() { return $this->estado; }
     public function getTotal() { return $this->total; }
-    
+
 }

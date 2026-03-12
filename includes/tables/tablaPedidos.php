@@ -3,7 +3,7 @@ namespace BistroFDI\tables;
 
 require_once dirname(__DIR__).'/config.php';
 
-class TablaHistorialPedidos extends Tabla {
+class TablaPedidos extends Tabla {
 
     protected function formateaContenido($campo, $valor, $fila) {
         if ($campo === 'estado') {

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Camarero";

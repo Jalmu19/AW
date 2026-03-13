@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/config.php';
-use BistroFDI\forms\FormularioTarjeta;
+use BistroFDI\forms\formularioTarjeta;
 
 //coger los datos enviados por el formulario desde la URL (GET)
 $numPedido = $_GET['id'] ?? null;

@@ -1,9 +1,9 @@
 <?php
 require_once dirname(__DIR__).'/config.php';
 
-use BistroFDI\tables\TablaCompletarPedidos;
+use BistroFDI\tables\tablaCompletarPedidos;
 use BistroFDI\pedidos\Pedido;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 $app = Aplicacion::getInstance();
 

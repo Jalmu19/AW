@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/includes/config.php';
 use BistroFDI\users\Usuario;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 $app = Aplicacion::getInstance();
 $ruta_img = RUTA_IMGS;

@@ -3,7 +3,7 @@ namespace BistroFDI\tables;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\productos\Producto;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 
 class TablaProductos extends Tabla {

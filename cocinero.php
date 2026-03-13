@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\pedidos\Pedido;
-use BistroFDI\tables\TablaCocinero;
+use BistroFDI\tables\tablaCocinero;
 
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Cocinero";

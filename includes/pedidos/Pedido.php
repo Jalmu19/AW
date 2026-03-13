@@ -1,6 +1,6 @@
 <?php
 namespace BistroFDI\pedidos;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 class Pedido {
 

@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\tables\tablaUsuarios;
 use BistroFDI\users\Usuario;
 

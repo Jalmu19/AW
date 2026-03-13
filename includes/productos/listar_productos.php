@@ -2,7 +2,7 @@
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaProductos;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\productos\Producto;
 
 $app = Aplicacion::getInstance();

@@ -1,7 +1,7 @@
 <?php
 namespace BistroFDI\forms;
 
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\pedidos\Pedido;
 
 class FormularioFinalizarPedido extends Formulario

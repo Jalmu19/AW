@@ -3,7 +3,7 @@
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\tables\tablaCategorias;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 
 $app = Aplicacion::getInstance();

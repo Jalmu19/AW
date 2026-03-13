@@ -22,5 +22,5 @@ if ($nombreCategoria) {
     }
 }
 
-header('Location: listar_categoria.php');
+header('Location: listar_categorias.php');
 exit();

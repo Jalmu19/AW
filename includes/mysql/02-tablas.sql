@@ -27,17 +27,15 @@ CREATE TABLE `Pedido` (
     `camarero` varchar(10) DEFAULT NULL,
     `cocinero` varchar(10) DEFAULT NULL,
     PRIMARY KEY (`fecha_hora`, `num_pedido`),
-    FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`)
-    FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`)
+    FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`),
+    FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`),
     FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `Categoria` (
     `nombre` varchar(15) NOT NULL,
     `descripcion` varchar(50) NOT NULL,
-    `gerente` varchar(10) NOT NULL,
-    PRIMARY KEY (`nombre`),
-    FOREIGN KEY (`gerente`) REFERENCES `Usuarios`(`nombreUsuario`)
+    PRIMARY KEY (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `Producto` (

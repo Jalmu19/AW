@@ -18,10 +18,19 @@ if (!$app->isCurrentUserAdmin()) {
 $nombreCategoria = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $categoria = $nombreCategoria ? Categoria::buscaCategoria($nombreCategoria) : null;
 
+$datosIniciales = [];
+if ($categoria) {
+    $datosIniciales = [
+        'nombre' => $categoria->getNombre(),
+        'descripcion' => $categoria->getDescripcion()
+    ];
+}
+
+
 // Si categoria es null, se crea una nueva. Si no, se actualiza la existente
 $form = new FormularioCategoria($categoria);  
 
-$htmlForm = $form->gestiona();
+$htmlForm = $form->gestiona($datosIniciales);
 
 $modoEdicion = $categoria !== null;
 $tituloPagina = $modoEdicion ? 'Actualizar Categoría' : 'Añadir Categoría';

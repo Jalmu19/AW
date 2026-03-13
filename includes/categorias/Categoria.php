@@ -13,6 +13,7 @@ class Categoria {
 
     private $nombre;
     private $descripcion;
+ 
 
     private function __construct($nombre, $descripcion)
     {
@@ -57,18 +58,19 @@ class Categoria {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Categoria(nombre, descripcion) VALUES ('%s', '%s')",
             $conn->real_escape_string($categoria->nombre),
-            $conn->real_escape_string($categoria->descripcion)
+            $conn->real_escape_string($categoria->descripcion),
         );
         return $conn->query($query);
     }
 
-    public static function actualiza($categoria)
+    public static function actualiza($nombre, $descripcion)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Categoria SET descripcion='%s' WHERE nombre='%s'",
-            $conn->real_escape_string($categoria->descripcion),
-            $conn->real_escape_string($categoria->nombre)
+            $conn->real_escape_string($descripcion),
+            $conn->real_escape_string($nombre)
         );
+        
         return $conn->query($query);
     }
 

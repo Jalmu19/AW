@@ -33,7 +33,7 @@ $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
 $tituloPagina = "Entregar Pedidos";
-$contenidoPrincipal = "<h1>Pedidos Listos para Entregar (En local)</h1>";
+$contenidoPrincipal = "<h1>Pedidos Listos para Entregar</h1>";
 
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";

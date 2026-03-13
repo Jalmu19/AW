@@ -16,6 +16,8 @@ if (!$app->isCurrentUserAdmin()) {
 
 $result = Producto::listarProductos();
 
+$contenidoPrincipal = '';
+
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 

@@ -108,14 +108,14 @@ class Producto {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Producto(nombre, precio, disponibilidad, iva, ofertado, descripcion, imagen, categoria, cocinable) VALUES ('%s', %f, %d, %f, %d, '%s', '%s', '%s' ,'%d')",
             $conn->real_escape_string($producto->nombre),
-            $conn->real_escape_string($producto->precio),
-            $conn->real_escape_string($producto->disponibilidad),
-            $conn->real_escape_string($producto->iva),
-            $conn->real_escape_string($producto->ofertado),
+            $producto->precio,       
+            $producto->disponibilidad, 
+            $producto->iva,            
+            $producto->ofertado,      
             $conn->real_escape_string($producto->descripcion),
             $conn->real_escape_string($producto->imagen),
             $conn->real_escape_string($producto->categoria),
-            $conn->real_escape_string($producto->cocinable)
+            $producto->cocinable
             
         );
         return $conn->query($query);

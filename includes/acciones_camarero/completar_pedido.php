@@ -33,8 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido']) && isset(
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-$tituloPagina = "Completar Pedidos";
-$contenidoPrincipal = "<h1>Gestión de Pedidos: Bebidas y Complementos</h1>";
 
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
@@ -50,6 +48,8 @@ $contenidoPrincipal .= <<<EOS
     <div>
         <a href="../../camarero.php">← Volver al Panel</a>
     </div>
+
+    <h1>Gestión de Pedidos: Bebidas y Complementos</h1>
 EOS;
 
 $result = Pedido::pedidosParaCompletar();
@@ -57,5 +57,7 @@ $result = Pedido::pedidosParaCompletar();
 $tabla = new TablaCompletarPedidos($columnas, $result, true);
 
 $contenidoPrincipal .= $tabla->genera();
+
+$tituloPagina = "Completar Pedidos";
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

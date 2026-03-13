@@ -24,7 +24,7 @@ class TablaEntregarPedidos extends Tabla {
             <form action="entregar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$id"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
-                <button type="submit">Entregar a Mesa</button>
+                <button type="submit">Entregar</button>
             </form>
         EOS;
     }

@@ -19,7 +19,6 @@ $result = Producto::listarProductos();
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-$contenidoPrincipal = "<h1>Gestión de Productos</h1>";
 
 // Concatenamos los mensajes a la variable principal para que salgan en el cuerpo de la página
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
@@ -34,23 +33,26 @@ $columnas = [
 ];
 
 
-$tituloPagina = "Administración de Productos";
 
 $contenidoPrincipal .= <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
-EOS;
+    <a href="../../index.php">← Volver al inicio</a>
 
- $contenidoPrincipal .= <<<EOS
+<div>
+    <h1>Gestión de Productos</h1>
+</div>
+
+<div> 
    <form action="crear_producto.php" method="get">
         <button type="submit">
            Añadir Producto
         </button>
     </form>
+</div>
 EOS;
 
 $accion = true;
 $tabla = new TablaProductos($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
 
-
+$tituloPagina = "Administración de Productos";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

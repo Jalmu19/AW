@@ -15,8 +15,8 @@ class Pedido {
     public const ESTADO_CANCELADO = 'Cancelado';
 
     // Tipos
-    public const TIPO_DOMICILIO = 'A domicilio';
-    public const TIPO_LOCAL = 'En local';
+    public const TIPO_DOMICILIO = 'a domicilio';
+    public const TIPO_LOCAL = 'local';
 
     private $num_pedido; 
     private $fecha_hora;
@@ -114,7 +114,7 @@ class Pedido {
     }
 
     //pedidos en proceso de un usuario concreto
-    public function pedidosProcesoUsuario($nombreUsuario){
+    public static function pedidosProcesoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = "SELECT num_pedido, fecha_hora, estado 
@@ -224,11 +224,11 @@ class Pedido {
 
 
     //historial de pedidos de un usuario concreto
-    public function historialPedidoUsuario($nombreUsuario){
+    public static function historialPedidoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = "SELECT p.num_pedido as id, p.fecha_hora, p.total as precio_total, p.estado, p.tipo,
-                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
+                         GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
                 FROM Pedido p
                 JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
                 WHERE p.cliente = ? AND p.estado = '" . self::ESTADO_ENTREGADO . "'
@@ -284,23 +284,35 @@ class Pedido {
         return $conn->query($query2);
     }
 
-    //(completar pedido camarero): id pedido, fecha, tipo y productos no cocinables de los pedidos
+    // (completar pedido camarero): devuelve pedidos en LISTO_COCINA, 
+    // mostrando productos no cocinables (si los hay) y el tipo de pedido.
     public static function pedidosParaCompletar() {
         $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        // Usamos LEFT JOIN para no descartar pedidos que no tengan productos no cocinables
         $query = "SELECT p.num_pedido as id, p.fecha_hora, p.tipo,
                         GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', prod.nombre) SEPARATOR '<br>') as productos
                 FROM Pedido p
-                JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
-                JOIN Producto prod ON pp.nombre = prod.nombre
-                WHERE p.estado = '" . self::ESTADO_LISTO_COCINA . "' AND prod.cocinable = 0
-                GROUP BY p.num_pedido, p.fecha_hora";
+                LEFT JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
+                LEFT JOIN Producto prod ON pp.nombre = prod.nombre AND prod.cocinable = 0
+                WHERE p.estado = '" . self::ESTADO_LISTO_COCINA . "' 
+                GROUP BY p.num_pedido, p.fecha_hora, p.tipo
+                ORDER BY p.fecha_hora ASC";
         
         $rs = $conn->query($query);
         $lista = [];
+        
         if ($rs) {
-            while ($f = $rs->fetch_assoc()) { $lista[] = $f; }
+            while ($f = $rs->fetch_assoc()) { 
+                // Si el pedido no tiene productos no cocinables, productos será NULL.
+                if (is_null($f['productos'])) {
+                    $f['productos'] = "Solo productos de cocina (Ya listos)";
+                }
+                $lista[] = $f; 
+            }
             $rs->free();
         }
+        
         return $lista;
     }
 
@@ -327,7 +339,7 @@ class Pedido {
         return $lista;
     }
 
-    //(entregar pedido camarero): id pedido(tipo = en local), cliente, productos
+    //(entregar pedido camarero): id pedido, cliente, productos
     public static function getPedidosParaEntregarLocal() {
         $conn = Aplicacion::getInstance()->getConexionBd();
         
@@ -337,7 +349,6 @@ class Pedido {
                 JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
                 JOIN Producto prod ON pp.nombre = prod.nombre
                 WHERE p.estado = '" . self::ESTADO_TERMINADO . "' 
-                AND p.tipo = '" . self::TIPO_LOCAL . "'
                 GROUP BY p.num_pedido, p.fecha_hora";
         
         $rs = $conn->query($query);

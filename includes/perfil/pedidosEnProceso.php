@@ -29,8 +29,9 @@ $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Pedidos en Curso";
 $contenidoPrincipal = <<<EOS
-    <h1>Estado de mis Pedidos</h1>
     <a href="{$ruta}/miCuenta.php">← Volver a mi cuenta</a>
+
+    <h1>Estado de mis Pedidos</h1>
     <div>
         $htmlTabla
     </div>

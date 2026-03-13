@@ -35,7 +35,10 @@ class FormularioFinalizarPedido extends Formulario
             <label><input type="radio" name="metodo_pago" value="tarjeta"> Tarjeta de crédito</label>
 
             <div>
-                <button type="submit">Confirmar y Finalizar Pedido</button>
+                <button type="submit" name="accion" value="confirmar">Confirmar y Finalizar Pedido</button>
+                <button type="submit" name="accion" value="cancelar" onclick="return confirm('¿Estás seguro de que deseas cancelar y borrar este pedido?')">
+                    Cancelar Pedido
+                </button>
             </div>
         </fieldset>
         EOF;
@@ -47,9 +50,19 @@ class FormularioFinalizarPedido extends Formulario
         $fechaHora = $datos['fecha_hora'] ?? null; 
         $tipoEntrega = $datos['tipo_entrega'] ?? 'local';
         $metodoPago = $datos['metodo_pago'] ?? 'efectivo';
+        $accion = $datos['accion'] ?? 'confirmar';
 
         if (!$numPedido || !$fechaHora) {
             return ["Error: Datos del pedido no encontrados."];
+        }
+
+        if ($accion === 'cancelar') {
+            if (Pedido::borra($numPedido, $fechaHora)) {
+                $this->urlRedireccion = RUTA_APP . "/carta.php";
+                return;
+            } else {
+                return ["Error al intentar cancelar el pedido."];
+            }
         }
 
         $Estado = Pedido::confirmarPedido($numPedido, $fechaHora); 
@@ -61,9 +74,9 @@ class FormularioFinalizarPedido extends Formulario
             $fechaEncoded = urlencode($fechaHora);
             
             if ($metodoPago === 'tarjeta') {
-                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
             } else {
-                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
             }
         } else {
             return ["Error al procesar el pedido en la base de datos. Inténtelo de nuevo."];

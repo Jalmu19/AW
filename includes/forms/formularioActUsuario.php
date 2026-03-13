@@ -8,124 +8,101 @@ use BistroFDI\Aplicacion;
 class formularioActUsuario extends Formulario
 {
     public function __construct() {
-        parent::__construct('formEditarPerfil', ['action' => 'micuenta.php']);
+        parent::__construct('formEditarPerfil', [
+            'action' => RUTA_APP . '/micuenta.php', 
+            'enctype' => 'multipart/form-data'
+        ]);
     }
     
     protected function generaCamposFormulario(&$datos)
     {
-        // Se reutiliza el nombre de usuario introducido previamente o se deja en blanco
-        $nombreUsuario = $datos['nombreUsuario'] ?? '';
+        $app = Aplicacion::getInstance();
+        $user = Usuario::buscaUsuario($app->getCurrentUserName());
 
-        // Se generan los mensajes de error si existen.
-        $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['nombreUsuario', 'password', 'correo'], $this->errores, 'span', array('class' => 'error'));
+        $nombre = $user->getNombre();
+        $apellidos = $user->getApellidos();
+        $correo = $user->getEmail();
 
-        // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
-        $html = <<<EOF
-        $htmlErroresGlobales
+        return <<<EOF
         <fieldset>
-            <legend>Actualizar usuario</legend>
+            <legend>Actualizar perfil</legend>
             <div>
-                <label for="nombreUsuario">Nombre de usuario:</label>
-                <input id="nombreUsuario" type="text" name="nombreUsuario" value="$nombreUsuario" />
-                {$erroresCampos['nombreUsuario']}
-            </div>
-            <div>
-                <label for="password">Contraseña:</label>
-                <input id="password" type="password" name="password" />
-                {$erroresCampos['password']}
-            </div>
-             <div>
-                <label for="correo">Correo electronico:</label>
-                <input id="correo" type="mail" name="correo" />
-                {$erroresCampos['correo']}
-            </div>
-             <div>
-                <label for="nombre">Nombre:</label>
-                <input id="nombre" type="text" name="nombre" />
-            </div>
-             <div>
-                <label for="apellidos">Apellidos:</label>
-                <input id="apellidos" type="text" name="apellidos" />
+                <label>Nombre:</label>
+                <input type="text" name="nombre" value="$nombre" />
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="borrar"> Eliminar y usar avatar por defecto
+                <label>Apellidos:</label>
+                <input type="text" name="apellidos" value="$apellidos" />
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="galeria"> Elegir de la galería:
-                <select name="avatarGaleria">
-                    <option value="avatar2.png">Opcion1</option>
-                    <option value="avatar3.png">Opcion2</option>
-                    <option value="avatar4.png">Opcion3</option>
-                </select>
+                <label>Correo:</label>
+                <input type="email" name="correo" value="$correo" />
             </div>
             <div>
-                <input type="radio" name="tipoAvatar" value="subida"> Subir mi propia foto:
-                <input type="file" name="avatarArchivo" accept="image/*">
+                <label>Nueva Contraseña (dejar en blanco para mantener):</label>
+                <input type="password" name="password" />
             </div>
             <div>
-                <button type="submit" name="actualizar">Ok</button>
+                <label>Avatar actual:</label><br>
+                <input type="radio" name="tipoAvatar" value="nada" checked> Mantener actual<br>
+                <input type="radio" name="tipoAvatar" value="borrar"> Borrar y poner por defecto<br>
+                <input type="radio" name="tipoAvatar" value="subida"> Subir nuevo: 
+                <input type="file" name="avatarArchivo" />
             </div>
-
+            <button type="submit" name="actualizar">Guardar cambios</button>
         </fieldset>
         EOF;
-        return $html;
     }
 
     protected function procesaFormulario(&$datos)
     {
-        $this->errores = [];
-        $nombreUsuario = trim($datos['nombreUsuario'] ?? '');
-        $nombreUsuario = filter_var($nombreUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $nombreUsuario || empty($nombreUsuario) ) {
-            $this->errores['nombreUsuario'] = 'El nombre de usuario no puede estar vacío';
+        $app = Aplicacion::getInstance();
+        $nombreUsuario = $app->getCurrentUserName();
+        $usuarioOriginal = Usuario::buscaUsuario($nombreUsuario);
+
+        if (!$usuarioOriginal) {
+            return ["Error: No se ha encontrado el usuario."];
         }
-        
+
+        $nuevoNombre = trim($datos['nombre'] ?? '');
+        if (!empty($nuevoNombre) && $nuevoNombre !== $usuarioOriginal->getNombre()) {
+            Usuario::actualizaNombreReal($nombreUsuario, $nuevoNombre);
+        }
+
+        $nuevosApellidos = trim($datos['apellidos'] ?? '');
+        if (!empty($nuevosApellidos) && $nuevosApellidos !== $usuarioOriginal->getApellidos()) {
+            Usuario::actualizaApellidos($nombreUsuario, $nuevosApellidos);
+        }
+
+        $nuevoCorreo = trim($datos['correo'] ?? '');
+        if (!empty($nuevoCorreo) && $nuevoCorreo !== $usuarioOriginal->getEmail()) {
+            Usuario::actualizaEmail($nombreUsuario, $nuevoCorreo);
+        }
+
         $password = trim($datos['password'] ?? '');
-        $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $password || empty($password) ) {
-            $this->errores['password'] = 'La contraseña no puede estar vacía.';
+        if (!empty($password)) {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            Usuario::actualizaPassword($nombreUsuario, $hash);
         }
 
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $correo = trim($datos['correo'] ?? '');
-        $correo = filter_var($correo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $correo || empty($correo) ) {
-            $this->errores['correo'] = 'El correo no puede estar vacío.';
-        }
-
-        if($tipo === 'borrar'){
-            $avatar = "avatar1.png"; //Por defecto
-        }
-        elseif($tipo === 'galeria') {
-            $avatar = $datos['avatarGaleria'];
-        } 
-        elseif($tipo === 'subida') {
-            if(isset($_FILES['avatarArchivo']) && $_FILES['avatarArchivo']['error'] === UPLOAD_ERR_OK) {
-                $archivoTmp = $_FILES['avatarArchivo']['tmp_name'];
-                //time() para garantizar nombres únicos, evita que un usuario sobrescriba la foto de otro
-                $nombreArchivo = time() . "_" . $_FILES['avatarArchivo']['name'];
-                
-                if(move_uploaded_file($archivoTmp, RAIZ_APP . "/img/avatares/" . $nombreArchivo)) {
-                    $avatar = $nombreArchivo;
-                }
-                else {
-                    $this->errores['avatar'] = "Error al subir la imagen.";
-                }
-            }
-        }
-        
-        if (count($this->errores) === 0) {
-            $aux = new Usuario($nombreUsuario, $correo, $datos['nombre'], $datos['$apellidos'], $hash, $datos['rol'], $avatar);
-            $usuario = Usuario::actualiza($aux);
-        
-            if (!$usuario) {
-                $this->errores[] = "El usuario o la contraseña no coinciden";
+   
+        $tipo = $datos['tipoAvatar'] ?? 'nada';
+        if ($tipo === 'borrar') {
+            Usuario::actualizaAvatar($nombreUsuario, "avatar1.png");
+        } elseif ($tipo === 'subida' && isset($_FILES['avatarArchivo']) && $_FILES['avatarArchivo']['error'] === UPLOAD_ERR_OK) {
+            $nombreF = time() . "_" . $_FILES['avatarArchivo']['name'];
+            if (move_uploaded_file($_FILES['avatarArchivo']['tmp_name'], RAIZ_APP . "/img/avatares/" . $nombreF)) {
+                Usuario::actualizaAvatar($nombreUsuario, $nombreF);
             } else {
-                $app = Aplicacion::getInstance();
-                $app->loginUser($usuario);
+                $this->errores[] = "Error al subir el archivo.";
             }
+        }
+
+        if (count($this->errores) === 0) {
+            $usuarioModificado = Usuario::buscaUsuario($nombreUsuario);
+            $app->loginUser($usuarioModificado);
+            
+            $this->urlRedireccion = RUTA_APP . '/miCuenta.php';
         }
     }
 }

@@ -138,14 +138,14 @@ class formularioActProducto extends Formulario
 
         $iva = $productoActual->getIva();
 
-        $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
-        $ofertado = isset($datos['ofertado']) ? 1 : 0;
-        $cocinable = isset($datos['cocinable']) ? 1 : 0;
+        $disponibilidad = isset($_POST['disponibilidad']) ? 1 : 0;
+        $ofertado = isset($_POST['ofertado']) ? 1 : 0;
+        $cocinable = isset($_POST['cocinable']) ? 1 : 0;
 
         
         if (count($this->errores) === 0) {
-            $aux = new Producto($nombreProducto, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
-            $producto = Producto::actualiza($aux);
+            // Como el producto ya existe, el método guarda() llamará internamente a actualiza().
+            $resultado = Producto::crea($nombreProducto, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
 
             if (!$producto) {
                 $this->errores[] = "El producto no se ha actualizado";

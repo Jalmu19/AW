@@ -14,19 +14,23 @@ class TablaCocinero extends Tabla {
             $html = "";
 
             foreach ($valor as $producto) {
+                $checked = ($producto['preparado'] == 1) ? 'checked' : '';
+                $disabled = ($producto['preparado'] == 1) ? 'disabled' : '';
+
                 $html .= '
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="num_pedido" value="'.$fila['num_pedido'].'">
                         <input type="hidden" name="fecha_hora" value="'.$fila['fecha_hora'].'">
+                        <input type="hidden" name="nombre_producto" value="'.htmlspecialchars($producto['nombre']).'">
                     
                         <label>
-                        <input type="checkbox" name="producto_preparado"
-                               value="'.$producto['nombre'].'"
-                               onclick="this.form.submit();">
+                        <input type="checkbox" name="marcar_preparado"
+                            value="1" 
+                            '.$checked.' '.$disabled.'
+                            onclick="this.form.submit();">
                         '.htmlspecialchars($producto['nombre']).'
                         </label><br>
                     </form>
-
                 ';
             }
 
@@ -37,33 +41,32 @@ class TablaCocinero extends Tabla {
     }
 
     protected function generaAcciones($fila) {
-
         $numPedido = $fila['num_pedido'];
         $fechaHora = $fila['fecha_hora'];
         $estado = $fila['estado'];
+        $cocineroAsignado = $fila['cocinero']; // Columna cocinero en tabla Pedido
 
         $html = "";
 
-        // Botón para quedarse con el pedido, solo si está en estado "en preparación"
-        if($estado === 'En preparacion'){
+        // Si el pedido no tiene cocinero asignado (es NULL en la BD) y está en preparación
+        if ($cocineroAsignado == null && $estado === 'En preparacion') {
             $html .= "
             <form method='POST'>
                 <input type='hidden' name='num_pedido' value='$numPedido'>
                 <input type='hidden' name='fecha_hora' value='$fechaHora'>
-                <button type='submit'>Aceptar pedido</button>
+                <button type='submit' name='accion' value='aceptar_pedido'>Aceptar pedido</button>
+            </form>
+            ";
+        } else {
+            // Si ya tiene cocinero, solo mostramos el botón de Terminar
+            $html .= "
+            <form method='POST'>
+                <input type='hidden' name='pedido_terminado' value='$numPedido'>
+                <input type='hidden' name='fecha_hora' value='$fechaHora'>
+                <button type='submit'>Terminar pedido</button>
             </form>
             ";
         }
-
-        // Añadimos un botón para poner el pedido a "listo cocina" una vez que 
-        // el cocinero ha marcado todos los productos que tenía por cocinar
-        $html .= "
-        <form method='POST'>
-            <input type='hidden' name='pedido_terminado' value='$numPedido'>
-            <input type='hidden' name='fecha_hora' value='$fechaHora'>
-            <button type='submit'>Terminar pedido</button>
-        </form>
-        ";
 
         return $html;
     }

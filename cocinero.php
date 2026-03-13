@@ -15,13 +15,23 @@ if (!$app->isCurrentUserCook() && !$app->isCurrentUserAdmin()) {
 
 
 // Si se acepta un pedido
-if (isset($_POST['aceptar_pedido'])) {
+if (isset($_POST['accion']) && $_POST['accion'] === 'aceptar_pedido') {
     $numPedido = (int) $_POST['num_pedido'];
     $fechaHora = $_POST['fecha_hora'];
     $cocinero = $app->getCurrentUserName();
 
     Pedido::aceptarPedido($numPedido, $fechaHora, $cocinero);
     header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Si se marca un producto como preparado
+if (isset($_POST['marcar_preparado'])) {
+    $numPedido = (int) $_POST['num_pedido'];
+    $fechaHora = $_POST['fecha_hora'];
+    $nombreProducto = $_POST['nombre_producto'];
+    Pedido::marcarProductoPedido($nombreProducto, $numPedido, $fechaHora);
+    header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
 
@@ -34,20 +44,10 @@ if (isset($_POST['pedido_terminado'])) {
     exit();
 }
 
-// Si se marca un producto como preparado
-if (isset($_POST['producto_preparado'])) {
-    $numPedido = (int) $_POST['num_pedido'];
-    $fechaHora = $_POST['fecha_hora'];
-    $nombreProducto = $_POST['producto_preparado'];
-    Pedido::marcarProductoPedido($nombreProducto, $numPedido, $fechaHora);
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
-}
-
-
 $columnas = [
     'num_pedido' => 'Número del Pedido',
-    'productos' => 'Productos'
+    'productos' => 'Productos',
+    'estado' => 'Acciones'
 ];
 
 // $datos puede venir de la base de datos usando tu clase Pedido, por ejemplo:

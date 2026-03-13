@@ -15,6 +15,10 @@ class TablaPedidos extends Tabla {
             return number_format($valor, 2, ',', '.') . " €";
         }
 
+        if ($campo == 'productos') {
+            return htmlspecialchars_decode($valor);
+        }
+
         return parent::formateaContenido($campo, $valor, $fila);
     }
 

@@ -36,7 +36,7 @@ $filtrosHtml = <<<HTML
 </div>
 HTML;
 
-
+$contenidoPrincipal = '';
 
 if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
     $contenidoPrincipal .= <<<EOS

@@ -61,9 +61,9 @@ class FormularioFinalizarPedido extends Formulario
             $fechaEncoded = urlencode($fechaHora);
             
             if ($metodoPago === 'tarjeta') {
-                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
             } else {
-                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
             }
         } else {
             return ["Error al procesar el pedido en la base de datos. Inténtelo de nuevo."];

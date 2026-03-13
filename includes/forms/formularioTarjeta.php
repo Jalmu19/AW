@@ -56,7 +56,7 @@ class FormularioTarjeta extends Formulario
             $estado = Pedido::cobrarPedido($numPedido, $fechaHora);
 
             if ($estado) {
-                $this->urlRedireccion = RUTA_APP . "/includes/users/vista_confirm_pedido.php?id=$numPedido&fecha=" . urlencode($fechaHora);
+                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_confirm_pedido.php?id=$numPedido&fecha=" . urlencode($fechaHora);
             } else {
                 $this->errores[] = "Error crítico: No se pudo actualizar el pedido en la base de datos.";
             }

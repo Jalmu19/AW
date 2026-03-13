@@ -15,8 +15,8 @@ class Pedido {
     public const ESTADO_CANCELADO = 'Cancelado';
 
     // Tipos
-    public const TIPO_DOMICILIO = 'A domicilio';
-    public const TIPO_LOCAL = 'En local';
+    public const TIPO_DOMICILIO = 'a domicilio';
+    public const TIPO_LOCAL = 'local';
 
     private $num_pedido; 
     private $fecha_hora;
@@ -114,7 +114,7 @@ class Pedido {
     }
 
     //pedidos en proceso de un usuario concreto
-    public function pedidosProcesoUsuario($nombreUsuario){
+    public static function pedidosProcesoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = "SELECT num_pedido, fecha_hora, estado 
@@ -224,11 +224,11 @@ class Pedido {
 
 
     //historial de pedidos de un usuario concreto
-    public function historialPedidoUsuario($nombreUsuario){
+    public static function historialPedidoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = "SELECT p.num_pedido as id, p.fecha_hora, p.total as precio_total, p.estado, p.tipo,
-                        GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
+                         GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
                 FROM Pedido p
                 JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora
                 WHERE p.cliente = ? AND p.estado = '" . self::ESTADO_ENTREGADO . "'

@@ -9,26 +9,25 @@ class formularioActUsuario extends Formulario
 {
     public function __construct() {
         parent::__construct('formEditarPerfil', [
-            'action' => RUTA_APP . '/micuenta.php', 
+            'action' => RUTA_APP . '/includes/perfil/editarPerfil.php', 
             'enctype' => 'multipart/form-data'
         ]);
     }
     
     protected function generaCamposFormulario(&$datos)
     {
-        $app = Aplicacion::getInstance();
-        $user = Usuario::buscaUsuario($app->getCurrentUserName());
-
-        $nombre = $user->getNombre();
-        $apellidos = $user->getApellidos();
-        $correo = $user->getEmail();
+        $nombre = $datos['nombre'] ?? '';
+        $apellidos = $datos['apellidos'] ?? '';
+        $correo = $datos['correo'] ?? '';
+        $password = $datos['password'] ?? '';
+        $imagen = $datos['avatar'] ?? '';
 
         return <<<EOF
         <fieldset>
             <legend>Actualizar perfil</legend>
             <div>
                 <label>Nombre:</label>
-                <input type="text" name="nombre" value="$nombre" />
+                <input type="text" name="nombreUsuario" value="$nombre" />
             </div>
             <div>
                 <label>Apellidos:</label>
@@ -57,7 +56,7 @@ class formularioActUsuario extends Formulario
     protected function procesaFormulario(&$datos)
     {
         $app = Aplicacion::getInstance();
-        $nombreUsuario = $app->getCurrentUserName();
+        $nombreUsuario = $datos['nombreUsuario'] ?? $app->getCurrentUserName();
         $usuarioOriginal = Usuario::buscaUsuario($nombreUsuario);
 
         if (!$usuarioOriginal) {
@@ -86,7 +85,7 @@ class formularioActUsuario extends Formulario
         }
 
    
-        $tipo = $datos['tipoAvatar'] ?? 'nada';
+        $tipo = $datos['avatar'] ?? 'nada';
         if ($tipo === 'borrar') {
             Usuario::actualizaAvatar($nombreUsuario, "avatar1.png");
         } elseif ($tipo === 'subida' && isset($_FILES['avatarArchivo']) && $_FILES['avatarArchivo']['error'] === UPLOAD_ERR_OK) {

@@ -11,9 +11,6 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-
-//$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
 //Intenta obtener el nombre de la URL (GET), y si no está, del formulario (POST)
 $nombre = $_GET['id'] ?? $_POST['nombre'] ?? null;
 

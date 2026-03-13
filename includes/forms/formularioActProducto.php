@@ -17,7 +17,7 @@ class formularioActProducto extends Formulario
     
     protected function generaCamposFormulario(&$datos)
     {
-        $nombreProducto =$datos['nombre'] ?? '';
+        $nombreProducto = $datos['nombre'];
         $precio = $datos['precio'] ?? '';
         $categoria = $datos['categoria'] ?? '';
         $descripcion = $datos['descripcion'] ?? '';
@@ -107,8 +107,9 @@ class formularioActProducto extends Formulario
         $productoActual = Producto::buscaProducto($nombreProducto);
         if (!$productoActual) {
             $this->errores[] = "El producto no existe.";
-        return;
-    }
+            return;
+        }
+
         $categoria = trim($datos['categoria'] ?? '');
         $categoria = filter_var($categoria, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $categoria || empty($categoria) ) {
@@ -136,16 +137,16 @@ class formularioActProducto extends Formulario
             }
         }
 
-        $iva = $productoActual->getIva();
+        $iva = $datos['descripcion'] ?? '';
 
-        $disponibilidad = isset($_POST['disponibilidad']) ? 1 : 0;
-        $ofertado = isset($_POST['ofertado']) ? 1 : 0;
-        $cocinable = isset($_POST['cocinable']) ? 1 : 0;
+        $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
+        $ofertado = isset($datos['ofertado']) ? 1 : 0;
+        $cocinable = isset($datos['cocinable']) ? 1 : 0;
 
         
         if (count($this->errores) === 0) {
             // Como el producto ya existe, el método guarda() llamará internamente a actualiza().
-            $resultado = Producto::crea($nombreProducto, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
+            $producto = Producto::crea($nombreProducto, $precio, $disponibilidad, $iva, $ofertado, $descripcion, $nombreImagen, $categoria, $cocinable);
 
             if (!$producto) {
                 $this->errores[] = "El producto no se ha actualizado";

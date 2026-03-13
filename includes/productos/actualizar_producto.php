@@ -12,27 +12,33 @@ if (!$app->isCurrentUserAdmin()) {
 }
 
 
-$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-if(! $nombre){
+//$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+//Intenta obtener el nombre de la URL (GET), y si no está, del formulario (POST)
+$nombre = $_GET['id'] ?? $_POST['nombre'] ?? null;
+
+// Si no hay ID en la URL y no es un envío de formulario, redirigimos
+if (!$nombre) {
     header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
     exit();
 }
 
-$producto = Producto::buscaProducto($nombre);
-if(!$producto){
+$producto = Producto::buscaProducto($nombre); //
+if (!$producto) {
     header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
     exit();
 }
 
+// Preparamos los datos para que el formulario se pinte con los valores actuales
 $datos = [
-'nombre' => $producto->getNombre(),
-'precio' => $producto->getPrecio(),
-'categoria' => $producto->getCategoria(),
-'descripcion' => $producto->getDescripcion(),
-'imagen' => $producto->getImagen(),
-'disponibilidad' => $producto->getDisponibilidad(),
-'ofertado' => $producto->getOfertado(),
-'cocinable' => $producto->getCocinable()
+    'nombre' => $producto->getNombre(),
+    'precio' => $producto->getPrecio(),
+    'categoria' => $producto->getCategoria(),
+    'descripcion' => $producto->getDescripcion(),
+    'imagen' => $producto->getImagen(),
+    'disponibilidad' => $producto->getDisponibilidad(),
+    'ofertado' => $producto->getOfertado(),
+    'cocinable' => $producto->getCocinable()
 ];
 
 

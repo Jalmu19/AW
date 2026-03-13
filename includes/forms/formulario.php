@@ -184,16 +184,18 @@ abstract class Formulario
      *   </li>
      * </ul>
      */
-    public function gestiona()
+    public function gestiona($datosIniciales = array())
     {
         $datos = &$_POST;
         if (strcasecmp('GET', $this->method) == 0) {
             $datos = &$_GET;
+        } else {
+            $datos = &$_POST;
         }
         $this->errores = [];
 
         if (!$this->formularioEnviado($datos)) {
-            return $this->generaFormulario();
+            return $this->generaFormulario($datosIniciales);
         }
 
         $this->procesaFormulario($datos);

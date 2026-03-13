@@ -17,7 +17,7 @@ if (!$app->isCurrentUserAdmin()) {
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-$contenidoPrincipal = "<h1>Gestión de Usuarios</h1>";
+
 
 // Concatenamos los mensajes a la variable principal para que salgan en el cuerpo de la página
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
@@ -38,9 +38,16 @@ $tabla = new TablaUsuarios($columnas, $result, $accion);
 $htmlTabla = $tabla->genera();
 
 $tituloPagina = "Administración de Usuarios";
-$contenidoPrincipal .= <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
+$contenidoPrincipal = <<<EOS
+<div>
+    <a href="../../gerente.php">← Volver al panel</a> 
+</div>
+
+<div>
+    <h1>Gestión de Usuarios</h1>
+</div>
 EOS;
+
 $contenidoPrincipal .= $htmlTabla;
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

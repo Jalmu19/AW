@@ -57,13 +57,11 @@ foreach ($roles as $val => $nombre) {
 }
 
 
-$contenidoPrincipal .= <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
+$contenidoPrincipal = <<<EOS
+    <a href="listar_usuario.php">← Volver al listado</a> 
 EOS;
 
-
-
-$contenidoPrincipal = <<<EOS
+$contenidoPrincipal .= <<<EOS
 <h1>Modificar Rol del Usuario: $nombreUsuario</h1>
 <form method="POST">
     <fieldset>

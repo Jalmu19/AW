@@ -46,7 +46,7 @@ $contenidoPrincipal = <<< EOS
     </div>
 EOS;
 
-$contenidoPrincipal = <<<EOS
+$contenidoPrincipal .= <<<EOS
 <div>
     <h2>Gestión de Inventario: Actualizar $nombre </h2>
     <p>Rellena todos los campos para actualizar el producto en la carta.</p>

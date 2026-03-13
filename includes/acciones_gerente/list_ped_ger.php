@@ -24,8 +24,8 @@ $columnas = [
 
 $tituloPagina = "Visualización de Pedidos";
 
-$contenidoPrincipal  .= <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
+$contenidoPrincipal  = <<<EOS
+    <a href="../../gerente.php">← Volver al panel</a> 
     <h1>Visualización de Pedidos</h1>
 EOS;
 

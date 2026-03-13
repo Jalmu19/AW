@@ -1,6 +1,7 @@
 <?php
-
-use BistroFDI\Aplicacion;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+use BistroFDI\aplicacion;
 /**
  * Parámetros de conexión a la BD
  */

@@ -1,5 +1,6 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 use BistroFDI\tables\tablaPedidos;
 use BistroFDI\aplicacion;
 use BistroFDI\pedidos\Pedido;

@@ -1,6 +1,7 @@
 <?php
 namespace BistroFDI\forms;
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\categorias\Categoria;
 
@@ -13,6 +14,7 @@ class FormularioCategoria extends Formulario {
 
         parent::__construct('formCategoria', [
         'action' => 'crear_y_actualizar_categoria.php' . ($categoria ? '?id='.$categoria->getNombre() : ''),
+        // 'urlRedireccion' => 'listar_categorias.php',  <-- COMENTA ESTO PARA DEPURAR
     ]);
     }
 

@@ -1,5 +1,7 @@
 <?php
 namespace BistroFDI\forms;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 /**
  * Clase base para la gestión de formularios.
  */

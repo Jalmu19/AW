@@ -22,7 +22,7 @@ if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
 $contenidoPrincipal .= <<<EOS
 <div>
-  <a href="../../carta.php">← Volver al inicio</a> 
+  <a href="../../carta.php">← Volver a la carta</a> 
 </div>
 EOS;
 

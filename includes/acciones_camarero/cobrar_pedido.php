@@ -33,8 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido'])) {
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-$tituloPagina = "Cobrar Pedidos";
-$contenidoPrincipal = "<h1>Pedidos Pendientes de Cobro</h1>";
 
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
@@ -45,16 +43,20 @@ $columnas = [
     'productos' => 'Productos'
 ];
 
+
 $contenidoPrincipal .= <<<EOS
     <div>
         <a href="../../camarero.php">← Volver al Panel</a>
     </div>
-EOS;
 
+    <h1>Pedidos Pendientes de Cobro</h1>
+EOS;
 
 $pedidos = Pedido::getPedidosParaCobrar();
 $tabla = new TablaCobrarPedidos($columnas, $pedidos, true);
 
 $contenidoPrincipal .= $tabla->genera();
+
+$tituloPagina = "Cobrar Pedidos";
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

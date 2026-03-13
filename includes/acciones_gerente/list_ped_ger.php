@@ -21,10 +21,15 @@ $columnas = [
     'estado'     => 'Estado',
 ];
 
-$tabla = new TablaPedidosGerente($columnas, $pedidos, true);
 
 $tituloPagina = "Visualización de Pedidos";
-$contenidoPrincipal  = "<h1>Visualización de Pedidos</h1>";
+
+$contenidoPrincipal  .= <<<EOS
+    <a href="../../index.php">← Volver al inicio</a> 
+    <h1>Visualización de Pedidos</h1>
+EOS;
+
+$tabla = new TablaPedidosGerente($columnas, $pedidos, true);
 $contenidoPrincipal .= $tabla->genera();
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

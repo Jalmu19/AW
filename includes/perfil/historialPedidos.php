@@ -32,8 +32,9 @@ $tabla = new TablaPedidos($columnas, $result, false);
 $htmlTabla = $tabla->genera();
 
 $contenidoPrincipal = <<<EOS
-    <h1>Historial de Pedidos</h1>
     <a href="{$ruta}/miCuenta.php">← Volver a mi cuenta</a>
+
+    <h1>Historial de Pedidos</h1>
     <div>
         $htmlTabla
     </div>

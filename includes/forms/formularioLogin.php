@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\users\Usuario;
+use BistroFDI\pedidos\formulario;
 use BistroFDI\aplicacion;
 
 class FormularioLogin extends Formulario

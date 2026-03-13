@@ -2,6 +2,7 @@
 namespace BistroFDI\tables;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+use BistroFDI\tables\tabla;
 class TablaCobrarPedidos extends Tabla {
 
     protected function formateaContenido($campo, $valor, $fila) {

@@ -3,6 +3,7 @@ namespace BistroFDI\forms;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\pedidos\Pedido;
+use BistroFDI\pedidos\formulario;
 
 class FormularioTarjeta extends Formulario
 {

@@ -13,7 +13,7 @@ CREATE TABLE `Usuarios` (
     `apellidos` varchar(50) NOT NULL,
     `email` varchar(20) NOT NULL,
     `password` varchar(80) NOT NULL,
-    `rol` varchar(20) NOT NULL, 
+    `rol` int NOT NULL, 
     `avatar` varchar(100) NOT NULL,
     PRIMARY KEY (`nombreUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

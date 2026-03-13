@@ -17,6 +17,10 @@ class FormularioTarjeta extends Formulario
     
     protected function generaCamposFormulario(&$datos)
     {
+
+        $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
+        $erroresCampos = self::generaErroresCampos(['numTarjeta', 'fCaducidad', 'cve'], $this->errores, 'span', array('class' => 'error'));
+
         // Recuperamos valores si el usuario ya los escribió y hubo un error de validación
         $numTarjeta = $datos['numTarjeta'] ?? '';
         $fCaducidad = $datos['fCaducidad'] ?? '';
@@ -29,8 +33,13 @@ class FormularioTarjeta extends Formulario
             <legend>Pago con tarjeta bancaria</legend>
             <div>
                 <p>Número de tarjeta: <input type="text" name="numTarjeta" value="$numTarjeta" maxlength="12" required /></p>
+                {$erroresCampos['numTarjeta']}
+
                 <p>Fecha caducidad (MM/YY): <input type="text" name="fCaducidad" value="$fCaducidad" placeholder="MM/YY" required /></p>
+                 {$erroresCampos['fCaducidad']}
+
                 <p>CVE: <input type="password" name="cve" value="$cve" maxlength="3";" required /></p>
+                 {$erroresCampos['cve']}
                 <button type="submit">Finalizar Pago</button>
             </div>
         </fieldset>
@@ -49,7 +58,7 @@ class FormularioTarjeta extends Formulario
         //Validar tarjeta
         if (strlen($tarjeta) !== 12 || !is_numeric($tarjeta)) {
             $this->errores['numTarjeta'] = 'El número de tarjeta debe tener 12 dígitos.';
-        }
+        } 
 
         if (count($this->errores) === 0) {
   

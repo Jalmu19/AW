@@ -14,7 +14,7 @@ define('BD_PASS', 'awpass');
  * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación
  */
 define('RAIZ_APP', dirname(__DIR__));
-define('RUTA_APP', '/AW/AW');
+define('RUTA_APP', '/AW');
 define('RUTA_IMGS', RUTA_APP.'/img/');
 define('RUTA_CSS', RUTA_APP.'/css/');
 define('RUTA_JS', RUTA_APP.'/js/');
@@ -61,4 +61,5 @@ $app = Aplicacion::getInstance();
 $app->init(['host' => BD_HOST, 'bd'   => BD_NAME, 'user' => BD_USER, 'pass' => BD_PASS]);
 
 // Cierre automático de conexión al finalizar el script
+
 register_shutdown_function([$app, 'shutdown']);

@@ -29,7 +29,7 @@ $contenidoPrincipal = <<<EOS
     <div>
         <a href="index.php">← Volver al inicio</a>
         <div>
-            <img src="{$ruta_img}{$usuario->getAvatar()}" alt="Avatar">
+            <img src="{$ruta_img}avatares/{$usuario->getAvatar()}" alt="Avatar">
             <div>
                 <h1>Hola, {$usuario->getNombreUsuario()}</h1>
                 <a href="{$ruta}editarPerfil.php">Editar mis datos</a>

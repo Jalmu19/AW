@@ -1,6 +1,6 @@
 <?php
 namespace BistroFDI\users;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 class Usuario {
 

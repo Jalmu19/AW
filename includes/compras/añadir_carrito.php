@@ -1,6 +1,6 @@
 <?php
 use BistroFDI\users\Usuarios;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\pedidos\Pedido;
 
 require_once dirname(__DIR__).'/config.php';

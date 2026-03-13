@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\Aplicacion;
-use BistroFDI\tables\TablaProductos;
+use BistroFDI\aplicacion;
+use BistroFDI\tables\tablaProductos;
 use BistroFDI\productos\Producto;
 
 $app = Aplicacion::getInstance();

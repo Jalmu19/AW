@@ -35,12 +35,6 @@ INSERT INTO Pedido_Producto VALUES('pollo', 1, '16-02-2025 20:46:00', 4, false);
 INSERT INTO Pedido_Producto VALUES('salmon', 1, '17-02-2025 19:37:00', 5, false);
 INSERT INTO Pedido_Producto VALUES('coca-cola', 1, '17-02-2025 19:37:00', 5, false);
 
-INSERT INTO Cocinero_Producto VALUES('silvia', 'pasta');
-INSERT INTO Cocinero_Producto VALUES('silvia', 'pollo');
-INSERT INTO Cocinero_Producto VALUES('silvia', 'salmon');
-INSERT INTO Cocinero_Producto VALUES('marcos', 'pollo');
-INSERT INTO Cocinero_Producto VALUES('marcos', 'brownie');
-
 
 
 

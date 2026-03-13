@@ -3,7 +3,7 @@ namespace BistroFDI\forms;
 
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\users\Usuario;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 class FormularioRegistro extends Formulario
 {

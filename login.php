@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\forms\FormularioLogin;
+use BistroFDI\forms\formularioLogin;
 
 $form = new FormularioLogin();
 $htmlFormLogin = $form->gestiona();

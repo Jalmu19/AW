@@ -1,6 +1,6 @@
 <?php
 namespace BistroFDI\productos;
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 
 class Producto {
     // Categorias de producto: Entrante(1), Primer plato(2), Segundo plato(3), Postre(4)

@@ -29,6 +29,8 @@ CREATE TABLE `Pedido` (
     `cocinero` varchar(10) DEFAULT NULL,
     PRIMARY KEY (`fecha_hora`, `num_pedido`),
     FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`)
+     FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`)
+      FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `Categoria` (
@@ -62,14 +64,6 @@ CREATE TABLE `Pedido_Producto` (
     PRIMARY KEY (`nombre`, `fecha_hora`, `num_pedido`),
     FOREIGN KEY (`nombre`) REFERENCES `Producto` (`nombre`),
     FOREIGN KEY (`fecha_hora`, `num_pedido`) REFERENCES `Pedido` (`fecha_hora`, `num_pedido`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE `Cocinero_Producto` (
-    `cocinero` varchar(10) NOT NULL,
-    `nombre_producto` varchar(15) NOT NULL,
-    PRIMARY KEY (`cocinero`, `nombre_producto`),
-    FOREIGN KEY (`cocinero`) REFERENCES `Usuarios` (`nombreUsuario`),
-    FOREIGN KEY (`nombre_producto`) REFERENCES `Producto` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

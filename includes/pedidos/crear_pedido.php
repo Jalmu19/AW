@@ -2,7 +2,7 @@
 
 //ES EL CARRITO DE LA COMPRA,
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\Aplicacion;
+use BistroFDI\aplicacion;
 use BistroFDI\users\Usuario;
 
 $app = Aplicacion::getInstance();

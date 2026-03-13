@@ -1,9 +1,9 @@
 <?php
 
-use BistroFDI\tables\TablaPedidos;
-use BistroFDI\Aplicacion;
+use BistroFDI\tables\tablaPedidos;
+use BistroFDI\aplicacion;
 use BistroFDI\pedidos\Pedido;
-use BistroFDI\forms\FormularioFinalizarPedido;
+use BistroFDI\forms\formularioFinalizarPedido;
 
 require_once dirname(__DIR__).'/config.php';
 

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\forms\FormularioRegistro;
+use BistroFDI\forms\formularioRegistro;
 
 $form = new FormularioRegistro();
 $htmlFormRegistro = $form->gestiona();

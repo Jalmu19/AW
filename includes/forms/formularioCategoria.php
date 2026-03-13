@@ -13,7 +13,6 @@ class FormularioCategoria extends Formulario {
 
         parent::__construct('formCategoria', [
         'action' => 'crear_y_actualizar_categoria.php' . ($categoria ? '?id='.$categoria->getNombre() : ''),
-        // 'urlRedireccion' => 'listar_categorias.php',  <-- COMENTA ESTO PARA DEPURAR
     ]);
     }
 

@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `Categoria`;
 DROP TABLE IF EXISTS `Producto`;
 DROP TABLE IF EXISTS `Pedido`;
 DROP TABLE IF EXISTS `Pedido_Producto`;
-DROP TABLE IF EXISTS `Cocinero_Producto`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -29,8 +28,8 @@ CREATE TABLE `Pedido` (
     `cocinero` varchar(10) DEFAULT NULL,
     PRIMARY KEY (`fecha_hora`, `num_pedido`),
     FOREIGN KEY (`cliente`) REFERENCES `Usuarios`(`nombreUsuario`)
-     FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`)
-      FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`)
+    FOREIGN KEY (`camarero`) REFERENCES `Usuarios`(`nombreUsuario`)
+    FOREIGN KEY (`cocinero`) REFERENCES `Usuarios`(`nombreUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `Categoria` (

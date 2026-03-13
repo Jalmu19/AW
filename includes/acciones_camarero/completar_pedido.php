@@ -29,6 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido']) && isset(
     exit();
 }
 
+$contenidoPrincipal = <<<EOS
+    <div>
+        <a href="../../camarero.php">← Volver al Panel</a>
+    </div>
+EOS;
+
 //recuperar mensajes (éxito/error al completar los pedidos)
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
@@ -44,13 +50,7 @@ $columnas = [
 ];
 
 
-$contenidoPrincipal .= <<<EOS
-    <div>
-        <a href="../../camarero.php">← Volver al Panel</a>
-    </div>
-
-    <h1>Gestión de Pedidos: Bebidas y Complementos</h1>
-EOS;
+$contenidoPrincipal .= "<h1>Gestión de Pedidos: Bebidas y Complementos</h1>";
 
 $result = Pedido::pedidosParaCompletar();
 

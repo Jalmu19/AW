@@ -23,7 +23,6 @@ $contenidoPrincipal = <<< EOS
 EOS;
 
 
-
 $contenidoPrincipal = <<<EOS
 <h1>Modificar precio del producto</h1>
 <div>

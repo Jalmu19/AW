@@ -21,22 +21,25 @@ $result = $conn->query("SELECT nombre, descripcion FROM Categoria");
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-$contenidoPrincipal = "<h1>Gestión de Categorías</h1>";
-
-// Concatenamos los mensajes a la variable principal para que salgan en el cuerpo de la página
-if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
-if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
-
 $columnas = [
     'nombre'      => 'Nombre',
     'descripcion' => 'Descripción'
 ];
 
-
-
-$contenidoPrincipal .=  <<<EOS
-    <a href="../../index.php">← Volver al inicio</a> 
+$contenidoPrincipal = <<<EOS
+    <a href="../../gerente.php">← Volver al panel</a> 
+    
+<div>
+    <h1>Gestión de Categorías</h1>
+</div>
 EOS;
+
+// Concatenamos los mensajes a la variable principal para que salgan en el cuerpo de la página
+if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
+if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
+
+
+
 $contenidoPrincipal .= <<<EOS
     <form action="crear_y_actualizar_categoria.php" method="get">
         <button type="submit">

@@ -33,6 +33,17 @@ $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
 
+
+
+$contenidoPrincipal = <<<EOS
+    <div>
+        <a href="../../camarero.php">← Volver al Panel</a>
+    </div>
+    <h1>Pedidos Listos para Entregar</h1>
+EOS;
+
+
+
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
@@ -41,14 +52,6 @@ $columnas = [
     'cliente'   => 'Cliente',
     'productos' => 'Contenido'
 ];
-
-
-$contenidoPrincipal .= <<<EOS
-    <div>
-        <a href="../../camarero.php">← Volver al Panel</a>
-    </div>
-    <h1>Pedidos Listos para Entregar</h1>
-EOS;
 
 
 $pedidos = Pedido::getPedidosParaEntregarLocal();

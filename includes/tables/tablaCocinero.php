@@ -44,7 +44,7 @@ class TablaCocinero extends Tabla {
         $numPedido = $fila['num_pedido'];
         $fechaHora = $fila['fecha_hora'];
         $estado = $fila['estado'];
-        $cocineroAsignado = $fila['cocinero']; // Columna cocinero en tabla Pedido
+        $cocineroAsignado = $fila['cocinero'] ?? null; // Columna cocinero en tabla Pedido
 
         $html = "";
 

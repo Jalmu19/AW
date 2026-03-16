@@ -1,8 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\aplicacion;
-use BistroFDI\pedidos\Pedido;
-use BistroFDI\tables\tablaCocinero;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\pedidos\Pedido;
+use BistroFDI\clases\tables\tablaCocinero;
 
 $app = Aplicacion::getInstance();
 $tituloPagina = "Gestión de Cocinero";

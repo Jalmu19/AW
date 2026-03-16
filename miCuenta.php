@@ -1,8 +1,9 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\users\Usuario;
-use BistroFDI\aplicacion;
+use BistroFDI\clases\users\Usuario;
+use BistroFDI\clases\aplicacion;
 
 $app = Aplicacion::getInstance();
 $ruta_img = RUTA_IMGS;

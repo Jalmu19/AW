@@ -1,7 +1,8 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 require_once __DIR__.'/includes/config.php';
-use BistroFDI\forms\formularioRegistro;
+use BistroFDI\clases\forms\formularioRegistro;
 
 $form = new FormularioRegistro();
 $htmlFormRegistro = $form->gestiona();

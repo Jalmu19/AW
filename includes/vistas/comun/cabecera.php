@@ -26,7 +26,7 @@ function perfil() {
         $rutaRegistro = RUTA_APP . '/registro.php';
         $rutaLogin = RUTA_APP . '/login.php';
 
-        $html = "<div>
+        $html = "<div class=login-registro>
             <a href='$rutaLogin'>Login</a> | <a href='$rutaRegistro'>Registro</a>
         </div>";
     }

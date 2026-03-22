@@ -1,11 +1,9 @@
 <?php
-namespace BistroFDI\clases\forms;
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+namespace BistroFDI\forms;
+
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\users\Usuario;
-use BistroFDI\clases\aplicacion;
-use BistroFDI\clases\forms\formulario;
+use BistroFDI\users\Usuario;
+use BistroFDI\aplicacion;
 
 class FormularioLogin extends Formulario
 {
@@ -25,14 +23,14 @@ class FormularioLogin extends Formulario
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         $htmlErroresGlobales
-        <fieldset>
+        <fieldset class="formularioLog">
             <legend>Usuario y contraseña</legend>
             <div>
                 <label for="nombreUsuario">Nombre de usuario:</label>
                 <input id="nombreUsuario" type="text" name="nombreUsuario" value="$nombreUsuario" />
                 {$erroresCampos['nombreUsuario']}
             </div>
-            <div>
+            <div class="formularioLog"> 
                 <label for="password">Contraseña:</label>
                 <input id="password" type="password" name="password" />
                 {$erroresCampos['password']}
@@ -41,7 +39,9 @@ class FormularioLogin extends Formulario
                 <button type="submit" name="login">Entrar</button>
             </div>
             
+            <div>
             <p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
+            <div>
 
         </fieldset>
         EOF;

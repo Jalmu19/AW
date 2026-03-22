@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\users\Usuario;
 /**
  * Parámetros de conexión a la BD
  */
@@ -28,8 +29,9 @@ setLocale(LC_ALL, 'es_ES.UTF.8');
 date_default_timezone_set('Europe/Madrid');
 
 // Carga de clases principales
+/*
 require_once __DIR__ . '/aplicacion.php';
-require_once __DIR__ . '/users/Usuario.php';
+require_once __DIR__ . '/users/Usuario.php';*/
 
 //Función para autocargar clases PHP.
 spl_autoload_register(function ($class) {

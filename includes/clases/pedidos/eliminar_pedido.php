@@ -13,10 +13,12 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$nombre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombre = filter_input(INPUT_GET, 'num_pedido', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$fecha_hora = filter_input(INPUT_GET, 'fecha_hora', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 
 if ($nombre) {
-    if (Pedido::borra($nombre)) {
+    if (Pedido::borra($nombre, $fecha_hora)) {
         // Guardamos un mensaje de éxito para mostrarlo en la siguiente petición
         $app->putRequestAttribute('mensaje', "El pedido '$nombre' ha sido eliminado correctamente.");
     } 

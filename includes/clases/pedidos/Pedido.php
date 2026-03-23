@@ -256,7 +256,7 @@ class Pedido {
     }
 
     //actualizar estado
-    private static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
+    public static function actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Pedido SET estado='%s' WHERE num_pedido=%d AND fecha_hora='%s'",
             $conn->real_escape_string($nuevoEstado), $num_pedido, $conn->real_escape_string($fecha_hora));

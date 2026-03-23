@@ -14,8 +14,7 @@ class FormularioCategoria extends Formulario {
         $this->categoria = $categoria;
 
         parent::__construct('formCategoria', [
-        'action' => 'crear_y_actualizar_categoria.php' . ($categoria ? '?id='.$categoria->getNombre() : ''),
-        // 'urlRedireccion' => 'listar_categorias.php',  <-- COMENTA ESTO PARA DEPURA
+        'action' => 'crear_y_actualizar_categoria.php' . ($categoria ? '?id='.$categoria->getNombre() : '')
     ]);
     }
 

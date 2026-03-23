@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/config.php';
 
 use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\tables\tablaEstProdPed;
+use BistroFDI\clases\gerente\tablaEstProdPed;
 
 $app = Aplicacion::getInstance();
 

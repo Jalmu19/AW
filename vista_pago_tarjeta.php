@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__) . '/config.php';
-use BistroFDI\clases\forms\formularioTarjeta;
+use BistroFDI\clases\pedidos\formularioTarjeta;
 
 //coger los datos enviados por el formulario desde la URL (GET)
 $numPedido = $_GET['id'] ?? null;

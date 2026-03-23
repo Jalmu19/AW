@@ -1,8 +1,15 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
- use BistroFDI\clases\users\formularioActUsuario;
+require_once __DIR__ . '/autoload.php';
+
+use BistroFDI\clases\users\formularioActUsuario;
 use BistroFDI\clases\users\Usuario;
+use BistroFDI\clases\aplicacion;
+
+
+$app = Aplicacion::getInstance();
+
 
 $nombreUsuario = $app->getCurrentUserName();
 $usuario = Usuario::buscaUsuario($nombreUsuario);

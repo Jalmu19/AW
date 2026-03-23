@@ -1,8 +1,13 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-require_once dirname(__DIR__) . '/config.php';
+require_once __DIR__ . '/autoload.php';
+
 use BistroFDI\clases\pedidos\formularioTarjeta;
+use BistroFDI\clases\aplicacion;
+
+
+$app = Aplicacion::getInstance();
 
 //coger los datos enviados por el formulario desde la URL (GET)
 $numPedido = $_GET['id'] ?? null;

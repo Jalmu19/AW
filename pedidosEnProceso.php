@@ -1,7 +1,9 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
- use BistroFDI\clases\pedidos\Pedido;
+require_once __DIR__ . '/autoload.php'; 
+
+use BistroFDI\clases\pedidos\Pedido;
 use BistroFDI\clases\pedidos\tablaPedidos;
 use BistroFDI\clases\aplicacion;
 

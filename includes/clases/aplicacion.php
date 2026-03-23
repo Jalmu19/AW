@@ -5,9 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\clases\users\Usuario;
 
-
-require_once dirname(__DIR__).'/config.php';
-
+require_once __DIR__ . '/../config.php';
 
 /**
  * Clase que mantiene el estado global de la aplicación.
@@ -63,6 +61,9 @@ class Aplicacion
 	 */
 	private function __construct()
 	{
+        $this->init(['host' => BD_HOST,'bd'   => BD_NAME,'user' => BD_USER,'pass' => BD_PASS ]);
+         // Cierre automático de conexión al finalizar el script
+        register_shutdown_function([$this, 'shutdown']);
 	}
 	
     

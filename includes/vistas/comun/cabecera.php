@@ -14,7 +14,7 @@ function perfil() {
         $fotoCarrito = RUTA_APP . '/img/carrito.png';
         $rutaPerfil = RUTA_APP . '/miCuenta.php';
         $rutaLogout = RUTA_APP . '/logout.php';
-        $rutaCarrito = RUTA_APP. '/includes/compras/carrito.php';
+        $rutaCarrito = RUTA_APP. '/carrito.php';
 
         $html = "<div>
             Hola, 

@@ -36,10 +36,10 @@ $columnas = [
     'descripcion' => 'Descripción'
 ];
 
-
+$ruta=RUTA_APP;
 
 $contenidoPrincipal .= <<<EOS
-    <a href="../../gerente.php">← Volver al panel</a>
+    <a href="$ruta/gerente.php">← Volver al panel</a>
 
 <div>
     <h1>Gestión de Productos</h1>

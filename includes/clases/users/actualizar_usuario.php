@@ -7,6 +7,9 @@ use BistroFDI\clases\users\Usuario;
 use BistroFDI\clases\Aplicacion;
 
 
+$app = Aplicacion::getInstance();
+
+
 //solo el gerente
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permiso para realizar esta acción.');

@@ -41,10 +41,12 @@ $accion = true;
 $tabla = new TablaUsuarios($columnas, $result, $accion);
 $htmlTabla = $tabla->genera();
 
+$ruta=RUTA_APP;
+
 $tituloPagina = "Administración de Usuarios";
 $contenidoPrincipal = <<<EOS
 <div>
-    <a href="../../gerente.php">← Volver al panel</a> 
+    <a href="$ruta/gerente.php">← Volver al panel</a> 
 </div>
 
 <div>

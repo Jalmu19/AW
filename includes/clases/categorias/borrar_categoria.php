@@ -3,8 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\clases\categorias\Categoria;
 
-require_once dirname(__DIR__).'/config.php';
-
+ 
 //solo el gerente puede borrar categorias
 if (!$app->isCurrentUserAdmin()) {
     $app->putRequestAttribute('error', 'No tienes permisos para realizar esta acción.');

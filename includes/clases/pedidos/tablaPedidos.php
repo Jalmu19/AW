@@ -2,8 +2,7 @@
 namespace BistroFDI\clases\pedidos;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-require_once dirname(__DIR__).'/config.php';
-
+ 
 use BistroFDI\clases\tabla;
 
 class TablaPedidos extends Tabla {

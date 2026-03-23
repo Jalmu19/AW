@@ -1,7 +1,7 @@
 <?php
 namespace BistroFDI\clases\users;
 
-require_once dirname(__DIR__).'/config.php';
+
 use BistroFDI\clases\users\Usuario;
 use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\formulario;

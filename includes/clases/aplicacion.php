@@ -6,6 +6,9 @@ ini_set('display_startup_errors', 1);
 use BistroFDI\clases\users\Usuario;
 
 
+require_once dirname(__DIR__).'/config.php';
+
+
 /**
  * Clase que mantiene el estado global de la aplicación.
  */

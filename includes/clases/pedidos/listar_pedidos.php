@@ -2,8 +2,7 @@
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\pedidos\tablaPedidos;
+ use BistroFDI\clases\pedidos\tablaPedidos;
 use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 

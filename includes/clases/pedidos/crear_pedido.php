@@ -2,8 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 //ES EL CARRITO DE LA COMPRA,
-require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\aplicacion;
+ use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 
 $app = Aplicacion::getInstance();

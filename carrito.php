@@ -6,8 +6,7 @@ use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 use BistroFDI\clases\pedidos\formularioFinalizarPedido;
 
-require_once dirname(__DIR__).'/config.php';
-
+ 
 $app = Aplicacion::getInstance();
 
 $contenidoPrincipal = '';

@@ -5,8 +5,7 @@ ini_set('display_startup_errors', 1);
 use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 
-require_once dirname(__DIR__).'/config.php';
-
+ 
 
 $app = Aplicacion::getInstance();
 

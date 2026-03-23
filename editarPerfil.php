@@ -5,8 +5,7 @@ require_once __DIR__ . '/autoload.php';
 
 use BistroFDI\clases\users\formularioActUsuario;
 use BistroFDI\clases\users\Usuario;
-use BistroFDI\clases\Aplicacion;
-
+use BistroFDI\clases\aplicacion;
 
 $app = Aplicacion::getInstance();
 

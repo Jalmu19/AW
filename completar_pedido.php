@@ -6,8 +6,7 @@ require_once __DIR__ . '/autoload.php';
 
 use BistroFDI\clases\camarero\tablaCompletarPedidos;
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\Aplicacion;
-
+use BistroFDI\clases\aplicacion;
 $app = Aplicacion::getInstance();
 
 //solo personal autorizado (Camarero, Cocinero o Gerente)

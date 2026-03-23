@@ -1,11 +1,10 @@
 <?php
-namespace BistroFDI\clases\tables;
+namespace BistroFDI\clases\categorias;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\categorias\Categoria;
-use BistroFDI\clases\tables\tabla;
+use BistroFDI\clases\tabla;
 
 class TablaCategorias extends Tabla {
 

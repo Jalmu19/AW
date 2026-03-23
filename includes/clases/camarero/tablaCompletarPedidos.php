@@ -1,9 +1,9 @@
 <?php
-namespace BistroFDI\clases\tables;
+namespace BistroFDI\clases\camarero;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-use BistroFDI\clases\tables\tabla;
+use BistroFDI\clases\tabla;
 
 class TablaCompletarPedidos extends Tabla {
 

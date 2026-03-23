@@ -1,11 +1,11 @@
 <?php
-namespace BistroFDI\clases\forms;
+namespace BistroFDI\clases\productos;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__).'/config.php';
 use BistroFDI\clases\productos\Producto;
 use BistroFDI\clases\categorias\Categoria;
-use BistroFDI\clases\forms\formulario;
+use BistroFDI\clases\formulario;
 
 class FormularioCrearProducto extends Formulario {
 

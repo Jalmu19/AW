@@ -1,11 +1,11 @@
 <?php
-namespace BistroFDI\clases\tables;
+namespace BistroFDI\clases\gerente;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-use BistroFDI\clases\tables\tabla;
+use BistroFDI\clases\tabla;
 
-class TablaPedido extends Tabla {
+class TablaEstProdPed extends Tabla {
 
     public function __construct($datos) {
 

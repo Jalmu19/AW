@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\forms\formularioActPedido;
+use BistroFDI\clases\pedido\formularioActPedido;
 
 //el gerente, camarero o cocinero
 if (!$app->isCurrentUserAdmin() || $app->isCurrentUserCocinero() || $app->isCurrentUserCamarero()) {

@@ -1,9 +1,10 @@
 <?php
-namespace BistroFDI\forms;
+namespace BistroFDI\clases\users;
 
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\users\Usuario;
-use BistroFDI\aplicacion;
+use BistroFDI\clases\users\Usuario;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\formulario;
 
 class FormularioLogin extends Formulario
 {

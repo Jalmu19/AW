@@ -1,9 +1,9 @@
 <?php
-namespace BistroFDI\clases\forms;
+namespace BistroFDI\clases\pedidos;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\forms\formulario;
+use BistroFDI\clases\formulario;
 
 class FormularioTarjeta extends Formulario
 {

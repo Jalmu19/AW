@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once dirname(__DIR__).'/config.php';
-use BistroFDI\clases\forms\formularioActProducto;
+use BistroFDI\clases\productos\formularioActProducto;
 use BistroFDI\clases\productos\Producto;
 
 //solo el gerente

@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php'; 
 
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 
 $app = Aplicacion::getInstance();
@@ -25,7 +25,7 @@ $contenidoPrincipal = '';
 
 $contenidoPrincipal .= <<<EOS
     <div>
-    <a href="../../carta.php">← Volver a la carta</a> 
+    <a href="carta.php">← Volver a la carta</a> 
     </div>
 EOS;
 

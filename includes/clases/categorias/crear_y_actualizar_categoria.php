@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . '/../../../autoload.php';
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
  use BistroFDI\clases\categorias\formularioCategoria;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\categorias\Categoria;
 
 $app = Aplicacion::getInstance(); 

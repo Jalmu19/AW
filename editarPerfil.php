@@ -5,7 +5,7 @@ require_once __DIR__ . '/autoload.php';
 
 use BistroFDI\clases\users\formularioActUsuario;
 use BistroFDI\clases\users\Usuario;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 
 $app = Aplicacion::getInstance();
@@ -32,7 +32,7 @@ $tituloPagina = 'Actualiza Usuario';
 
 $contenidoPrincipal = <<<EOS
 <div>
-   <a href="../../miCuenta.php">← Volver a mi cuenta</a>
+   <a href="miCuenta.php">← Volver a mi cuenta</a>
 </div>
 
 <h1>Actualizacion de usuario</h1>

@@ -1,11 +1,15 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-use BistroFDI\clases\aplicacion;
+require_once __DIR__ . '/../../../autoload.php';
+
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\users\tablaUsuarios;
 use BistroFDI\clases\users\Usuario;
 
+
 $app = Aplicacion::getInstance();
+
 
 //solo el gerente
 if (!$app->isCurrentUserAdmin()) {

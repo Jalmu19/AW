@@ -5,7 +5,7 @@ require_once __DIR__ . '/autoload.php';
 
 use BistroFDI\clases\camarero\tablaEntregarPedidos;
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 
 $app = Aplicacion::getInstance();
@@ -40,7 +40,7 @@ $err = $app->getRequestAttribute('error');
 
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="../../camarero.php">← Volver al Panel</a>
+        <a href="camarero.php">← Volver al Panel</a>
     </div>
     <h1>Pedidos Listos para Entregar</h1>
 EOS;

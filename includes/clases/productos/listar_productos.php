@@ -1,8 +1,10 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+require_once __DIR__ . '/../../../autoload.php';
+
  use BistroFDI\clases\productos\tablaProductos;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\productos\Producto;
 
 $app = Aplicacion::getInstance();

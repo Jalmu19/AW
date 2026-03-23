@@ -2,7 +2,8 @@
 namespace BistroFDI\clases\users;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
+
 
 class Usuario {
 

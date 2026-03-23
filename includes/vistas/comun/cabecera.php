@@ -1,6 +1,6 @@
 <?php
 
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 function perfil() {
     $app = Aplicacion::getInstance();

@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php';
 use BistroFDI\clases\pedidos\tablaPedidos;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
 use BistroFDI\clases\pedidos\formularioFinalizarPedido;
 
@@ -24,7 +24,7 @@ if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
 $contenidoPrincipal .= <<<EOS
 <div>
-  <a href="../../carta.php">← Volver a la carta</a> 
+  <a href="carta.php">← Volver a la carta</a> 
 </div>
 EOS;
 

@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php'; 
 use BistroFDI\clases\pedidos\Pedido;
 use BistroFDI\clases\pedidos\tablaPedidos;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 $app = Aplicacion::getInstance();
 $ruta = RUTA_APP;

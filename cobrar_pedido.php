@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php'; 
 
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 use BistroFDI\clases\camarero\tablaCobrarPedidos;
 use BistroFDI\clases\pedidos\Pedido;
 
@@ -39,7 +39,7 @@ $err = $app->getRequestAttribute('error');
 
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="../../camarero.php">← Volver al Panel</a>
+        <a href="camarero.php">← Volver al Panel</a>
     </div>
 
     <h1>Pedidos Pendientes de Cobro</h1>

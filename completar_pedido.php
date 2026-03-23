@@ -6,7 +6,7 @@ require_once __DIR__ . '/autoload.php';
 
 use BistroFDI\clases\camarero\tablaCompletarPedidos;
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 $app = Aplicacion::getInstance();
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido']) && isset(
 
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="../../camarero.php">← Volver al Panel</a>
+        <a href="camarero.php">← Volver al Panel</a>
     </div>
 EOS;
 

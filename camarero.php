@@ -3,17 +3,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
  
 require_once __DIR__ . '/autoload.php';
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 $app = Aplicacion::getInstance();
 
 
 $tituloPagina = "Gestión de Camarero";
 
-$rutaAcciones = RUTA_APP .'/includes/acciones_camarero/';
-$Completar = $rutaAcciones . "completar_pedido.php";
-$Entregar  = $rutaAcciones . "entregar_pedido.php";
-$Cobrar    = $rutaAcciones . "cobrar_pedido.php";
+
+$Completar = "completar_pedido.php";
+$Entregar  =  "entregar_pedido.php";
+$Cobrar    = "cobrar_pedido.php";
 
 //solo camareros, cocineros o gerentes
 if (!$app->isCurrentUserLogged() || $app->isCurrentUserClient()) {

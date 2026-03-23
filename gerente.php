@@ -2,17 +2,17 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php';
-use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\Aplicacion;
 
 $app = Aplicacion::getInstance();
 
 
 $tituloPagina = "Gestión de Gerente";
 
-$GestionarProducto = RUTA_APP .'/includes/productos/listar_productos.php';
-$GestionarUsuarios = RUTA_APP .'/includes/users/listar_usuario.php';
-$GestionarCategorias = RUTA_APP .'/includes/categorias/listar_categorias.php';
-$VisualizarPedidos = RUTA_APP .'/includes/acciones_gerente/list_ped_ger.php';
+$GestionarProducto = RUTA_APP .'/includes/clases/productos/listar_productos.php';
+$GestionarUsuarios = RUTA_APP .'/includes/clases/users/listar_usuario.php';
+$GestionarCategorias = RUTA_APP .'/includes/clases/categorias/listar_categorias.php';
+$VisualizarPedidos = RUTA_APP .'/list_ped_ger.php';
 
 
 //solo gerentes

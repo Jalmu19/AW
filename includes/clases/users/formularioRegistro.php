@@ -11,7 +11,7 @@ class FormularioRegistro extends Formulario
 {
     public function __construct() {
         parent::__construct('formRegistro', [
-            'urlRedireccion' => 'index.php', 
+            'urlRedireccion' => RUTA_APP . '/index.php', 
             'enctype' => 'multipart/form-data'
         ]);
     }

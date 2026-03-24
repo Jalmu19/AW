@@ -24,10 +24,11 @@ class TablaCobrarPedidos extends Tabla {
     protected function generaAcciones($fila) {
         $idPedido = $fila['id'];
         $fecha = $fila['fecha_hora'];
+        $ruta = RUTA_APP;
 
         //El botón envía la orden de cobro al controlador
         return <<<EOS
-            <form action="cobrar_pedido.php" method="POST">
+            <form action="$ruta/cobrar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$idPedido"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
                 <button type="submit">

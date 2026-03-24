@@ -20,10 +20,11 @@ $pedidos = Pedido::getTodosLosPedidos();
 
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
+$ruta = RUTA_APP;
 
 $contenidoPrincipal =  <<<EOS
     <div>
-    <a href="../../gerente.php">← Volver al panel</a> 
+    <a href="$ruta/gerente.php">← Volver al panel</a> 
     </div>
 
     <h1>Visualización de Pedidos</h1>

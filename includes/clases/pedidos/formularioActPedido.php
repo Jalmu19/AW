@@ -8,7 +8,7 @@ ini_set('display_startup_errors', 1);
 use BistroFDI\clases\formulario;
 
 
-class formularioActPedido extends Formulario
+class FormularioActPedido extends Formulario
 {
     public function __construct() {
         parent::__construct('formActPedido', ['action' => 'actualizar_pedido.php',

@@ -13,7 +13,7 @@ class FormularioTarjeta extends Formulario
     private $fechaHora;
 
     public function __construct($numPedido, $fechaHora) {
-        parent::__construct('formTarjeta', ['action' => "vista_pago_tarjeta.php?id=$numPedido&fecha=" . urlencode($fechaHora)]);
+        parent::__construct('formTarjeta', ['action' => RUTA_APP . "/vista_pago_tarjeta.php?id=$numPedido&fecha=" . urlencode($fechaHora)]);
         
         $this->numPedido = $numPedido;
         $this->fechaHora = $fechaHora;
@@ -69,7 +69,7 @@ class FormularioTarjeta extends Formulario
             $estado = Pedido::cobrarPedido($numPedido, $fechaHora);
 
             if ($estado) {
-                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_confirm_pedido.php?id=$numPedido&fecha=" . urlencode($fechaHora);
+                $this->urlRedireccion = RUTA_APP . "/vista_confirm_pedido.php?id=$numPedido&fecha=" . urlencode($fechaHora);
             } else {
                 $this->errores[] = "Error crítico: No se pudo actualizar el pedido en la base de datos.";
             }

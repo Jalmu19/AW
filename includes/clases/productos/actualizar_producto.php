@@ -20,13 +20,13 @@ $nombre = $_GET['id'] ?? $_POST['nombre'] ?? null;
 
 // Si no hay ID en la URL y no es un envío de formulario, redirigimos
 if (!$nombre) {
-    header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
+    header('Location:'.RUTA_APP.'/includes/clases/productos/listar_productos.php');
     exit();
 }
 
 $producto = Producto::buscaProducto($nombre); //
 if (!$producto) {
-    header('Location:'.RUTA_APP.'/includes/productos/listar_productos.php');
+    header('Location:'.RUTA_APP.'/includes/clases/productos/listar_productos.php');
     exit();
 }
 

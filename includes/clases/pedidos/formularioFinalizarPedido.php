@@ -15,7 +15,7 @@ class FormularioFinalizarPedido extends Formulario
     public function __construct($numPedido, $fechaHora) {
         // Solo necesitamos pasar el ID del formulario y la acción.
         // La redirección se decide dinámicamente en procesaFormulario.
-        parent::__construct('formFinalizar', ['action' => 'carrito.php']);
+        parent::__construct('formFinalizar', ['action' => RUTA_APP . '/carrito.php']);
         $this->numPedido = $numPedido;
         $this->fechaHora = $fechaHora;
     }
@@ -77,9 +77,9 @@ class FormularioFinalizarPedido extends Formulario
             $fechaEncoded = urlencode($fechaHora);
             
             if ($metodoPago === 'tarjeta') {
-                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/vista_pago_tarjeta.php?id=$numPedido&fecha=$fechaEncoded";
             } else {
-                $this->urlRedireccion = RUTA_APP . "/includes/compras/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
+                $this->urlRedireccion = RUTA_APP . "/vista_confirm_pedido.php?id=$numPedido&fecha=$fechaEncoded";
             }
         } else {
             return ["Error al procesar el pedido en la base de datos. Inténtelo de nuevo."];

@@ -11,7 +11,7 @@ class formularioActUsuario extends Formulario
 {
     public function __construct() {
         parent::__construct('formEditarPerfil', [
-            'action' => RUTA_APP . '/includes/perfil/editarPerfil.php', 
+            'action' => RUTA_APP . '/editarPerfil.php', 
             'enctype' => 'multipart/form-data'
         ]);
     }

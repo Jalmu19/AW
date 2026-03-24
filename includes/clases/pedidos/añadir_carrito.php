@@ -4,7 +4,8 @@ require_once __DIR__ . '/../../../autoload.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-use BistroFDI\clases\aplicacion;use BistroFDI\clases\pedidos\Pedido;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\pedidos\Pedido;
 
  
 
@@ -33,7 +34,7 @@ if($nombreProducto && $tipoPedido){
     Pedido::actualizarTotalPedido($fecha_hora, $num_pedido);  
 } 
 
-header('Location: ../../carta.php');
+header('Location: ../../../carta.php');
 exit();
 
 

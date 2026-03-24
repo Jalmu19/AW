@@ -25,9 +25,10 @@ class TablaEntregarPedidos extends Tabla {
     protected function generaAcciones($fila) {
         $id = $fila['id'];
         $fecha = $fila['fecha_hora'];
+        $ruta = RUTA_APP;
 
         return <<<EOS
-            <form action="entregar_pedido.php" method="POST">
+            <form action="$ruta/entregar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$id"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
                 <button type="submit">Entregar</button>

@@ -23,9 +23,10 @@ class TablaCompletarPedidos extends Tabla {
     protected function generaAcciones($fila) {
         $idPedido = $fila['id'];
         $fecha = $fila['fecha_hora'] ?? ''; 
+        $ruta = RUTA_APP;
 
         $html = <<<EOS
-            <form action="completar_pedido.php" method="POST">
+            <form action="$ruta/completar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$idPedido"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
                 <button type="submit">

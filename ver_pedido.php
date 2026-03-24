@@ -17,13 +17,22 @@ if (!$app->isCurrentUserAdmin()) {
 $num = isset($_GET['num_pedido']) ? (int)$_GET['num_pedido'] : 0;
 $fh  = isset($_GET['fecha_hora']) ? (string)$_GET['fecha_hora'] : '';
 
+$contenidoPrincipal="";
+
 if ($num <= 0 || $fh === '') {
     $contenidoPrincipal = "Parámetros inválidos.";
 } else {
 
     $productos = Pedido::getEstadoProductosPedido($num, $fh); 
     $tabla = new TablaEstProdPed($productos);
-    $contenidoPrincipal = $tabla->genera();
+
+    $contenidoPrincipal .= <<<EOS
+    <div>
+         <a href="list_ped_ger.php">← Volver al listado de pedidos</a> 
+    </div>
+    EOS;
+
+    $contenidoPrincipal .= $tabla->genera();
 }
 
 $tituloPagina = "Detalle del pedido";

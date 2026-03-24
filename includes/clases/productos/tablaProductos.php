@@ -53,7 +53,7 @@ class TablaProductos extends Tabla {
             
             return <<<EOS
                 <a href="$urlEditar">Editar</a>
-                <a href="$urlBorrar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
+                <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
             EOS;
         }
 

@@ -41,13 +41,18 @@ header a:hover {
 } 
 
 
+
+
+
 main {
-	padding: 10px;
+	padding: 20px;
 	min-height: 600px;
     box-sizing: border-box;
 	width: 100%; /*ocupa el 100% del contenedor*/
 	background-color: white;
+	text-align:center;
 }
+
 
 h1{ /*todos los titulos en el centro*/
 	text-align:center;
@@ -101,6 +106,33 @@ label {
 }
 
 
+/*//////////////////TABLAS///////////////////////////////////////*/
+table {
+    width: 100%;
+    background-color: white;
+}
+/*encabezados*/
+th {
+    background-color: #329fa8;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+/*celdas*/
+td {
+    padding: 12px 15px;
+}
+.acciones a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+/*estilo del enlace de eliminar*/
+.eliminar { color: #e74c3c; }
+
+.acciones a:hover {
+    text-decoration: underline;
+}
+/*//////////////////////////////////////////////////////////////*/
 
 
 footer {

@@ -30,6 +30,9 @@ if ($num <= 0 || $fh === '') {
     <div>
          <a href="list_ped_ger.php">← Volver al listado de pedidos</a> 
     </div>
+    <div>
+        <h2> Pedido numero $num<h2>
+    </div>
     EOS;
 
     $contenidoPrincipal .= $tabla->genera();

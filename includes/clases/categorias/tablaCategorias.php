@@ -23,7 +23,7 @@ class TablaCategorias extends Tabla {
         
         return <<<EOS
             <a href="$urlEditar">Editar</a>
-            <a href="$urlBorrar" onclick="return confirm('¿Seguro que deseas eliminar esta categoria?')">Borrar</a>
+            <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar esta categoria?')">Borrar</a>
         EOS;
     }
 }

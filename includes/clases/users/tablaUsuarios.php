@@ -34,7 +34,7 @@ class TablaUsuarios extends Tabla {
         
         return <<<EOS
             <a href="$urlEditar">Editar</a>
-            <a href="$urlBorrar" onclick="return confirm('¿Borrar a $id?')">Borrar</a>
+            <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Borrar a $id?')">Borrar</a>
         EOS;
     }
 }

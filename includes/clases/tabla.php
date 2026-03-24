@@ -56,7 +56,7 @@ abstract class Tabla {
         }
         // Solo añade el <td> si hay acciones
         if ($this->mostrarAcciones) {
-            $html .= "<td>" . $this->generaAcciones($fila) . "</td>";
+            $html .= "<td class=acciones>" . $this->generaAcciones($fila) . "</td>";
         }
         $html .= "</tr>";
         return $html;

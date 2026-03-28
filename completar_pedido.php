@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido']) && isset(
 
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="camarero.php">← Volver al Panel</a>
+        <a href="camarero.php" class="btn-volver">← Volver al Panel</a>
     </div>
 EOS;
 

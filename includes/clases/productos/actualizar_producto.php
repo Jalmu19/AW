@@ -49,7 +49,7 @@ $htmlForm = $form->gestiona($datos);
 
 $contenidoPrincipal = <<< EOS
     <div>
-        <a href="listar_productos.php">← Volver al listado</a>
+        <a href="listar_productos.php" class="btn-volver">← Volver al listado</a>
     </div>
 EOS;
 

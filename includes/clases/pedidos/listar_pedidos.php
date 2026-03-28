@@ -24,7 +24,7 @@ $ruta = RUTA_APP;
 
 $contenidoPrincipal =  <<<EOS
     <div>
-    <a href="$ruta/gerente.php">← Volver al panel</a> 
+    <a href="$ruta/gerente.php" class="btn-volver">← Volver al panel</a> 
     </div>
 
     <h1>Visualización de Pedidos</h1>

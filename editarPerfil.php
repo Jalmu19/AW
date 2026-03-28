@@ -31,7 +31,7 @@ $tituloPagina = 'Actualiza Usuario';
 
 $contenidoPrincipal = <<<EOS
 <div>
-   <a href="miCuenta.php">← Volver a mi cuenta</a>
+   <a href="miCuenta.php" class="btn-volver">← Volver a mi cuenta</a>
 </div>
 
 <h1>Actualizacion de usuario</h1>

@@ -7,7 +7,7 @@ body {
 div#contenedor {
     display: flex;
     flex-direction: column;
-	max-width: 1000px;
+	width: 100%;	
 	margin: auto;
 	border: 1px solid black;
 	background-color: #aaaaaa;
@@ -133,6 +133,12 @@ td {
     text-decoration: underline;
 }
 /*//////////////////////////////////////////////////////////////*/
+
+a.btn-volver{
+	position: absolute;
+	left: 75px;
+}
+
 
 
 footer {

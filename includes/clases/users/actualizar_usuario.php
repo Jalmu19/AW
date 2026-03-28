@@ -64,7 +64,7 @@ foreach ($roles as $val => $nombre) {
 
 
 $contenidoPrincipal = <<<EOS
-    <a href="listar_usuario.php">← Volver al listado</a> 
+    <a href="listar_usuario.php" class="btn-volver">← Volver al listado</a> 
 EOS;
 
 $contenidoPrincipal .= <<<EOS

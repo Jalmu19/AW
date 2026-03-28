@@ -28,7 +28,7 @@ if ($num <= 0 || $fh === '') {
 
     $contenidoPrincipal .= <<<EOS
     <div>
-         <a href="list_ped_ger.php">← Volver al listado de pedidos</a> 
+         <a href="list_ped_ger.php"> class="btn-volver"← Volver al listado de pedidos</a> 
     </div>
     <div>
         <h2> Pedido numero $num<h2>

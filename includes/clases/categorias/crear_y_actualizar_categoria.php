@@ -43,7 +43,7 @@ $subtitulo = $modoEdicion
 $contenidoPrincipal = <<<EOS
 <div>
     <div>
-        <a href="listar_categorias.php">← Volver al listado</a>
+        <a href="listar_categorias.php" class="btn-volver">← Volver al listado</a>
     </div>
 
     <h1>Gestión de Inventario: $tituloPagina</h1>

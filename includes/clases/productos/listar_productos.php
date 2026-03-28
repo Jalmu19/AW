@@ -38,7 +38,7 @@ $columnas = [
 $ruta=RUTA_APP;
 
 $contenidoPrincipal .= <<<EOS
-    <a href="$ruta/gerente.php">← Volver al panel</a>
+    <a href="$ruta/gerente.php" class="btn-volver">← Volver al panel</a>
 
 <div>
     <h1>Gestión de Productos</h1>

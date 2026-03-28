@@ -24,7 +24,7 @@ $ruta=RUTA_APP;
 
 $contenidoPrincipal = <<< EOS
     <div>
-        <a href="$ruta/list_ped_ger.php">← Volver al listado</a>
+        <a href="$ruta/list_ped_ger.php" class="btn-volver">← Volver al listado</a>
     </div>
 EOS;
 

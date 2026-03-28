@@ -45,7 +45,7 @@ $ruta=RUTA_APP;
 $tituloPagina = "Administración de Usuarios";
 $contenidoPrincipal .= <<<EOS
 <div>
-    <a href="$ruta/gerente.php">← Volver al panel</a> 
+    <a href="$ruta/gerente.php" class="btn-volver">← Volver al panel</a> 
 </div>
 
 <div>

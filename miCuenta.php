@@ -30,7 +30,7 @@ $infoMsg = $msg ? "<div>$msg</div>" : "";
 $contenidoPrincipal = <<<EOS
 <div>
     <div>
-        <a href="index.php">← Volver al inicio</a>
+        <a href="index.php" class="btn-volver">← Volver al inicio</a>
         <div>
             <img src="{$ruta_img}avatares/{$usuario->getAvatar()}" alt="Avatar">
             <div>

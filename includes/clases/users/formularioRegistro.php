@@ -76,7 +76,7 @@ class FormularioRegistro extends Formulario
                 <input type="file" name="avatarArchivo" accept="image/*">
             </div>
             <div>
-                <button type="submit" name="registro">Registrar</button>
+                <button type="submit" name="registro" class="boton-form">Registrar</button>
             </div>
             <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a></p>
         </fieldset>

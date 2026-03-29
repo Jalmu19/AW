@@ -59,7 +59,7 @@ class FormularioCategoria extends Formulario {
                     {$erroresCampos['descripcion']}
                 </div>
 
-                <button type="submit" name="registro" class="btn-primario">$textoBoton</button>
+                <button type="submit" name="registro" class="boton-form">$textoBoton</button>
             </fieldset>
         EOF;
         return $html;

@@ -33,7 +33,7 @@ class TablaUsuarios extends Tabla {
         $urlBorrar = "borrar_usuario.php?id=$id";
         
         return <<<EOS
-            <a href="$urlEditar">Editar</a>
+            <a href="$urlEditar" class="boton-form">Editar</a>
             <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Borrar a $id?')">Borrar</a>
         EOS;
     }

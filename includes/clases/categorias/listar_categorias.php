@@ -40,20 +40,19 @@ EOS;
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
-
-
-$contenidoPrincipal .= <<<EOS
-    <form action="crear_y_actualizar_categoria.php" method="get">
-        <button type="submit">
-           Añadir Categoría
-        </button>
-    </form>
-EOS;
-
-
 $accion = true;
 $tabla = new TablaCategorias($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
+
+$contenidoPrincipal .= <<<EOS
+    <div class="boton-añadir">
+        <form action="crear_y_actualizar_categoria.php" method="get">
+            <button type="submit">
+            Añadir Categoría
+            </button>
+        </form>
+    </div>
+EOS;
 
 $tituloPagina = "Administración de Categorías";
 

@@ -35,21 +35,19 @@ $contenidoPrincipal = <<<EOS
             <img src="{$ruta_img}avatares/{$usuario->getAvatar()}" alt="Avatar">
             <div>
                 <h1>Hola, {$usuario->getNombreUsuario()}</h1>
-                <a href="{$ruta}editarPerfil.php">Editar mis datos</a>
+                <a href="{$ruta}editarPerfil.php" class="boton">Editar mis datos</a>
             </div>
         </div>
     </div>
 
-    <div>
+    <div class="panel-perfil">
         <h2>Gestión de Pedidos</h2>
         <div>
-            <a href="{$ruta}pedidosEnProceso.php">
-                <h3>Pedidos en Proceso</h3>
-            </a>
+            <a href="{$ruta}pedidosEnProceso.php" class="boton-form">Pedidos en Proceso</a>
             <p>Consulta el estado actual de tus pedidos activos</p>
 
-            <a href="{$ruta}historialPedidos.php">
-                <h3>Historial de Pedidos</h3>
+            <a href="{$ruta}historialPedidos.php" class="boton-form">
+                Historial de Pedidos
             </a>
             <p>Revisa tus pedidos anteriores y facturas</p>
         </div>

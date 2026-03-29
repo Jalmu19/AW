@@ -30,22 +30,22 @@ $contenidoPrincipal = <<<EOS
     <h1>Panel - Camarero</h1>
     <p>Seleccione la acción que desea realizar sobre los pedidos:</p>
 
-    <div>
+    <div class="panel-botones">
         
         <form action= "$Completar" method="get">
-            <button type="submit">
+            <button type="submit" class="boton">
                 Completar Pedidos
             </button>
         </form>
 
         <form action= "$Entregar" method="get">
-            <button type="submit">
+            <button type="submit" class="boton">
                 Entregar Pedidos
             </button>
         </form>
 
         <form action= "$Cobrar" method="get">
-            <button type="submit">
+            <button type="submit" class="boton">
                 Cobrar Cuenta
             </button>
         </form>

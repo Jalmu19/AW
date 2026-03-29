@@ -31,7 +31,7 @@ class TablaCobrarPedidos extends Tabla {
             <form action="$ruta/cobrar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$idPedido"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
-                <button type="submit">
+                <button type="submit" class="boton-form">
                     Confirmar Pago
                 </button>
             </form>

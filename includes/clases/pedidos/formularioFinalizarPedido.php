@@ -38,8 +38,10 @@ class FormularioFinalizarPedido extends Formulario
             <label><input type="radio" name="metodo_pago" value="tarjeta"> Tarjeta de crédito</label>
 
             <div>
-                <button type="submit" name="accion" value="confirmar">Confirmar y Finalizar Pedido</button>
-                <button type="submit" name="accion" value="cancelar" onclick="return confirm('¿Estás seguro de que deseas cancelar y borrar este pedido?')">
+                <button type="submit" name="accion" value="confirmar" class='boton-form'>
+                    Confirmar y Finalizar Pedido
+                </button>
+                <button type="submit" name="accion" value="cancelar"  class='boton-form' onclick="return confirm('¿Estás seguro de que deseas cancelar y borrar este pedido?')">
                     Cancelar Pedido
                 </button>
             </div>

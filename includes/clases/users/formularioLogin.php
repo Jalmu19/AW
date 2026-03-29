@@ -37,7 +37,7 @@ class FormularioLogin extends Formulario
                 {$erroresCampos['password']}
             </div>
             <div>
-                <button type="submit" name="login">Entrar</button>
+                <button type="submit" name="login" class="boton-form">Entrar</button>
             </div>
             
             <div>

@@ -35,8 +35,8 @@ function perfil() {
 
 <header>
     <div class="logo-central">
-        <a href="<?=__DIR__?>../../registro.php">
-            <img src= "img/logo_bistro.png" alt="Bistro FDI Logo" width= "80"/>
+        <a href="<?= RUTA_APP ?>/index.php">
+            <img src="<?= RUTA_APP ?>/img/logo_bistro.png" alt="Bistro FDI Logo" width="80"/>
         </a>
     </div>
         

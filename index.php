@@ -22,43 +22,37 @@ if($app->isCurrentUserClient()){
 
 //camareros
 if ($app->isCurrentUserWaiter() || $app->isCurrentUserCook() || $app->isCurrentUserAdmin()) {
-$contenidoPrincipal .= <<<EOS
+    $contenidoPrincipal .= '<div class="panel-botones">';
+    
+    $contenidoPrincipal .= <<<EOS
         <form action="carta.php" method="get">
-            <button type="submit">
-                Acceder como Cliente
-            </button>
+            <button type="submit" class="boton">Acceder como Cliente</button>
         </form>   
 
         <form action="camarero.php" method="get">
-            <button type="submit">
-                Acceder como Camarero
-            </button>
+            <button type="submit" class="boton">Acceder como Camarero</button>
         </form>
-EOS;
-
+    EOS;
 }
 
 //cocineros
 if ($app->isCurrentUserCook() || $app->isCurrentUserAdmin()) {
     $contenidoPrincipal .= <<<EOS
         <form action="cocinero.php" method="get">
-            <button type="submit">
-                Acceder como Cocinero
-            </button>
+            <button type="submit" class="boton">Acceder como Cocinero</button>
         </form>
-EOS;
+    EOS;
 }
 
 //gerente
 if ($app->isCurrentUserAdmin()) {
     $contenidoPrincipal .= <<<EOS
         <form action="gerente.php" method="get">
-            <button type="submit">
-                Acceder como Gerente
-            </button>
+            <button type="submit" class="boton">Acceder como Gerente</button>
         </form>
-EOS;
+    EOS;
 }
 
+$contenidoPrincipal .= '</div>';
 
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

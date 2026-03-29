@@ -47,7 +47,7 @@ class FormularioActPedido extends Formulario
             </div>
             
             <div>
-                <button type="submit" name="actualizar">Ok</button>
+                <button type="submit" name="actualizar" class="boton-form">Ok</button>
             </div>
 
         </fieldset>

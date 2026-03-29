@@ -57,7 +57,9 @@ class TablaCocinero extends Tabla {
             <form method='POST'>
                 <input type='hidden' name='num_pedido' value='$numPedido'>
                 <input type='hidden' name='fecha_hora' value='$fechaHora'>
-                <button type='submit' name='accion' value='aceptar_pedido'>Aceptar pedido</button>
+                <button type='submit' name='accion' value='aceptar_pedido'  class='boton-form'>
+                    Aceptar pedido
+                </button>
             </form>
             ";
         } else {
@@ -66,7 +68,9 @@ class TablaCocinero extends Tabla {
             <form method='POST'>
                 <input type='hidden' name='pedido_terminado' value='$numPedido'>
                 <input type='hidden' name='fecha_hora' value='$fechaHora'>
-                <button type='submit'>Terminar pedido</button>
+                <button type='submit' class='boton-form'>
+                    Terminar pedido
+                </button>
             </form>
             ";
         }

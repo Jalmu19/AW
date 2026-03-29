@@ -28,7 +28,7 @@ if ($categoriaSeleccionada == 'Todos') {
 
 
 $filtrosHtml = <<<HTML
-<div>
+<div class="panel-carta-categorias">
     <a href="carta.php?cat=Todos">Todos</a>
     <a href="carta.php?cat=entrante">Entrantes</a>
     <a href="carta.php?cat=primer plato">Primeros</a>

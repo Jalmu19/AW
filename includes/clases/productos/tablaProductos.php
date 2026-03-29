@@ -42,7 +42,7 @@ class TablaProductos extends Tabla {
                 <form action="$urlComprar" method="GET">
                     <input type="hidden" name="id" value="$id">
                     <input type="number" name="cantidad" value="1" min="1" style="width: 40px;">
-                    <button type="submit">Comprar</button>
+                    <button type="submit" class="boton-form">Comprar</button>
                 </form>
             EOS;
         }
@@ -52,7 +52,7 @@ class TablaProductos extends Tabla {
             $urlBorrar = "borrar_producto.php?id=$id";
             
             return <<<EOS
-                <a href="$urlEditar">Editar</a>
+                <a href="$urlEditar" class="boton-form">Editar</a>
                 <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
             EOS;
         }

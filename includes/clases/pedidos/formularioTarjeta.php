@@ -44,7 +44,7 @@ class FormularioTarjeta extends Formulario
 
                 <p>CVE: <input type="password" name="cve" value="$cve" maxlength="3";" required /></p>
                  {$erroresCampos['cve']}
-                <button type="submit">Finalizar Pago</button>
+                <button type="submit" class='boton-form'>Finalizar Pago</button>
             </div>
         </fieldset>
         EOF;

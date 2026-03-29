@@ -44,18 +44,21 @@ $contenidoPrincipal .= <<<EOS
     <h1>Gestión de Productos</h1>
 </div>
 
-<div> 
-   <form action="crear_producto.php" method="get">
-        <button type="submit">
-           Añadir Producto
-        </button>
-    </form>
-</div>
 EOS;
 
 $accion = true;
 $tabla = new TablaProductos($columnas, $result, $accion);
 $contenidoPrincipal .= $tabla->genera();
+
+$contenidoPrincipal .= <<<EOS
+    <div class="boton-añadir">
+        <form action="crear_producto.php" method="get">
+        <button type="submit">
+           Añadir Producto
+        </button>
+    </form>
+    </div>
+EOS;
 
 $tituloPagina = "Administración de Productos";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

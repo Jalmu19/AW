@@ -50,7 +50,7 @@ class formularioActUsuario extends Formulario
                 <input type="radio" name="tipoAvatar" value="subida"> Subir nuevo: 
                 <input type="file" name="avatarArchivo" />
             </div>
-            <button type="submit" name="actualizar">Guardar cambios</button>
+            <button type="submit" name="actualizar" class="boton-form">Guardar cambios</button>
         </fieldset>
         EOF;
     }

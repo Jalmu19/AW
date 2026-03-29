@@ -60,8 +60,8 @@ class TablaPedidosGerente extends Tabla
                     . "&fecha_hora=" . $fecha_hora;
         
         return <<<EOS
-            <a href="$urlVer"> Ver detalles </a>
-            <a href="$urlEditar">Editar</a>
+            <a href="$urlVer" class="boton-form"> Ver detalles </a>
+            <a href="$urlEditar" class="boton-form">Editar</a>
             <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Borrar $num_pedido?')">Borrar</a>
             
         EOS;

@@ -78,8 +78,8 @@ $contenidoPrincipal .= <<<EOS
             </select>
         </div>
         <br>
-        <button type="submit">Guardar Cambios</button>
-        <a href="listar_usuario.php">Cancelar</a>
+        <button type="submit" class="boton-form">Guardar Cambios</button>
+        <a href="listar_usuario.php" class="eliminar">Cancelar</a>
     </fieldset>
 </form>
 EOS;

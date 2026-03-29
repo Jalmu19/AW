@@ -22,7 +22,7 @@ class TablaCategorias extends Tabla {
         $urlBorrar = "borrar_categoria.php?id=$id";
         
         return <<<EOS
-            <a href="$urlEditar">Editar</a>
+            <a href="$urlEditar" class="boton-form">Editar</a>
             <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar esta categoria?')">Borrar</a>
         EOS;
     }

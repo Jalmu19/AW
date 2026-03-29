@@ -29,7 +29,7 @@ class TablaCompletarPedidos extends Tabla {
             <form action="$ruta/completar_pedido.php" method="POST">
                 <input type="hidden" name="idPedido" value="$idPedido"> 
                 <input type="hidden" name="fechaHora" value="$fecha"> 
-                <button type="submit">
+                <button type="submit" class="boton-form">
                     Completar
                 </button>
             </form>

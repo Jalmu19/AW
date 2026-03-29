@@ -81,7 +81,7 @@ class FormularioCrearProducto extends Formulario {
                 <label><input type="checkbox" name="cocinable"> Cocinable </label>
             </div>
 
-            <button type="submit" name="registro" class="btn-primario">Crear Producto</button>
+            <button type="submit" name="registro" class="boton-form">Crear Producto</button>
         </fieldset>
         EOF;
         return $html;

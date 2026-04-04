@@ -17,8 +17,8 @@ function perfil() {
 
         $html = "<div>
             Hola, 
-            <a href='$rutaPerfil'>$nombre<img src='$rutaImg' width='40'></a>
-            <a href='$rutaCarrito'>Mi carrito<img src='$fotoCarrito' width='40'></a>
+            <a href='$rutaPerfil'>$nombre<img src='$rutaImg' class = 'cabecera'></a>
+            <a href='$rutaCarrito'>Mi carrito<img src='$fotoCarrito' class = 'cabecera'></a>
             <a href='$rutaLogout'>Salir</a>
         </div>";
     } else {

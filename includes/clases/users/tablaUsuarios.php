@@ -11,7 +11,7 @@ class TablaUsuarios extends Tabla {
     protected function formateaContenido($campo, $valor, $fila) {
         if ($campo === 'avatar') {
             $rutaImg = RUTA_IMGS . 'avatares/' . $valor;
-            return "<img src='$rutaImg' alt='Usuario' style='width: 50px; height: auto;'>";
+            return "<img src='$rutaImg' alt='Usuario' class='usuario'>";
         }
 
         if ($campo === 'rol') {

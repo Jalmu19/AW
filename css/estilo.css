@@ -66,7 +66,7 @@ fieldset {
 	border: 1px solid black;
 	margin: auto;
 	padding: 20px;	/*margen*/
-	width:fit-content;
+	width:auto;
 	align-items:center
 }
 
@@ -103,7 +103,7 @@ label {
 }
 
 
-/*//////////////////TABLAS///////////////////////////////////////*/
+/*Tablas*/
 table {
     width: 100%;
     background-color: white;
@@ -117,7 +117,7 @@ th {
 }
 /*celdas*/
 td {
-    padding: 12px 15px;
+    padding: 12px 15px;	
 }
 .acciones a {
     text-decoration: none;
@@ -130,14 +130,24 @@ td {
     text-decoration: underline;
 }
 /*//////////////////////////////////////////////////////////////*/
+img.producto{
+	width: 250px;
+	height: auto;
+	border-radius: 10px;
+}
+img.cabecera{
+	width: 40px;
+	height: 38px;
+}
+img.usuario{
+	width: 50px;
+	height: auto;
+}
 
 a.btn-volver{
 	position: absolute;
 	left: 75px;
 }
-
-
-
 footer {
 	clear: both;
 	padding: 20px;

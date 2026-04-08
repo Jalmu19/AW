@@ -14,18 +14,14 @@ div#contenedor {
 }
 
 
-
 header {
     display:flex;
     flex-direction: row;         /*elementos en fila*/
-    justify-content: space-between;      /*con espacio entre ellos y los bordes*/
-    align-items: first baseline;
-	padding: 30px;
-	height: 60px;
+    justify-content: space-between;     /*con espacio entre ellos y los bordes*/
+	align-items: flex-end;
+	padding: 20px;
 	background-color: #b79af2;
 }
-
-
 
 /*letras del header*/
 header a, header a:visited {
@@ -39,6 +35,20 @@ header a:hover {
 	font-weight: bold;
 	text-decoration: underline;
 } 
+
+/*para que imagen perfil y carrito salgan encima del texto*/
+div.perfil_carrito_salir{
+	display: flex;
+    align-items: flex-end;
+	gap: 20px;
+}
+a.perfil_cabecera, a.carrito_cabecera, a.salir_cabecera{
+	display: flex;
+	flex-direction: column;
+	align-items: center;      /* centrar los elems horizontalmente */
+    text-align: center;
+}
+
 
 
 main {
@@ -56,10 +66,6 @@ h1{ /*todos los titulos en el centro*/
 }
 
 
-div.saludo {
-	width: 100%;
-	text-align: right;
-}
 
 
 fieldset {
@@ -93,6 +99,7 @@ fieldset.formularioLog{
 	flex-direction: column;
 	align-items: center;
 	flex-wrap:wrap;
+	max-width:600px;
 	padding: 20px;	/*margen*/
 }
 
@@ -165,6 +172,16 @@ footer {
 
 img.logo-central{
 	width: 80px;
+}
+
+img.perfil, img.carrito{
+	width: 45px;
+	height: auto;
+}
+
+img.logout{
+	width: 35px;
+	height: auto;
 }
 
 /*////////////////////////////////////////////////////////////*/

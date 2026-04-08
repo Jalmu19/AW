@@ -41,7 +41,7 @@ class TablaProductos extends Tabla {
             return <<<EOS
                 <form action="$urlComprar" method="GET">
                     <input type="hidden" name="id" value="$id">
-                    <input type="number" name="cantidad" value="1" min="1" style="width: 40px;">
+                    <input type="number" class="cantidad_producto" name="cantidad" value="1" min="1" > 
                     <button type="submit" class="boton-form">Comprar</button>
                 </form>
             EOS;

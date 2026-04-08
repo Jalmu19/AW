@@ -21,7 +21,7 @@ class TablaCocinero extends Tabla {
                 $disabled = ($producto['preparado'] == 1) ? 'disabled' : '';
 
                 $html .= '
-                    <form method="POST" style="display:inline;">
+                    <form method="POST" >
                         <input type="hidden" name="num_pedido" value="'.$fila['num_pedido'].'">
                         <input type="hidden" name="fecha_hora" value="'.$fila['fecha_hora'].'">
                         <input type="hidden" name="nombre_producto" value="'.htmlspecialchars($producto['nombre']).'">

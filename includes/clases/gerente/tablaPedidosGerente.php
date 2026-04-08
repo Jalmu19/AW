@@ -26,7 +26,7 @@ class TablaPedidosGerente extends Tabla
 
                     if (!empty($cocinero)) {
                         if (!empty($avatar)) {
-                            $texto .= " | " . "<img src='" . htmlspecialchars($avatar, ENT_QUOTES) . "' width='25' height='25'>" . " " . $cocinero;
+                            $texto .= " | " . "<img src='" . htmlspecialchars($avatar, ENT_QUOTES)  "'>" . " " . $cocinero;
                         } else {
                             $texto .= " | " . $cocinero;
                         }

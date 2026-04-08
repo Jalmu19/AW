@@ -102,6 +102,11 @@ label {
 	display: inline;
 }
 
+/*texto que indica cantidad del producto a comprar*/
+form .cantidad_producto{
+	width: 40px;
+}
+
 
 /*Tablas*/
 table {
@@ -129,6 +134,8 @@ td {
 .acciones a:hover {
     text-decoration: underline;
 }
+
+
 /*//////////////////////////////////////////////////////////////*/
 img.producto{
 	width: 250px;
@@ -156,6 +163,9 @@ footer {
 	text-align: center;
 }
 
+img.logo-central{
+	width: 80px;
+}
 
 /*////////////////////////////////////////////////////////////*/
 

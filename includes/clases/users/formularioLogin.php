@@ -24,14 +24,14 @@ class FormularioLogin extends Formulario
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         $htmlErroresGlobales
-        <fieldset class="formularioLog">
+        <fieldset>
             <legend>Usuario y contraseña</legend>
             <div>
                 <label for="nombreUsuario">Nombre de usuario:</label>
                 <input id="nombreUsuario" type="text" name="nombreUsuario" value="$nombreUsuario" />
                 {$erroresCampos['nombreUsuario']}
             </div>
-            <div class="formularioLog"> 
+            <div> 
                 <label for="password">Contraseña:</label>
                 <input id="password" type="password" name="password" />
                 {$erroresCampos['password']}

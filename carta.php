@@ -55,7 +55,7 @@ $contenidoPrincipal .= <<<EOS
 $filtrosHtml
 <fieldset>
     <legend>Carta - $categoriaSeleccionada</legend>
-    $htmlTabla
+    <div id="carta">$htmlTabla</div>
 </fieldset>
 EOS;
 

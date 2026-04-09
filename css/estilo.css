@@ -2,6 +2,7 @@ body {
 	background-color: #000000;
 	text-align:center;
 	color: white;
+	font-family: Arial;
 }
 
 
@@ -157,10 +158,6 @@ td {
 .eliminar { color: #ff1900;
 	font-weight: bold;
  }
-
-.acciones a:hover {
-    text-decoration: underline;
-}
 
 
 /*//////////////////////////////////////////////////////////////*/

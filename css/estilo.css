@@ -313,7 +313,7 @@ img.logout{
 /*Adaptación a pantallas móviles*/
 @media (max-width: 768px) {
     
- header {
+ 	header {
         display: flex;
         flex-direction: row;      /* Ponemos todo en una línea horizontal */
         align-items: center;      /* Lo centramos verticalmente */
@@ -369,6 +369,14 @@ img.logout{
         max-width: 300px; 
         font-size: 16px;
         padding: 12px 20px;
+    }
+
+	.btn-volver {
+        position: relative;       /* Le quitamos el absolute para que no flote sobre la tabla */
+        top: 0;                   /* Anulamos los 165px del ordenador */
+        width: 70px;              /* Lo hacemos más pequeño, perfecto para un dedo */
+        margin: 10px 0 15px 5px; /* Le damos espacio y lo separamos un poco del borde izquierdo */
+        display: block;           /* Hacemos que ocupe su propia línea */
     }
 
 	/*mantenemos el formato horizontal haciendo que si los botones no caben, bajen de

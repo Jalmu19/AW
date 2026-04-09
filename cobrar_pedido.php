@@ -34,11 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPedido'])) {
 $msg = $app->getRequestAttribute('mensaje');
 $err = $app->getRequestAttribute('error');
 
-
-
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="camarero.php" class="btn-volver">← Volver al Panel</a>
+        <a href="camarero.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
 
     <h1>Pedidos Pendientes de Cobro</h1>

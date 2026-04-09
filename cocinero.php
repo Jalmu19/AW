@@ -64,9 +64,12 @@ $tablaCocinero = new TablaCocinero($columnas, $datos, true);
 $tabla = $tablaCocinero->genera();
 
 // Mostramos en la plantilla
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
 <div>
-    <a href="index.php" class="btn-volver">← Volver al Inicio</a>
+    <a href="index.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>
 </div>
 
 <div>

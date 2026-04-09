@@ -40,10 +40,15 @@ $subtitulo = $modoEdicion
     ? 'Modifica los campos que quieras actualizar de la categoría.' 
     : 'Rellena todos los campos para dar de alta una nueva categoría.';
 
+
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal = <<<EOS
 <div>
     <div>
-        <a href="listar_categorias.php" class="btn-volver">← Volver al listado</a>
+        <a href="listar_categorias.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
 
     <h1>Gestión de Inventario: $tituloPagina</h1>

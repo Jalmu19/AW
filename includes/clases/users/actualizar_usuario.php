@@ -63,8 +63,12 @@ foreach ($roles as $val => $nombre) {
 }
 
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal = <<<EOS
-    <a href="listar_usuario.php" class="btn-volver">← Volver al listado</a> 
+    <a href="listar_usuario.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>
 EOS;
 
 $contenidoPrincipal .= <<<EOS

@@ -1,7 +1,11 @@
 body {
 	background-color: #000000;
-	text-align:center;
 	color: white;
+}
+
+
+header, main, footer {
+    text-align: center;
 }
 
 
@@ -12,6 +16,7 @@ div#contenedor {
 	margin: auto;
 	border: 1px solid black;
 	background-color: #aaaaaa;
+	min-height: 100vh;
 }
 
 
@@ -67,10 +72,10 @@ p a:hover{
 
 main {
 	padding: 20px;
-	min-height: 600px;
     box-sizing: border-box;
 	width: 100%; /*ocupa el 100% del contenedor*/
 	text-align:center;
+	flex-grow: 1;
 
 	/*imagen del fondo*/
 	background-color: transparent;
@@ -86,22 +91,21 @@ h1{ /*todos los titulos en el centro*/
 }
 
 
-
-
 fieldset {
 	border: 1px solid rgb(255, 255, 255);
 	margin: auto;
 	padding: 20px;	/*margen*/
 	width:auto;
-	align-items:center;
 	background-color:rgba(99, 90, 90, 0.427);
 	color: rgb(248, 248, 248);
 }
 
 fieldset div {
+	display: flex;
 	justify-content: center;
 	margin: 10px auto;
-	align-items: flex-end;
+	align-items: center;
+	gap: 10px;
 }
 
 legend {
@@ -193,7 +197,6 @@ a.btn-volver{
 	color: white;
 }
 footer {
-	clear: both;
 	padding: 20px;
 	background-color: #329fa8;
 	color: white;
@@ -297,4 +300,151 @@ img.logout{
  	border: none;
 	border-radius: 6px;
 	cursor: pointer;
+}
+
+
+/*//////////////////////////////////////////////////////////////*/
+
+/*Adaptación a pantallas móviles*/
+@media (max-width: 768px) {
+    
+ header {
+        display: flex;
+        flex-direction: row;      /* Ponemos todo en una línea horizontal */
+        align-items: center;      /* Lo centramos verticalmente */
+        padding: 8px 10px;
+        gap: 10px;                /* Dejamos un hueco bonito entre el logo y el texto */
+    }
+
+    img.logo-central {
+        width: 40px;              /* Logo pequeñito y proporcionado */
+        margin: 0;
+    }
+
+    h1#titulo_restaurante {
+        font-size: 1.1rem;
+        white-space: nowrap;      /* Impide que "BISTRO" y "FDI" se separen en dos líneas */
+        margin: 0;
+    }
+
+    div.perfil_carrito_salir {
+        display: flex;
+        gap: 12px;
+        width: auto;
+        margin-left: auto;        /* ¡LA CLAVE! Actúa como un muelle que empuja los iconos a la derecha */
+    }
+
+    /* Tamaño de los iconos de la derecha */
+    img.perfil,
+    img.carrito,
+    img.logout {
+        width: 27px; 
+        height: auto;
+    }
+
+    /* Textos debajo de los iconos */
+    a.perfil_cabecera, 
+    a.carrito_cabecera, 
+    a.salir_cabecera {
+        font-size: 13px; 
+    }
+
+    /*quitamos la posición absoluta que rompe la vista en el móvil*/
+    a.btn-volver {
+        position: relative;
+        left: 0;
+        display: block;
+        margin-bottom: 20px; 
+    }
+
+    /*hacemos que los botones ocupen casi todo el ancho posible pero sin pasarse en 
+	pantallas intermedias*/
+    .boton {
+        width: 90%;
+        max-width: 300px; 
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+	/*mantenemos el formato horizontal haciendo que si los botones no caben, bajen de
+	linea*/
+	.panel-carta-categorias {
+        flex-direction: row;      
+        flex-wrap: wrap;          
+        width: 95%;              
+        border-radius: 20px;      
+        padding: 10px 15px;       
+        gap: 10px;               
+        justify-content: center;  
+        box-sizing: border-box;
+    }
+
+    .panel-carta-categorias a {
+        font-size: 14px;          /* Reducimos un poco la letra para que quepan más */
+        padding: 5px;
+        display: inline-block;    /* Para que respeten los márgenes */
+    }
+
+    /*añadimos una barra de scroll horizontal para las tablas y las alineamos*/
+    table {
+        display: block; 
+        overflow-x: auto; 
+        white-space: nowrap; 
+		width: 95%;
+		box-sizing: border-box;
+		margin: 20px auto;
+    }
+    
+	/* Reducir el tamaño de los títulos de las páginas en móviles */
+    main h1 {
+        font-size: 1.4rem;       /* Tamaño mucho más amigable para pantallas pequeñas */
+        margin-top: 10px;
+        margin-bottom: 15px;
+        padding: 0 10px;         /* Un poco de espacio a los lados para que no se pegue a los bordes */
+    }
+
+    main {
+        padding: 15px 10px;
+		background-position: top;
+        min-height: auto;
+
+    }
+
+	/*hacemos que el fieldset respete el ancho*/
+	fieldset {
+        width: 95%; 
+        box-sizing: border-box;
+        min-width: 0;        
+        padding: 10px;       
+        overflow: hidden;   
+    }
+
+    fieldset table {
+        width: 100%;
+        margin: 10px 0;
+        /* Aseguramos que la tabla se ajuste y el texto pueda saltar de línea */
+        table-layout: auto; 
+    }
+
+    /* Reducimos el relleno de las celdas y el tamaño de letra */
+    fieldset table th, 
+    fieldset table td {
+        padding: 5px; 
+        font-size: 13px; 
+        text-align: center;
+    }
+
+    /* ¡LA CLAVE! Reducir la imagen del producto solo en móviles */
+    img.producto {
+        width: 70px; /* En ordenador seguirá siendo de 250px, pero en móvil será pequeñita */
+        height: auto;
+    }
+
+    /* Ajustamos las cajas de texto para que sean fáciles de tocar con el dedo */
+    fieldset input {
+        width: 100%; 
+        max-width: 250px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
 }

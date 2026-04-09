@@ -127,8 +127,9 @@ form .cantidad_producto{
 
 /*Tablas*/
 table {
-    width: 100%;
+    width: 80%;
     background-color: #ffffffc7;
+	margin:auto;
 }
 /*encabezados*/
 th {

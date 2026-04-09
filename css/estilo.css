@@ -248,10 +248,10 @@ img.logout{
 
 /*Botones añadir (producto, categoría...) en gerente*/
 .boton-añadir{
-	display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;         
-    padding-right: 20px;
+	position: fixed;      /*fijo en la pantalla*/
+    bottom: 30px;         
+    right: 30px;           
+    z-index: 999;          /*para que esté por encima de la tabla*/
 }
 .boton-añadir form button {
 	background-color: #b79af2; 

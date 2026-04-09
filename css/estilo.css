@@ -134,7 +134,7 @@ div#carta table{
 /*Tablas*/
 table {
     width: 80%;
-    background-color: #ffffffc7;
+    background-color: #9e8787a4;
 	margin:auto;
 }
 /*encabezados*/
@@ -147,14 +147,16 @@ th {
 /*celdas*/
 td {
     padding: 12px 15px;	
-	color: black;
+	color: rgb(255, 255, 255);
 }
 .acciones a {
     text-decoration: none;
     margin-right: 10px;
 }
 /*estilo del enlace de eliminar*/
-.eliminar { color: #e74c3c; }
+.eliminar { color: #ff1900;
+	font-weight: bold;
+ }
 
 .acciones a:hover {
     text-decoration: underline;

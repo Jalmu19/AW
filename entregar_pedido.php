@@ -36,10 +36,12 @@ $err = $app->getRequestAttribute('error');
 
 
 
-
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
     <div>
-        <a href="camarero.php" class="btn-volver">← Volver al Panel</a>
+        <a href="camarero.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
     <h1>Pedidos Listos para Entregar</h1>
 EOS;

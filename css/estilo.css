@@ -210,7 +210,7 @@ img.logout{
     gap: 20px;              
 }
 
-/*Botones de los formularios*/
+/*Botones de los formularios y para volver*/
 .boton-form {
 	background-color: #48C86B; 
     color: black;             
@@ -262,3 +262,15 @@ img.logout{
 	border-radius: 6px;
 	cursor: pointer;
 }
+
+/*Botón volver*/
+.btn-volver {
+    position: absolute;
+    top: 165px;
+    width: 90px;      /*tamaño*/
+}
+.btn-volver img {
+    width: 100%;
+    display: block;
+}
+

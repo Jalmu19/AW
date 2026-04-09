@@ -27,10 +27,14 @@ $tituloPagina = "Mi Perfil";
 $msg = $app->getRequestAttribute('mensaje');
 $infoMsg = $msg ? "<div>$msg</div>" : "";
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal = <<<EOS
 <div>
     <div>
-        <a href="index.php" class="btn-volver">← Volver al inicio</a>
+        <a href="index.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
         <div>
             <img src="{$ruta_img}avatares/{$usuario->getAvatar()}" alt="Avatar">
             <div>

@@ -28,8 +28,13 @@ $columnas = [
 
 
 $ruta=RUTA_APP;
+
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal = <<<EOS
-    <a href="$ruta/gerente.php" class="btn-volver">← Volver al panel</a> 
+    <a href="$ruta/gerente.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>   
     
 <div>
     <h1>Gestión de Categorías</h1>

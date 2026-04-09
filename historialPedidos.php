@@ -31,9 +31,12 @@ $columnas = [
 $tabla = new TablaPedidos($columnas, $result, false);
 $htmlTabla = $tabla->genera();
 
-$contenidoPrincipal = <<<EOS
-    <a href="{$ruta}/miCuenta.php" class="btn-volver">← Volver a mi cuenta</a>
+$Rutaflecha = RUTA_APP."/img/volver.png";
 
+$contenidoPrincipal = <<<EOS
+    <a href="{$ruta}/miCuenta.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>
     <h1>Historial de Pedidos</h1>
     <div>
         $htmlTabla

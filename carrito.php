@@ -21,10 +21,13 @@ $err = $app->getRequestAttribute('error');
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
-$contenidoPrincipal .= <<<EOS
-<div>
-  <a href="carta.php" class="btn-volver">← Volver a la carta</a> 
-</div>
+$Rutaflecha = RUTA_APP."/img/volver.png";
+$contenidoPrincipal = <<<EOS
+  <div>
+    <a href="carta.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>
+  </div>
 EOS;
 
 $contenidoPrincipal .= "<h1>Pedidos del carrito</h1>";

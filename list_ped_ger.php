@@ -26,8 +26,11 @@ $columnas = [
 
 $tituloPagina = "Visualización de Pedidos";
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal  = <<<EOS
-    <a href="gerente.php" class="btn-volver">← Volver al panel</a> 
+    <a href="gerente.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a> 
     <h1>Visualización de Pedidos</h1>
 EOS;
 

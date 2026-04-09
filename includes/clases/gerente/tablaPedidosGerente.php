@@ -28,7 +28,7 @@ class TablaPedidosGerente extends Tabla
 
                 if (!empty($cocinero)) {
                     if (!empty($avatar)) {
-                        $text = "<img src=$rutaAvatar class='cocinero'>" .  $cocinero;
+                        $text = "<img src=$rutaAvatar class='usuario'>" .  $cocinero;
                     } else {
                         $text = $cocinero;
                     }

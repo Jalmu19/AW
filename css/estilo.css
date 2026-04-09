@@ -1,6 +1,7 @@
 body {
 	background-color: #000000;
 	text-align:center;
+	color: white;
 }
 
 
@@ -56,8 +57,14 @@ main {
 	min-height: 600px;
     box-sizing: border-box;
 	width: 100%; /*ocupa el 100% del contenedor*/
-	background-color: white;
 	text-align:center;
+
+	/*imagen del fondo*/
+	background-color: transparent;
+	background-image: url("../img/fondo.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover; /*que cubra toda la pantalla*/	
 }
 
 
@@ -69,7 +76,7 @@ h1{ /*todos los titulos en el centro*/
 
 
 fieldset {
-	border: 1px solid black;
+	border: 1px solid rgb(255, 255, 255);
 	margin: auto;
 	padding: 20px;	/*margen*/
 	width:auto;
@@ -80,14 +87,13 @@ fieldset div {
 	justify-content: center;
 	margin: 10px auto;
 	align-items: flex-end;
-	
 }
 
 legend {
 	color: #000000;
 	background: #b79af2;
-	border: 1px solid black;
-	padding: 2px 6px;
+	border: 1px solid rgb(255, 255, 255);
+	padding: 5px 15px;
 	text-align: center;
 } 
 
@@ -118,7 +124,7 @@ form .cantidad_producto{
 /*Tablas*/
 table {
     width: 100%;
-    background-color: white;
+    background-color: #ffffffc7;
 }
 /*encabezados*/
 th {
@@ -130,6 +136,7 @@ th {
 /*celdas*/
 td {
     padding: 12px 15px;	
+	color: black;
 }
 .acciones a {
     text-decoration: none;
@@ -156,6 +163,7 @@ img.cabecera{
 img.usuario{
 	width: 50px;
 	height: auto;
+	border-radius: 100%;
 }
 
 img.cocinero{
@@ -166,6 +174,7 @@ img.cocinero{
 a.btn-volver{
 	position: absolute;
 	left: 75px;
+	color: white;
 }
 footer {
 	clear: both;
@@ -177,9 +186,15 @@ footer {
 
 img.logo-central{
 	width: 80px;
+	border-radius:100%;
 }
 
-img.perfil, img.carrito{
+img.perfil {
+	width: 45px;
+	height: auto;
+	border-radius: 100%;
+}
+img.carrito{
 	width: 45px;
 	height: auto;
 }
@@ -194,7 +209,7 @@ img.logout{
 /*Botones index*/
 .boton {
     background-color: #329FA8;
-    color: black;
+    color: rgb(255, 255, 255);
     border: none;
     padding: 15px 30px;
     font-size: 18px;
@@ -218,7 +233,7 @@ img.logout{
 /*Botones de los formularios*/
 .boton-form {
 	background-color: #48C86B; 
-    color: black;             
+    color: rgb(255, 255, 255);             
     border: none;
     padding: 10px 20px;        
     border-radius: 6px;
@@ -229,7 +244,7 @@ img.logout{
 
 /*panel para miCuenta*/
 .panel-perfil {
-    border: 2px solid #000000;
+    border: 2px solid #ffffff;
     border-radius: 15px;       
     padding: 10px;             
     margin: 30px auto;         
@@ -262,7 +277,7 @@ img.logout{
 	background-color: #b79af2; 
     width: auto;               
     padding: 12px 25px;        
-    color: black;
+    color: rgb(255, 255, 255);
  	border: none;
 	border-radius: 6px;
 	cursor: pointer;

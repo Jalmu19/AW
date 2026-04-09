@@ -19,10 +19,14 @@ $form = new FormularioCrearProducto();
 
 $htmlForm = $form->gestiona();
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
+$contenidoPrincipal = "";
 
 $contenidoPrincipal = <<< EOS
     <div>
-        <a href="listar_productos.php" class="btn-volver">← Volver al listado</a>
+        <a href="listar_productos.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
 EOS;
 

@@ -29,9 +29,12 @@ $htmlFormRegistro = $form->gestiona($datos);
 
 $tituloPagina = 'Actualiza Usuario';
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
 <div>
-   <a href="miCuenta.php" class="btn-volver">← Volver a mi cuenta</a>
+   <a href="miCuenta.php" class="btn-volver" title="Volver al Inicio">
+      <img src= "$Rutaflecha" alt="Volver al Inicio">
+   </a>
 </div>
 
 <h1>Actualizacion de usuario</h1>

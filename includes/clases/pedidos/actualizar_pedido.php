@@ -22,9 +22,13 @@ $htmlForm = $form->gestiona();
 
 $ruta=RUTA_APP;
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal = <<< EOS
     <div>
-        <a href="$ruta/list_ped_ger.php" class="btn-volver">← Volver al listado</a>
+        <a href="$ruta/list_ped_ger.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
 EOS;
 

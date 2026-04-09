@@ -26,9 +26,13 @@ if ($num <= 0 || $fh === '') {
     $productos = Pedido::getEstadoProductosPedido($num, $fh); 
     $tabla = new TablaEstProdPed($productos);
 
+    $Rutaflecha = RUTA_APP."/img/volver.png";
+
     $contenidoPrincipal .= <<<EOS
     <div>
-        <a href="list_ped_ger.php" class="btn-volver"> ← Volver al listado de pedidos</a> 
+        <a href="list_ped_ger.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>  
     </div>
     <div>
         <h2> Pedido numero $num<h2>

@@ -43,9 +43,14 @@ $htmlTabla = $tabla->genera();
 $ruta=RUTA_APP;
 
 $tituloPagina = "Administración de Usuarios";
+
+$Rutaflecha = RUTA_APP."/img/volver.png";
+
 $contenidoPrincipal .= <<<EOS
 <div>
-    <a href="$ruta/gerente.php" class="btn-volver">← Volver al panel</a> 
+    <a href="$ruta/gerente.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a>  
 </div>
 
 <div>

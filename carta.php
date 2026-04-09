@@ -38,14 +38,16 @@ $filtrosHtml = <<<HTML
 </div>
 HTML;
 
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = '';
 
 if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
     $contenidoPrincipal .= <<<EOS
-        <a href="index.php" class="btn-volver">← Volver al inicio</a>
+        <a href="index.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     EOS;
 }
-
 
 $tabla = new TablaProductos($columnas, $productos, true);
 $htmlTabla = $tabla->genera();
@@ -55,7 +57,7 @@ $contenidoPrincipal .= <<<EOS
 $filtrosHtml
 <fieldset>
     <legend>Carta - $categoriaSeleccionada</legend>
-    $htmlTabla
+    <div id="carta">$htmlTabla</div>
 </fieldset>
 EOS;
 

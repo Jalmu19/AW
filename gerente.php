@@ -21,11 +21,13 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
+
+$Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
 <div>
-    <div>
-        <a href="index.php" class="btn-volver">← Volver al Inicio</a>
-    </div>
+    <a href="index.php" class="btn-volver" title="Volver al Inicio">
+        <img src= "$Rutaflecha" alt="Volver al Inicio">
+    </a> 
 
     <h1>Panel - Gerente</h1>
     <p>Seleccione la acción que desea realizar:</p>

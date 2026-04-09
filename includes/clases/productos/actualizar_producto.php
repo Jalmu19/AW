@@ -45,11 +45,15 @@ $datos = [
 
 $form = new FormularioActProducto();
 
-$htmlForm = $form->gestiona($datos);    
+$htmlForm = $form->gestiona($datos); 
+
+$Rutaflecha = RUTA_APP."/img/volver.png";
 
 $contenidoPrincipal = <<< EOS
     <div>
-        <a href="listar_productos.php" class="btn-volver">← Volver al listado</a>
+        <a href="listar_productos.php" class="btn-volver" title="Volver al Inicio">
+            <img src= "$Rutaflecha" alt="Volver al Inicio">
+        </a>
     </div>
 EOS;
 

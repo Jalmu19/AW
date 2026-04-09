@@ -50,6 +50,10 @@ a.perfil_cabecera, a.carrito_cabecera, a.salir_cabecera{
     text-align: center;
 }
 
+h1#titulo_restaurante{
+	font-family: 'Courier New', Courier, monospace;
+	color: rgb(0, 0, 0);
+}
 
 
 main {

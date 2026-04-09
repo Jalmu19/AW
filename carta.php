@@ -51,7 +51,7 @@ $tabla = new TablaProductos($columnas, $productos, true);
 $htmlTabla = $tabla->genera();
 
 $contenidoPrincipal .= <<<EOS
-<h1>Bistro FDI</h1>
+
 $filtrosHtml
 <fieldset>
     <legend>Carta - $categoriaSeleccionada</legend>

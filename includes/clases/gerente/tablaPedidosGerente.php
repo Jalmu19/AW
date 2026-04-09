@@ -19,23 +19,25 @@ class TablaPedidosGerente extends Tabla
             case 'estado':
                 $estado = htmlspecialchars($valor);
                 $texto = $estado;
-
-                if ($valor === 'En preparacion') {
-                    $cocinero = htmlspecialchars($fila['cocinero'] ?? '');
-                    $avatar   = $fila['avatar_cocinero'] ?? '';
-
-                    if (!empty($cocinero)) {
-                        if (!empty($avatar)) {
-                            $texto .= " | " . "<img src='" . htmlspecialchars($avatar, ENT_QUOTES)  "'>" . " " . $cocinero;
-                        } else {
-                            $texto .= " | " . $cocinero;
-                        }
-                    } else {
-                        $texto .= " | Sin asignar";
-                    }
-                }
-
                 return $texto;
+
+            case 'cocinero':
+                $cocinero = htmlspecialchars($fila['cocinero'] ?? '');
+                $avatar   = $fila['avatar_cocinero'] ?? '';
+                $rutaAvatar = RUTA_APP . "/img/avatares/$avatar";
+
+                if (!empty($cocinero)) {
+                    if (!empty($avatar)) {
+                        $text = "<img src=$rutaAvatar class='cocinero'>" .  $cocinero;
+                    } else {
+                        $text = $cocinero;
+                    }
+                } else {
+                    $text = "Sin asignar";
+                }
+                
+                return $text;
+
 
             default:
                 return parent::formateaContenido($campo, $valor, $fila);

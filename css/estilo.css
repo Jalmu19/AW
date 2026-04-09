@@ -158,6 +158,11 @@ img.usuario{
 	height: auto;
 }
 
+img.cocinero{
+	width: 50px;
+	height: auto;
+}
+
 a.btn-volver{
 	position: absolute;
 	left: 75px;

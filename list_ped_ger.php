@@ -21,6 +21,7 @@ $pedidos = Pedido::getPedidosGerente();
 $columnas = [
     'num_pedido' => 'Pedido',
     'estado'     => 'Estado',
+    'cocinero' => 'Cocinero',    
 ];
 
 

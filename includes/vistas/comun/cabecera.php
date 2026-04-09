@@ -50,7 +50,9 @@ function perfil() {
         <a href="<?= RUTA_APP ?>/index.php">
             <img src="<?= RUTA_APP ?>/img/logo_bistro.png" alt="Bistro FDI Logo" class="logo-central"/>
         </a>
-    </div>    
+    </div> 
+     
+    <h1 id="titulo_restaurante">BISTRO FDI</h1>  
     
     <?= perfil() ?> 
 

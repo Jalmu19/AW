@@ -326,33 +326,38 @@ img.logout{
 /*Adaptación a pantallas móviles y tablets*/
 @media (max-width: 1024px) {
     
+	/*Ponemos todo en una línea horizontal con el título a la 
+	izquierda al lado del logo*/
  	header {
         display: flex;
-        flex-direction: row;      /* Ponemos todo en una línea horizontal */
-        align-items: center;      /* Lo centramos verticalmente */
+        flex-direction: row;      
+        align-items: center;      
         padding: 8px 10px;
-        gap: 10px;                /* Dejamos un hueco bonito entre el logo y el texto */
+        gap: 10px;                
     }
 
+	/*Redimensionamos el logo*/
     img.logo-central {
-        width: 40px;              /* Logo pequeñito y proporcionado */
+        width: 40px;             
         margin: 0;
     }
 
+	/*Impedimos que "BISTRO" y "FDI" se separen en dos líneas*/
     h1#titulo_restaurante {
         font-size: 1.1rem;
-        white-space: nowrap;      /* Impide que "BISTRO" y "FDI" se separen en dos líneas */
+        white-space: nowrap;    
         margin: 0;
     }
 
+	/*Empujamos los iconos del usuario, carrito y salir a la derecha*/
     div.perfil_carrito_salir {
         display: flex;
         gap: 12px;
         width: auto;
-        margin-left: auto;        /* ¡LA CLAVE! Actúa como un muelle que empuja los iconos a la derecha */
+        margin-left: auto;        
     }
 
-    /* Tamaño de los iconos de la derecha */
+    /*Ajustamos el tamaño de los iconos de la derecha*/
     img.perfil,
     img.carrito,
     img.logout {
@@ -360,14 +365,14 @@ img.logout{
         height: auto;
     }
 
-    /* Textos debajo de los iconos */
+    /*Ajustamos el tamaño del texto debajo de los iconos*/
     a.perfil_cabecera, 
     a.carrito_cabecera, 
     a.salir_cabecera {
         font-size: 13px; 
     }
 
-    /*hacemos que los botones ocupen casi todo el ancho posible pero sin pasarse en 
+    /*Hacemos que los botones ocupen casi todo el ancho posible pero sin pasarse en 
 	pantallas intermedias*/
     .boton {
         width: 90%;
@@ -376,15 +381,16 @@ img.logout{
         padding: 12px 20px;
     }
 
+	/*Cambiamos la posición y el tamaño del botón "volver"*/
 	.btn-volver {
-        position: relative;       /* Le quitamos el absolute para que no flote sobre la tabla */
-        top: 0;                   /* Anulamos los 165px del ordenador */
-        width: 70px;              /* Lo hacemos más pequeño, perfecto para un dedo */
-        margin: 10px 0 15px 5px; /* Le damos espacio y lo separamos un poco del borde izquierdo */
-        display: block;           /* Hacemos que ocupe su propia línea */
+        position: relative;      
+        top: 0;                   
+        width: 70px;              
+        margin: 10px 0 15px 5px; 
+        display: block;          
     }
 
-	 /*quitamos la posición absoluta que rompe la vista en el móvil*/
+	/*Quitamos la posición absoluta que rompe la vista en el móvil*/
     a.btn-volver {
         position: relative;
         left: 0;
@@ -392,11 +398,12 @@ img.logout{
         margin-bottom: 20px; 
     }
 
+	/*Cambiamos la posición y el tamaño del botón "añadir"*/
 	.boton-añadir {
-        position: static !important; /* ¡LA CLAVE! Le quita el "fixed" y deja de flotar */
+        position: static !important; 
         display: flex;
         justify-content: flex-end;    
-        margin: 20px auto !important;/* Le damos espacio por arriba y por abajo */
+        margin: 20px auto !important;
         padding-right: 20px;
 		width: 100%;
 		box-sizing: border-box;

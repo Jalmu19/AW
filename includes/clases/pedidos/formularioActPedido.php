@@ -35,15 +35,38 @@ class FormularioActPedido extends Formulario
                 {$erroresCampos['id_pedido']}
             </div>
            
-            <div>
-                <input type="radio" id="nuevo" name="estado" value="Nuevo"> Nuevo
-                <input type="radio"name="estado" value="Recibido"> Recibido
-                <input type="radio" name="estado" value="En preparacion">En preparacion
-                <input type="radio" name="estado" value="Cocinando">Cocinando
-                <input type="radio" name="estado" value="Listo cocina">Listo cocina
-                <input type="radio" name="estado" value="Terminado">Terminado
-                <input type="radio" name="estado" value="Entregado">Entregado
-                <input type="radio" name="estado" value="Cancelado">Cancelado
+            <div class="caja-opciones-movil">
+                <label class="label-en-linea">
+                    <input type="radio" id="nuevo" name="estado" value="Nuevo" class="input-en-linea"> Nuevo
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Recibido" class="input-en-linea"> Recibido
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="En preparacion" class="input-en-linea"> En preparacion
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Cocinando" class="input-en-linea"> Cocinando
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Listo cocina" class="input-en-linea"> Listo cocina
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Terminado" class="input-en-linea"> Terminado
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Entregado" class="input-en-linea"> Entregado
+                </label>
+                
+                <label class="label-en-linea">
+                    <input type="radio" name="estado" value="Cancelado" class="input-en-linea"> Cancelado
+                </label>
             </div>
             
             <div>

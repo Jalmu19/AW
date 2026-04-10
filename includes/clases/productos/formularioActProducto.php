@@ -86,9 +86,16 @@ class formularioActProducto extends Formulario
             </div>
 
             <div>
-                <label><input type="checkbox" name="disponibilidad" $checkedDisp> Disponible</label>
-                <label><input type="checkbox" name="ofertado" $checkedOfer> En oferta</label>
-                <label><input type="checkbox" name="cocinable" $checkedCoci> Cocinable</label>
+                <div class="caja-opciones-movil">
+                <input type="checkbox" name="disponibilidad" class="input-en-linea" $checkedDisp>
+                <label class="label-en-linea">Disponible</label>
+                
+                <input type="checkbox" name="ofertado" class="input-en-linea" $checkedOfer>
+                <label class="label-en-linea">En oferta</label>
+                
+                <input type="checkbox" name="cocinable" class="input-en-linea" $checkedCoci>
+                <label class="label-en-linea">Cocinable</label>
+            </div>
 
             </div>
 

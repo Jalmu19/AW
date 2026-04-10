@@ -30,18 +30,30 @@ class FormularioFinalizarPedido extends Formulario
             <legend>Finalizar Compra</legend>
             
             <h3>Opciones de entrega</h3>
-            <label><input type="radio" name="tipo_entrega" value="local" checked> Para tomar aquí</label><br>
-            <label><input type="radio" name="tipo_entrega" value="llevar"> Para llevar</label>
+            <div class="caja-opciones-movil">
+                <label class="label-en-linea">
+                    <input type="radio" name="tipo_entrega" value="local" class="input-en-linea" checked> Para tomar aquí
+                </label>
+                <label class="label-en-linea">
+                    <input type="radio" name="tipo_entrega" value="llevar" class="input-en-linea"> Para llevar
+                </label>
+            </div>
 
             <h3>Método de pago</h3>
-            <label><input type="radio" name="metodo_pago" value="efectivo" checked> Efectivo</label><br>
-            <label><input type="radio" name="metodo_pago" value="tarjeta"> Tarjeta de crédito</label>
+            <div class="caja-opciones-movil">
+                <label class="label-en-linea">
+                    <input type="radio" name="metodo_pago" value="efectivo" class="input-en-linea" checked> Efectivo
+                </label>
+                <label class="label-en-linea">
+                    <input type="radio" name="metodo_pago" value="tarjeta" class="input-en-linea"> Tarjeta de crédito
+                </label>
+            </div>
 
             <div>
                 <button type="submit" name="accion" value="confirmar" class='boton-form'>
                     Confirmar y Finalizar Pedido
                 </button>
-                <button type="submit" name="accion" value="cancelar"  class='boton-form' onclick="return confirm('¿Estás seguro de que deseas cancelar y borrar este pedido?')">
+                <button type="submit" name="accion" value="cancelar" class='boton-form' onclick="return confirm('¿Estás seguro de que deseas cancelar y borrar este pedido?')">
                     Cancelar Pedido
                 </button>
             </div>

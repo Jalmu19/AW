@@ -141,6 +141,7 @@ table {
     width: 80%;
     background-color: #9e8787a4;
 	margin:auto;
+	border-collapse: collapse;
 }
 /*encabezados*/
 th {
@@ -322,8 +323,8 @@ img.logout{
 
 /*//////////////////////////////////////////////////////////////*/
 
-/*Adaptación a pantallas móviles*/
-@media (max-width: 768px) {
+/*Adaptación a pantallas móviles y tablets*/
+@media (max-width: 1024px) {
     
  	header {
         display: flex;
@@ -391,6 +392,21 @@ img.logout{
         margin-bottom: 20px; 
     }
 
+	.boton-añadir {
+        position: static !important; /* ¡LA CLAVE! Le quita el "fixed" y deja de flotar */
+        display: flex;
+        justify-content: flex-end;    
+        margin: 20px auto !important;/* Le damos espacio por arriba y por abajo */
+        padding-right: 20px;
+		width: 100%;
+		box-sizing: border-box;
+    }
+
+    .boton-añadir form button {
+      	width: auto !important;      /* Anulamos el 90% de antes para que recupere su tamaño normal */
+        padding: 12px 25px;
+    }
+
 	/*mantenemos el formato horizontal haciendo que si los botones no caben, bajen de
 	linea*/
 	.panel-carta-categorias {
@@ -415,7 +431,8 @@ img.logout{
         display: block; 
         overflow-x: auto; 
         white-space: nowrap; /* Evita que el texto de las columnas se estruje */
-        width: 100%;
+		width: max-content; /* La tabla solo medirá lo que midan sus celdas */
+		max-width: 100%;
         margin: 10px auto;
         box-sizing: border-box;
     }
@@ -517,32 +534,28 @@ img.logout{
         max-width: 100%;     /* Anulamos el límite de 250px que tienes más arriba */
     }
 
-	.caja-avatar {
+	/* 1. La caja que los envuelve */
+    .caja-opciones-movil {
         display: block;
-        text-align: left; /* En móviles queda mucho más limpio todo alineado a la izquierda */
-        margin-top: 20px;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 15px;
     }
 
-    /* El título principal "Avatar actual:" */
-    .caja-avatar label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 10px;
+    /* 2. Anulamos el comportamiento de bloque solo para estos labels específicos */
+    .label-en-linea {
+        display: inline-block !important; /* Obliga a que se quede en la misma línea */
+        margin-right: 15px !important;    /* Espacio entre una opción y la siguiente */
+        font-weight: normal !important;   /* Quitamos la negrita de los títulos */
+        margin-bottom: 0 !important;
     }
 
-    /* ¡EL ANTÍDOTO! Anulamos el comportamiento de bloque para los radio */
-    .caja-avatar input[type="radio"] {
-        display: inline-block !important; /* Fuerza a que conviva en la misma línea que el texto */
-        width: auto !important;           /* Evita que ocupe el 100% de la pantalla */
-        margin: 0 5px 0 0 !important;     /* Le da un poco de margen a la derecha */
-        vertical-align: middle;           /* Lo alinea bien con las letras */
-    }
-
-    /* Separamos un poco el botón de subir archivo para que sea fácil de tocar */
-    .caja-avatar input[type="file"] {
-        display: block;
-        margin-top: 10px;
-        width: 100%; /* Este sí queremos que ocupe bastante espacio */
+    /* 3. Evitamos que el circulito/cuadradito ocupe toda la pantalla */
+    .input-en-linea {
+        display: inline-block !important;
+        width: auto !important;           /* Anula el width: 100% que tenías para los inputs de texto */
+        margin: 0 5px 0 0 !important;     /* Separa el círculo de su propia palabra */
+        vertical-align: middle;           /* Lo alinea con el texto */
     }
 }
 

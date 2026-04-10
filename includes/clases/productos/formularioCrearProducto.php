@@ -75,10 +75,15 @@ class FormularioCrearProducto extends Formulario {
                 {$erroresCampos['imagen']}
             </div>
 
-            <div>
-                <label><input type="checkbox" name="disponibilidad" checked> Disponible</label>
-                <label><input type="checkbox" name="ofertado"> En oferta</label>
-                <label><input type="checkbox" name="cocinable"> Cocinable </label>
+            <div class="caja-opciones-movil">
+                <input type="checkbox" name="disponibilidad" class="input-en-linea" checked>
+                <label class="label-en-linea">Disponible</label>
+                
+                <input type="checkbox" name="ofertado" class="input-en-linea">
+                <label class="label-en-linea">En oferta</label>
+                
+                <input type="checkbox" name="cocinable" class="input-en-linea">
+                <label class="label-en-linea">Cocinable</label>
             </div>
 
             <button type="submit" name="registro" class="boton-form">Crear Producto</button>

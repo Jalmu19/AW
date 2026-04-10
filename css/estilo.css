@@ -93,23 +93,20 @@ h1{ /*todos los titulos en el centro*/
 
 
 fieldset {
-	display:flex;
-	flex-direction: column;
 	align-items: center;
 	flex-wrap:wrap;
-	max-width:700px;
+	max-width:1109px;
 	padding: 20px;	
 	background-color:rgba(99, 90, 90, 0.427);
 	margin: auto;	
 }
-
 fieldset div {
-	display: flex;
 	justify-content: center;
 	margin: 10px auto;
 	align-items: center;
 	gap: 10px;
 }
+
 
 legend {
 	color: #000000;
@@ -129,11 +126,7 @@ label {
 /*texto que indica cantidad del producto a comprar*/
 form .cantidad_producto{
 	width: 40px;
-}
-
-div#carta table{
-	width: 850px;
-	max-width:900px;
+    text-align: center;
 }
 
 
@@ -164,26 +157,25 @@ td {
 	font-weight: bold;
  }
 .contenedor_principal {
-  display: flex;
-  gap: 20px; /* Espacio entre productos */
-  padding: 20px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 20px; /* Espacio entre productos */
+    flex-wrap: wrap;
 }
 
-/* Cada tarjeta de producto: Crea la "columna única" con sus filas */
+/* Cada tarjeta de producto*/
 div.producto {
-  display: flex;
-  flex-direction: column; /* Alinea los elementos uno debajo de otro */
-  text-align: center;
-  background-color: transparent;
-  color: white;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos uno debajo de otro */
+    text-align: center;
+    background-color: transparent;
+    color: white;
 }
 
 /*//////////////////////////////////////////////////////////////*/
 img.producto{
 	width: 250px;
 	height: auto;
-	border-radius: 10px;
+    border-radius: 10px;
 }
 img.cabecera{
 	width: 40px;

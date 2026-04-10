@@ -3,7 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/autoload.php'; 
 
-use BistroFDI\clases\aplicacion;use BistroFDI\clases\productos\tablaProductos;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\productos\tablaProductos;
+use BistroFDI\clases\productos\tablaCarta;
 use BistroFDI\clases\productos\Producto;
 
 
@@ -49,7 +51,7 @@ if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUs
     EOS;
 }
 
-$tabla = new TablaProductos($columnas, $productos, true);
+$tabla = new TablaCarta($columnas, $productos, true);
 $htmlTabla = $tabla->genera();
 
 $contenidoPrincipal .= <<<EOS

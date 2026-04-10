@@ -173,8 +173,8 @@ div.producto {
 
 /*//////////////////////////////////////////////////////////////*/
 img.producto{
-	width: 250px;
-	height: auto;
+	width: auto;
+	height: 175px;
     border-radius: 10px;
 }
 img.cabecera{

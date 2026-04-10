@@ -86,7 +86,7 @@ class formularioActProducto extends Formulario
             </div>
 
             <div>
-                <div class="caja-opciones-movil">
+                <div>
                 <input type="checkbox" name="disponibilidad" class="input-en-linea" $checkedDisp>
                 <label class="label-en-linea">Disponible</label>
                 

@@ -95,7 +95,8 @@ h1{ /*todos los titulos en el centro*/
 fieldset {
 	align-items: center;
 	flex-wrap:wrap;
-	max-width:1109px;
+	width: 90%;
+	max-width:900px;
 	padding: 20px;	
 	background-color:rgba(99, 90, 90, 0.427);
 	margin: auto;	
@@ -126,6 +127,11 @@ label {
 /*texto que indica cantidad del producto a comprar*/
 form .cantidad_producto{
 	width: 40px;
+}
+
+div#carta table{
+	width: 100%;
+	max-width: 850px;
     text-align: center;
 }
 
@@ -360,14 +366,6 @@ img.logout{
         font-size: 13px; 
     }
 
-    /*quitamos la posición absoluta que rompe la vista en el móvil*/
-    a.btn-volver {
-        position: relative;
-        left: 0;
-        display: block;
-        margin-bottom: 20px; 
-    }
-
     /*hacemos que los botones ocupen casi todo el ancho posible pero sin pasarse en 
 	pantallas intermedias*/
     .boton {
@@ -383,6 +381,14 @@ img.logout{
         width: 70px;              /* Lo hacemos más pequeño, perfecto para un dedo */
         margin: 10px 0 15px 5px; /* Le damos espacio y lo separamos un poco del borde izquierdo */
         display: block;           /* Hacemos que ocupe su propia línea */
+    }
+
+	 /*quitamos la posición absoluta que rompe la vista en el móvil*/
+    a.btn-volver {
+        position: relative;
+        left: 0;
+        display: block;
+        margin-bottom: 20px; 
     }
 
 	/*mantenemos el formato horizontal haciendo que si los botones no caben, bajen de
@@ -404,15 +410,40 @@ img.logout{
         display: inline-block;    /* Para que respeten los márgenes */
     }
 
-    /*añadimos una barra de scroll horizontal para las tablas y las alineamos*/
+   /* Tablas generales (Pedidos, Categorías...) -> CON SCROLL */
     table {
         display: block; 
         overflow-x: auto; 
-        white-space: nowrap; 
-		width: 95%;
-		box-sizing: border-box;
-		margin: 20px auto;
+        white-space: nowrap; /* Evita que el texto de las columnas se estruje */
+        width: 100%;
+        margin: 10px auto;
+        box-sizing: border-box;
     }
+
+    table th, table td {
+        padding: 8px 15px; /* Un poco más de espacio para que se lea bien */
+        font-size: 14px;
+    }
+
+    /* Tabla de la Carta -> SIN SCROLL (que se adapte a la pantalla) */
+    div#carta table {
+        display: table;
+        table-layout: auto;
+        white-space: normal;
+    }
+
+    div#carta table th, div#carta table td {
+        white-space: normal;
+        padding: 5px 2px;
+        font-size: 13px;
+    }
+
+    /* Hacemos la caja de la cantidad más pequeñita en el móvil */
+    form .cantidad_producto {
+        width: 35px;
+        padding: 5px 2px;
+    }
+
     
 	/* Reducir el tamaño de los títulos de las páginas en móviles */
     main h1 {
@@ -429,13 +460,13 @@ img.logout{
 
     }
 
-	/*hacemos que el fieldset respete el ancho*/
-	fieldset {
+	/*hacemos que el fieldset respete el ancho y permita deslizar*/
+    fieldset {
         width: 95%; 
         box-sizing: border-box;
         min-width: 0;        
         padding: 10px;       
-        overflow: hidden;   
+        overflow-x: auto;    /* ¡LA CLAVE! Cambiamos 'hidden' por 'auto' */
     }
 
     fieldset table {
@@ -465,6 +496,53 @@ img.logout{
         max-width: 250px;
         padding: 10px;
         box-sizing: border-box;
+    }
+
+	/* Anulamos el 'flex' del ordenador y apilamos texto y caja */
+    fieldset div {
+        display: block;      /* Rompe la fila y los apila */
+        width: 100%;         
+        text-align: left;    /* Queda más limpio en móvil todo a la izquierda */
+        margin-bottom: 15px; /* Espacio entre una pregunta y la siguiente */
+    }
+
+    fieldset div label {
+        display: block;      /* Obliga al título ("Nombre:") a estar en su propia línea */
+        margin-bottom: 5px;  /* Lo separa un pelín de la caja de escribir */
+    }
+
+    fieldset input[type="text"],
+    fieldset input[type="password"],
+    fieldset input[type="email"] {
+        max-width: 100%;     /* Anulamos el límite de 250px que tienes más arriba */
+    }
+
+	.caja-avatar {
+        display: block;
+        text-align: left; /* En móviles queda mucho más limpio todo alineado a la izquierda */
+        margin-top: 20px;
+    }
+
+    /* El título principal "Avatar actual:" */
+    .caja-avatar label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* ¡EL ANTÍDOTO! Anulamos el comportamiento de bloque para los radio */
+    .caja-avatar input[type="radio"] {
+        display: inline-block !important; /* Fuerza a que conviva en la misma línea que el texto */
+        width: auto !important;           /* Evita que ocupe el 100% de la pantalla */
+        margin: 0 5px 0 0 !important;     /* Le da un poco de margen a la derecha */
+        vertical-align: middle;           /* Lo alinea bien con las letras */
+    }
+
+    /* Separamos un poco el botón de subir archivo para que sea fácil de tocar */
+    .caja-avatar input[type="file"] {
+        display: block;
+        margin-top: 10px;
+        width: 100%; /* Este sí queremos que ocupe bastante espacio */
     }
 }
 

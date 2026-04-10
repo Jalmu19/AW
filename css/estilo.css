@@ -163,7 +163,21 @@ td {
 .eliminar { color: #ff1900;
 	font-weight: bold;
  }
+.contenedor_principal {
+  display: flex;
+  gap: 20px; /* Espacio entre productos */
+  padding: 20px;
+  flex-wrap: wrap;
+}
 
+/* Cada tarjeta de producto: Crea la "columna única" con sus filas */
+div.producto {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos uno debajo de otro */
+  text-align: center;
+  background-color: transparent;
+  color: white;
+}
 
 /*//////////////////////////////////////////////////////////////*/
 img.producto{

@@ -48,7 +48,7 @@ function perfil() {
 <header>
     <div>
         <a href="<?= RUTA_APP ?>/index.php">
-            <img src="<?= RUTA_APP ?>/img/logo_bistro.png" alt="Bistro FDI Logo" class="logo-central"/>
+            <img src="<?= RUTA_APP ?>/img/logo_nuevo.png" alt="Bistro FDI Logo" class="logo-central"/>
         </a>
     </div> 
      

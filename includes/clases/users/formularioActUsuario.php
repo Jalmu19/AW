@@ -43,7 +43,7 @@ class formularioActUsuario extends Formulario
                 <label>Nueva Contraseña (dejar en blanco para mantener):</label>
                 <input type="password" name="password" />
             </div>
-            <div class="caja-opciones-movil">
+            <div>
                 <label>Avatar actual:</label><br>
                 
                 <input type="radio" name="tipoAvatar" value="nada" class="input-en-linea" checked> 

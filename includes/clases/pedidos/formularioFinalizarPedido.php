@@ -30,7 +30,7 @@ class FormularioFinalizarPedido extends Formulario
             <legend>Finalizar Compra</legend>
             
             <h3>Opciones de entrega</h3>
-            <div class="caja-opciones-movil">
+            <div>
                 <label class="label-en-linea">
                     <input type="radio" name="tipo_entrega" value="local" class="input-en-linea" checked> Para tomar aquí
                 </label>

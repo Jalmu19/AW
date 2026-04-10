@@ -35,7 +35,7 @@ class FormularioActPedido extends Formulario
                 {$erroresCampos['id_pedido']}
             </div>
            
-            <div class="caja-opciones-movil">
+            <div>
                 <label class="label-en-linea">
                     <input type="radio" id="nuevo" name="estado" value="Nuevo" class="input-en-linea"> Nuevo
                 </label>

@@ -4,11 +4,9 @@ body {
 	font-family: Arial;
 }
 
-
 header, main, footer {
     text-align: center;
 }
-
 
 div#contenedor {
     display: flex;
@@ -19,7 +17,6 @@ div#contenedor {
 	background-color: #aaaaaa;
 	min-height: 100vh;
 }
-
 
 header {
     display:flex;
@@ -91,7 +88,6 @@ main {
 h1{ /*todos los titulos en el centro*/
 	text-align:center;
 }
-
 
 fieldset {
 	align-items: center;
@@ -178,7 +174,7 @@ div.producto {
     color: white;
 }
 
-/*//////////////////////////////////////////////////////////////*/
+
 img.producto{
 	max-width: 250px;
 	max-height: 175px;
@@ -231,7 +227,6 @@ img.logout{
 	height: auto;
 }
 
-/*////////////////////////////////////////////////////////////*/
 
 /*Botones index*/
 .boton {
@@ -321,8 +316,6 @@ img.logout{
 }
 
 
-/*//////////////////////////////////////////////////////////////*/
-
 /*Adaptación a pantallas móviles y tablets*/
 @media (max-width: 1024px) {
     
@@ -382,20 +375,13 @@ img.logout{
     }
 
 	/*Cambiamos la posición y el tamaño del botón "volver"*/
-	.btn-volver {
-        position: relative;      
-        top: 0;                   
-        width: 70px;              
-        margin: 10px 0 15px 5px; 
-        display: block;          
-    }
-
-	/*Quitamos la posición absoluta que rompe la vista en el móvil*/
-    a.btn-volver {
+	a.btn-volver {
         position: relative;
+        top: 0;
         left: 0;
+        width: 70px;
         display: block;
-        margin-bottom: 20px; 
+        margin: 10px 0 20px 5px;
     }
 
 	/*Cambiamos la posición y el tamaño del botón "añadir"*/
@@ -410,12 +396,12 @@ img.logout{
     }
 
     .boton-añadir form button {
-      	width: auto !important;      /* Anulamos el 90% de antes para que recupere su tamaño normal */
+      	width: auto !important;      
         padding: 12px 25px;
     }
 
-	/*mantenemos el formato horizontal haciendo que si los botones no caben, bajen de
-	linea*/
+	/*Adaptamos la carta para que tenga una presentación
+	estética al ser posible con los datos que contiene*/
 	.panel-carta-categorias {
         flex-direction: row;      
         flex-wrap: wrap;          
@@ -428,28 +414,29 @@ img.logout{
     }
 
     .panel-carta-categorias a {
-        font-size: 14px;          /* Reducimos un poco la letra para que quepan más */
+        font-size: 14px;         
         padding: 5px;
-        display: inline-block;    /* Para que respeten los márgenes */
+        display: inline-block;    
     }
 
-   /* Tablas generales (Pedidos, Categorías...) -> CON SCROLL */
+   /*Añadimos una scrollbar a las tablas y cambiamos su presentación 
+   para que se puedan ver completas sin hacerlas muy pequeñas o partiendo palabras*/
     table {
         display: block; 
         overflow-x: auto; 
-        white-space: nowrap; /* Evita que el texto de las columnas se estruje */
-		width: max-content; /* La tabla solo medirá lo que midan sus celdas */
+        white-space: nowrap; 
+		width: max-content; 
 		max-width: 100%;
         margin: 10px auto;
         box-sizing: border-box;
     }
 
     table th, table td {
-        padding: 8px 15px; /* Un poco más de espacio para que se lea bien */
+        padding: 8px 15px; 
         font-size: 14px;
     }
 
-    /* Tabla de la Carta -> SIN SCROLL (que se adapte a la pantalla) */
+    /*Quitamos el scroll a la tabla de la carta, que es distinta*/
     div#carta table {
         display: table;
         table-layout: auto;
@@ -457,50 +444,46 @@ img.logout{
     }
 
     div#carta table th, div#carta table td {
-        white-space: normal;
         padding: 5px 2px;
         font-size: 13px;
     }
 
-    /* Hacemos la caja de la cantidad más pequeñita en el móvil */
+    /*Hacemos la caja de la cantidad más pequeña*/
     form .cantidad_producto {
         width: 35px;
         padding: 5px 2px;
     }
 
-    
-	/* Reducir el tamaño de los títulos de las páginas en móviles */
+	/*Reducimos el tamaño de los títulos de las páginas*/
     main h1 {
-        font-size: 1.4rem;       /* Tamaño mucho más amigable para pantallas pequeñas */
+        font-size: 1.4rem;       
         margin-top: 10px;
         margin-bottom: 15px;
-        padding: 0 10px;         /* Un poco de espacio a los lados para que no se pegue a los bordes */
+        padding: 0 10px;        
     }
 
     main {
         padding: 15px 10px;
 		background-position: top;
         min-height: auto;
-
     }
 
-	/*hacemos que el fieldset respete el ancho y permita deslizar*/
+	/*Hacemos que el fieldset respete el ancho y permita deslizar*/
     fieldset {
         width: 95%; 
         box-sizing: border-box;
         min-width: 0;        
         padding: 10px;       
-        overflow-x: auto;    /* ¡LA CLAVE! Cambiamos 'hidden' por 'auto' */
+        overflow-x: auto;   
     }
 
     fieldset table {
         width: 100%;
         margin: 10px 0;
-        /* Aseguramos que la tabla se ajuste y el texto pueda saltar de línea */
         table-layout: auto; 
     }
 
-    /* Reducimos el relleno de las celdas y el tamaño de letra */
+    /* Reducimos el relleno de las celdas y el tamaño de letra*/
     fieldset table th, 
     fieldset table td {
         padding: 5px; 
@@ -508,13 +491,12 @@ img.logout{
         text-align: center;
     }
 
-    /* ¡LA CLAVE! Reducir la imagen del producto solo en móviles */
     img.producto {
-        width: 70px; /* En ordenador seguirá siendo de 250px, pero en móvil será pequeñita */
+        width: 70px; 
         height: auto;
     }
 
-    /* Ajustamos las cajas de texto para que sean fáciles de tocar con el dedo */
+    /*Ajustamos las cajas de texto para que sean fáciles de tocar con el dedo*/
     fieldset input {
         width: 100%; 
         max-width: 250px;
@@ -522,47 +504,33 @@ img.logout{
         box-sizing: border-box;
     }
 
-	/* Anulamos el 'flex' del ordenador y apilamos texto y caja */
+	/*Anulamos el 'flex' del ordenador y apilamos texto y caja*/
     fieldset div {
-        display: block;      /* Rompe la fila y los apila */
+        display: block;      
         width: 100%;         
-        text-align: left;    /* Queda más limpio en móvil todo a la izquierda */
-        margin-bottom: 15px; /* Espacio entre una pregunta y la siguiente */
+        text-align: left;   
+        margin-bottom: 15px; 
     }
 
     fieldset div label {
-        display: block;      /* Obliga al título ("Nombre:") a estar en su propia línea */
-        margin-bottom: 5px;  /* Lo separa un pelín de la caja de escribir */
+        display: block;    
+        margin-bottom: 5px;  
     }
 
-    fieldset input[type="text"],
-    fieldset input[type="password"],
-    fieldset input[type="email"] {
-        max-width: 100%;     /* Anulamos el límite de 250px que tienes más arriba */
-    }
-
-	/* 1. La caja que los envuelve */
-    .caja-opciones-movil {
-        display: block;
-        width: 100%;
-        text-align: left;
-        margin-bottom: 15px;
-    }
-
-    /* 2. Anulamos el comportamiento de bloque solo para estos labels específicos */
+    /*Anulamos el comportamiento de bloque solo para los checkboxes y radio buttons*/
     .label-en-linea {
-        display: inline-block !important; /* Obliga a que se quede en la misma línea */
-        margin-right: 15px !important;    /* Espacio entre una opción y la siguiente */
-        font-weight: normal !important;   /* Quitamos la negrita de los títulos */
+        display: inline-block !important; 
+        margin-right: 15px !important;   
+        font-weight: normal !important;  
         margin-bottom: 0 !important;
     }
 
-    /* 3. Evitamos que el circulito/cuadradito ocupe toda la pantalla */
+    /*Evitamos que el icono ocupe toda la pantalla*/
     .input-en-linea {
         display: inline-block !important;
-        width: auto !important;           /* Anula el width: 100% que tenías para los inputs de texto */
-        margin: 0 5px 0 0 !important;     /* Separa el círculo de su propia palabra */
-        vertical-align: middle;           /* Lo alinea con el texto */
+        width: auto !important;          
+        margin: 0 5px 0 0 !important;     
+        vertical-align: middle;           
     }
 }
 

@@ -94,17 +94,26 @@ class FormularioRegistro extends Formulario
         if (!$nombreUsuario || mb_strlen($nombreUsuario) < 5) {
             $this->errores['nombreUsuario'] = 'El nombre de usuario debe tener al menos 5 caracteres.';
         }
+        else if (mb_strlen($nombreUsuario) > 10) {
+            $this->errores['nombreUsuario'] = 'El nombre de usuario es demasiado largo (max 10 caracteres).';
+        }
 
         $nombre = trim($datos['nombre'] ?? '');
         $nombre = filter_var($nombre, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (!$nombre || mb_strlen($nombre) < 3) {
             $this->errores['nombre'] = 'El nombre debe tener al menos 3 caracteres.';
         }
+        else if (mb_strlen($nombre) > 10) {
+            $this->errores['nombre'] = 'El nombre es demasiado largo (max 20 caracteres).';
+        }
 
         $apellido = trim($datos['apellido'] ?? '');
         $apellido = filter_var($apellido, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (!$apellido || mb_strlen($apellido) < 3) {
             $this->errores['apellido'] = 'El apellido debe tener al menos 3 caracteres.';
+        }
+        else if (mb_strlen($apellido) > 10) {
+            $this->errores['apellido'] = 'El apellido es demasiado largo (max 50 caracteres).';
         }
 
         $email = trim($datos['email'] ?? '');

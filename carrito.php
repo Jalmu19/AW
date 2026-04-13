@@ -35,13 +35,13 @@ $contenidoPrincipal .= "<h1>Pedidos del carrito</h1>";
 if ($pedidos && count($pedidos) > 0) {
     
   $columnas = [
-    'num_pedido' => 'Pedido',
-    'cantidad'   => 'Cantidad',
+    'imagen' => 'Imagen',
     'nombre'     => 'Producto',
-    'precio'     => 'Precio'
+    'cantidad'   => 'Cantidad',
+    'precio'     => 'Precio (€/ud)'
   ];
 
-  $tabla = new TablaPedidos($columnas, $pedidos, false);
+  $tabla = new TablaPedidos($columnas, $pedidos, true);
   $contenidoPrincipal .= $tabla->genera();
 
   $total = isset($pedidos[0]['total']) ? $pedidos[0]['total'] : 0;

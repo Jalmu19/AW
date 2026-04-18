@@ -25,12 +25,10 @@ class TablaPedidos extends Tabla {
         }
         if ($campo == 'cantidad') {
             return <<<EOS
-                    <button type="submit" onclick = "disminuir_cantidad"> - </button>
+                    <button type="submit" id="btn_disminuir_producto" "onclick = "disminuir_cantidad_producto"> - </button>
                      $valor
-                    <button type="submit" onclick = "aumentar_cantidad"> + </button>
-                    
+                    <button type="submit" id="btn_aumentar_producto" onclick = "aumentar_cantidad_producto"> + </button>                
                 EOS;
-
         }
 
         return parent::formateaContenido($campo, $valor, $fila);
@@ -46,7 +44,7 @@ class TablaPedidos extends Tabla {
         $urlBorrar = '';
         
         return <<<EOS
-            <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Borrar</a>
+            <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto del carrito?')">Borrar</a>
         EOS;
     }
 

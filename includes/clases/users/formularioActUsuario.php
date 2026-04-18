@@ -29,7 +29,7 @@ class formularioActUsuario extends Formulario
             <legend>Actualizar perfil</legend>
             <div>
                 <label>Nombre:</label>
-                <input type="text" name="nombreUsuario" value="$nombre" />
+                <input type="text" name="nombre" value="$nombre" />
             </div>
             <div>
                 <label>Apellidos:</label>

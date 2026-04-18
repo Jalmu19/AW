@@ -7,7 +7,7 @@ function perfil() {
 
     if ($app->isCurrentUserLogged()) {
         $avatar = $app->getCurrentUserAvatar();
-        $nombre = $app->getCurrentUserRealName();
+        $nombre = $app->getCurrentUserName();
 
         $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
         $fotoCarrito = RUTA_APP . '/img/carrito.png';

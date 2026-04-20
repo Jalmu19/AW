@@ -24,10 +24,14 @@ class TablaPedidos extends Tabla {
             return htmlspecialchars_decode($valor);
         }
         if ($campo == 'cantidad') {
+            $idProd = $fila['nombre']; //ID del producto
+            $precio = $fila['precio']; //precio del producto
             return <<<EOS
-                    <button type="submit" id="btn_disminuir_producto" "onclick = "disminuir_cantidad_producto"> - </button>
-                     $valor
-                    <button type="submit" id="btn_aumentar_producto" onclick = "aumentar_cantidad_producto"> + </button>                
+                    <button type="button" class="btn_disminuir_producto"> - </button>
+                    <span class="cantidad_producto">$valor</span>
+                    <input type="hidden" name="cantidades[$idProd]" class="input_cantidad" value="$valor">
+                    <input type="hidden" class="precio_unidad" value="$precio">
+                    <button type="button" class="btn_aumentar_producto"> + </button>                
                 EOS;
         }
 
@@ -35,16 +39,11 @@ class TablaPedidos extends Tabla {
     }
 
     protected function generaAcciones($fila) {
-        $app = Aplicacion::getInstance();
         $id = urlencode($fila['nombre']);
 
-        // Obtenemos el nombre del archivo actual (ej: carta.php)
-        $paginaActual = basename($_SERVER['PHP_SELF']);
-
-        $urlBorrar = '';
-        
+        $urlBorrar = RUTA_APP . "/includes/clases/pedidos/eliminar_producto_pedido.php?id=$id";
         return <<<EOS
-            <a href="$urlBorrar" class="eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto del carrito?')">Borrar</a>
+            <a href="$urlBorrar" class="borrar_prod_carrito">Borrar</a>
         EOS;
     }
 

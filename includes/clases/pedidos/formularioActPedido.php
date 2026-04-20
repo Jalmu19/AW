@@ -12,7 +12,7 @@ class FormularioActPedido extends Formulario
 {
     public function __construct() {
         parent::__construct('formActPedido', ['action' => 'actualizar_pedido.php',
-                                              'urlRedireccion' => 'listar_pedidos.php',
+                                              'urlRedireccion' => RUTA_APP . '/list_ped_ger.php',
                                                'enctype' => 'multipart/form-data']);
     }
     

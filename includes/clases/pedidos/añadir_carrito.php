@@ -17,7 +17,7 @@ if (!$app->isCurrentUserLogged()) {
 }
 
 $nombreUsuario = $app->getCurrentUserName();
-$nombreProducto = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombreProducto = urldecode(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 $tipoPedido = Pedido::TIPO_DOMICILIO;   //por defecto-> a domicilio
 $cantidadAAñadir = filter_input(INPUT_GET, 'cantidad', FILTER_VALIDATE_INT) ?: 1;
 

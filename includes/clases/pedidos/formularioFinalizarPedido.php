@@ -69,6 +69,8 @@ class FormularioFinalizarPedido extends Formulario
         $metodoPago = $datos['metodo_pago'] ?? 'efectivo';
         $accion = $datos['accion'] ?? 'confirmar';
 
+        $cantidades = $datos['cantidades'] ?? []; // Array que viene de la tabla con la cantidad del producto
+
         if (!$numPedido || !$fechaHora) {
             return ["Error: Datos del pedido no encontrados."];
         }
@@ -82,10 +84,20 @@ class FormularioFinalizarPedido extends Formulario
             }
         }
 
+        if(!empty($cantidades)) {
+            foreach ($cantidades as $idProducto => $nuevaCantidad) {
+                // Actualizamos cada producto con su nueva cantidad exacta
+                Pedido::insertarPedidoProducto($fechaHora, $numPedido, $idProducto, $nuevaCantidad);
+            }
+                // Recalculamos el total una sola vez al final
+            Pedido::actualizarTotalPedido($fechaHora, $numPedido);
+        }
+
+
         $Estado = Pedido::confirmarPedido($numPedido, $fechaHora); 
         $Tipo = Pedido::actualizaTipo($numPedido, $fechaHora, $tipoEntrega);
 
-        if ($Estado && $Tipo) {
+        if ($Estado && $Tipo){
             // USAR $this->urlRedireccion (propiedad de la clase base Formulario)
             // Y usar urlencode para la fecha porque tiene espacios y símbolos
             $fechaEncoded = urlencode($fechaHora);

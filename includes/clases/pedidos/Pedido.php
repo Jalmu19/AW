@@ -187,7 +187,7 @@ class Pedido {
         $res = $conn->query($query);
         //si ya existe el producto, aumentamos la cantidad
         if($res && $res->num_rows > 0){
-            $query2 = sprintf("UPDATE Pedido_Producto SET cantidad = cantidad + %d
+            $query2 = sprintf("UPDATE Pedido_Producto SET cantidad = %d
                                WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
                                $cantidad, $nombreProducto, $fecha_hora, $num_pedido);
             $conn->query($query2);
@@ -308,6 +308,18 @@ class Pedido {
         $query2 = sprintf("DELETE FROM Pedido WHERE num_pedido=%d AND fecha_hora='%s'", 
             $num_pedido, $conn->real_escape_string($fecha_hora));
         return $conn->query($query2);
+    }
+
+
+    public static function borra_producto_carrito($nombreProd) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        // Primero borrar productos por integridad (claves foráneas)
+        $query1 = sprintf("DELETE FROM Pedido_Producto WHERE nombre='%s'", 
+             $conn->real_escape_string($nombreProd));
+        
+        return $conn->query($query1);
+
     }
 
     // (completar pedido camarero): devuelve pedidos en LISTO_COCINA, 

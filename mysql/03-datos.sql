@@ -7,7 +7,7 @@ INSERT INTO Producto VALUES('pollo', 10.0, true, 21, true, 'pollo con patatas','
 INSERT INTO Producto VALUES('tiramisu', 4.50, true, 21, true, 'tiramisu italiano','tiramisu.png',true,'postre');
 INSERT INTO Producto VALUES('brownie',4.50, true, 21, true, 'brownie de chocolate','brownie.png',true, 'postre');
 INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','coca_cola.png', false,'bebida');
-INSERT INTO Producto VALUES('cafe solo', 2.5, true, 21, true, 'cafe con leche','cafe_solo.png', false,'bebida');
+INSERT INTO Producto VALUES('cafe solo', 2.5, true, 21, true, 'cafe solo','cafe_solo.png', false,'bebida');
 INSERT INTO Producto VALUES('cafe con leche', 2.75, true, 21, true, 'cafe con leche','cafe_con_leche.png', false,'bebida');
 
 INSERT INTO Usuarios VALUES('martita', 'Marta', 'Pérez Gómez', 'marta@gmail.com', '$2y$10$G4jdtAR1AibJm0/PGgI7cunmySeB0vbPaDV5.G/LddxoOzZ8ySbYm', 1, 'avatar24.png');

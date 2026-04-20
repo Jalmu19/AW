@@ -15,19 +15,18 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$nombre = filter_input(INPUT_GET, 'num_pedido', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$fecha_hora = filter_input(INPUT_GET, 'fecha_hora', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombreProd = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 
-if ($nombre) {
-    if (Pedido::borra($nombre, $fecha_hora)) {
+if ($nombreProd) {
+    if (Pedido::borra_producto_carrito($nombreProd)) {
         // Guardamos un mensaje de éxito para mostrarlo en la siguiente petición
-        $app->putRequestAttribute('mensaje', "El pedido '$nombre' ha sido eliminado correctamente.");
+        $app->putRequestAttribute('mensaje', "El producto '$nombreProd' ha sido eliminado correctamente.");
     } 
     else {
-        $app->putRequestAttribute('error', "Hubo un error al intentar eliminar el pedido '$nombre'.");
+        $app->putRequestAttribute('error', "Hubo un error al intentar eliminar el producto '$nombreProd' del carrito.");
     }
 }
 
-header('Location: ../../../list_ped_ger.php');
+header('Location: ../../../carrito.php');
 exit();

@@ -21,6 +21,39 @@ $err = $app->getRequestAttribute('error');
 if ($msg) $contenidoPrincipal .= "<div class='alerta-exito'>$msg</div>";
 if ($err) $contenidoPrincipal .= "<div class='alerta-error'>$err</div>";
 
+
+
+
+if (isset($_GET['borrar'])) {
+    $nombre = urldecode($_GET['borrar']);
+    $num = $_GET['num'];
+    $fecha = urldecode($_GET['fecha']);
+
+    $db = BistroFDI\clases\Aplicacion::getInstance()->getConexionBd();
+    
+    // 1. Borramos el producto
+    Pedido::borrar_prod_carrito($fecha, $num);
+
+    // 2. Recalculamos el total (Usando tu método de Pedido.php)
+    Pedido::actualizarTotalPedido($fecha, $num);
+
+    // 3. Redirigimos para limpiar la URL
+    header("Location: carrito.php");
+    exit();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 $Rutaflecha = RUTA_APP."/img/volver.png";
 $contenidoPrincipal = <<<EOS
   <div>
@@ -45,7 +78,13 @@ if ($pedidos && count($pedidos) > 0) {
   $contenidoPrincipal .= $tabla->genera();
 
   $total = isset($pedidos[0]['total']) ? $pedidos[0]['total'] : 0;
-  $contenidoPrincipal .= "<h1>Total: " . $total . " €</h1>";
+  $contenidoPrincipal .= <<<EOS
+        <h1>
+          Total: 
+          <span id='total_carrito'>$total<span>
+          €
+        </h1>
+  EOS;
 
   $numPedido = $pedidos[0]['num_pedido'];
   $fechaHora = $pedidos[0]['fecha_hora'];

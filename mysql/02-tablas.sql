@@ -7,8 +7,6 @@ DROP TABLE IF EXISTS `Categoria`;
 DROP TABLE IF EXISTS `Usuarios`;
 
 
-SET FOREIGN_KEY_CHECKS = 0;
-
 CREATE TABLE `Usuarios` (
     `nombreUsuario` varchar(20) NOT NULL,
     `nombre` varchar(40) NOT NULL,
@@ -85,4 +83,3 @@ CREATE TABLE `Oferta_Producto` (
     FOREIGN KEY (`id_oferta`) REFERENCES `Oferta` (`id_oferta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-SET FOREIGN_KEY_CHECKS = 1;

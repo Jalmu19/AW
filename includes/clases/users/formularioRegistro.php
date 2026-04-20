@@ -94,8 +94,8 @@ class FormularioRegistro extends Formulario
         if (!$nombreUsuario || mb_strlen($nombreUsuario) < 5) {
             $this->errores['nombreUsuario'] = 'El nombre de usuario debe tener al menos 5 caracteres.';
         }
-        else if (mb_strlen($nombreUsuario) > 10) {
-            $this->errores['nombreUsuario'] = 'El nombre de usuario es demasiado largo (max 10 caracteres).';
+        else if (mb_strlen($nombreUsuario) > 20) {
+            $this->errores['nombreUsuario'] = 'El nombre de usuario es demasiado largo (max 20 caracteres).';
         }
 
         $nombre = trim($datos['nombre'] ?? '');
@@ -103,8 +103,8 @@ class FormularioRegistro extends Formulario
         if (!$nombre || mb_strlen($nombre) < 3) {
             $this->errores['nombre'] = 'El nombre debe tener al menos 3 caracteres.';
         }
-        else if (mb_strlen($nombre) > 10) {
-            $this->errores['nombre'] = 'El nombre es demasiado largo (max 20 caracteres).';
+        else if (mb_strlen($nombre) > 40) {
+            $this->errores['nombre'] = 'El nombre es demasiado largo (max 40 caracteres).';
         }
 
         $apellido = trim($datos['apellido'] ?? '');
@@ -112,13 +112,16 @@ class FormularioRegistro extends Formulario
         if (!$apellido || mb_strlen($apellido) < 3) {
             $this->errores['apellido'] = 'El apellido debe tener al menos 3 caracteres.';
         }
-        else if (mb_strlen($apellido) > 10) {
+        else if (mb_strlen($apellido) > 50) {
             $this->errores['apellido'] = 'El apellido es demasiado largo (max 50 caracteres).';
         }
 
         $email = trim($datos['email'] ?? '');
         if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errores['email'] = 'El email no es válido.';
+        }
+        else if (mb_strlen($email) > 50) {
+            $this->errores['email'] = 'El email es demasiado largo (max 100 caracteres).';
         }
 
         $password = trim($datos['password'] ?? '');

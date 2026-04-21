@@ -75,12 +75,13 @@ class TablaCarta extends Tabla {
         $paginaActual = basename($_SERVER['PHP_SELF']);
 
         if ($paginaActual == 'carta.php') {
-            $urlComprar = "includes/clases/pedidos/añadir_carrito.php?id=$id";
+            $urlComprar = "includes/clases/pedidos/añadir_carrito.php?id=$id&origen=carta";
             
             return <<<EOS
                 <form action="$urlComprar" method="GET">
                     <input type="hidden" name="id" value="$id">
                     <input type="number" class="cantidad_producto" name="cantidad" value="1" min="1" > 
+                    <input type="hidden" name="origen" value="carta">
                     <button type="submit" class="boton-form">Comprar</button>
                 </form>
             EOS;

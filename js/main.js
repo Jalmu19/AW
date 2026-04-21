@@ -20,17 +20,15 @@ function modificarValor(boton, operacion){
 
     let nuevoValor = valorActual;
     //Modificamos el valor y lo volvemos a escribir en el HTML
-    if(operacion === "+")
-        nuevoValor = nuevoValor + 1;
-    else if(valorActual > 0){
-        nuevoValor = nuevoValor - 1;
-    }
-    
+    if(operacion === "+") nuevoValor = nuevoValor + 1;
+    else if(valorActual > 0) nuevoValor = nuevoValor - 1;
+
     cantidad.text(nuevoValor);
     inputOculto.val(nuevoValor);
 
     modificarPrecio();
 }
+
 
 $(document).ready(function(){
     $(".borrar_prod_carrito").click(function(){
@@ -48,8 +46,6 @@ function modificarPrecio() {
     $(".input_cantidad").each(function() {
         let precioUnid = parseFloat($(this).siblings(".precio_unidad").val());
         let cantidad = parseInt($(this).val());
-
-        console.log("Cantidad:" +  cantidad + "| Precio: " +precioUnid);
 
         totalGeneral += precioUnid * cantidad;      
     });
@@ -80,6 +76,14 @@ $(document).ready(function() {
         return true; 
     });
 });
+
+
+
+function calculoDescuento(){
+    let precio = $("#precio_total").val();
+    let precio_reducido = $("#precio_reducido").val();
+    return (100*(precio-precio_reducido))/precio;
+}
 
 
 

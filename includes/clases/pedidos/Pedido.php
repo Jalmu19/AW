@@ -177,7 +177,7 @@ class Pedido {
     }
 
 
-    public static function insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidad){
+    public static function insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidad, $carta){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
         $query = sprintf("SELECT cantidad FROM Pedido_Producto 
@@ -187,10 +187,20 @@ class Pedido {
         $res = $conn->query($query);
         //si ya existe el producto, aumentamos la cantidad
         if($res && $res->num_rows > 0){
-            $query2 = sprintf("UPDATE Pedido_Producto SET cantidad = %d
-                               WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
-                               $cantidad, $nombreProducto, $fecha_hora, $num_pedido);
-            $conn->query($query2);
+            //Si el producto se ha añadido desde la carta, aumentamos la cantidad, sino la cantidad es la indicada
+            if($carta){
+                $query2 = sprintf(" UPDATE Pedido_Producto SET cantidad = cantidad +%d
+                                    WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
+                                    $cantidad, $nombreProducto, $fecha_hora, $num_pedido);
+                $conn->query($query2);
+            }
+            else{
+                $query2 = sprintf(" UPDATE Pedido_Producto SET cantidad = %d
+                                    WHERE nombre='%s' AND fecha_hora='%s' AND num_pedido=%d",
+                                    $cantidad, $nombreProducto, $fecha_hora, $num_pedido);
+                $conn->query($query2);
+            }
+            
         }
         else{
             $query3 = sprintf("INSERT INTO Pedido_Producto (nombre, cantidad, fecha_hora, num_pedido, preparado) 

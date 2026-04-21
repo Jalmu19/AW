@@ -24,7 +24,7 @@ class FormularioFinalizarPedido extends Formulario
     {
         return <<<EOF
         <input type="hidden" name="num_pedido" value="{$this->numPedido}">
-        <input type="hidden" name="fecha_hora" value="{$this->fechaHora}">
+        <input type="hidden" name="fecha_hora" value="{$this->fechaHora}"> 
         
         <fieldset>
             <legend>Finalizar Compra</legend>
@@ -69,6 +69,7 @@ class FormularioFinalizarPedido extends Formulario
         $metodoPago = $datos['metodo_pago'] ?? 'efectivo';
         $accion = $datos['accion'] ?? 'confirmar';
 
+
         $cantidades = $datos['cantidades'] ?? []; // Array que viene de la tabla con la cantidad del producto
 
         if (!$numPedido || !$fechaHora) {
@@ -87,7 +88,7 @@ class FormularioFinalizarPedido extends Formulario
         if(!empty($cantidades)) {
             foreach ($cantidades as $idProducto => $nuevaCantidad) {
                 // Actualizamos cada producto con su nueva cantidad exacta
-                Pedido::insertarPedidoProducto($fechaHora, $numPedido, $idProducto, $nuevaCantidad);
+                Pedido::insertarPedidoProducto($fechaHora, $numPedido, $idProducto, $nuevaCantidad, false);
             }
                 // Recalculamos el total una sola vez al final
             Pedido::actualizarTotalPedido($fechaHora, $numPedido);

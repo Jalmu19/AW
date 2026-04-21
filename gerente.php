@@ -11,6 +11,7 @@ $tituloPagina = "Gestión de Gerente";
 $GestionarProducto = RUTA_APP .'/includes/clases/productos/listar_productos.php';
 $GestionarUsuarios = RUTA_APP .'/includes/clases/users/listar_usuario.php';
 $GestionarCategorias = RUTA_APP .'/includes/clases/categorias/listar_categorias.php';
+$GestionarOfertas = RUTA_APP .'/includes/clases/categorias/listar_ofertas.php';
 $VisualizarPedidos = RUTA_APP .'/list_ped_ger.php';
 
 
@@ -52,12 +53,17 @@ $contenidoPrincipal = <<<EOS
             </button>
         </form>
 
+         <form action= "$GestionarOfertas" method="get">
+            <button type="submit" class="boton">
+               Gestionar las ofertas
+            </button>
+        </form>
+
         <form action= "$VisualizarPedidos" method="get">
             <button type="submit" class="boton">
                Visualizar los pedidos
             </button>
         </form>
-
     </div>
 </div>
 EOS;

@@ -244,12 +244,20 @@ img.logout{
 }
 
 /*Panel index*/
-.panel-botones {
+/*.panel-botones {
     display: flex;          
     flex-direction: column; 
     align-items: center;    
     justify-content: center;
     gap: 20px;              
+}*/
+
+.panel-botones {
+    display: grid;          
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: 120px;
+    grid-column-gap:30px;
+    justify-content: center;         
 }
 
 /*Botones de los formularios y para volver*/

@@ -17,10 +17,14 @@ if (!$app->isCurrentUserAdmin()) {
 
 $nombreProd = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+$nombreUsuario = $app->getCurrentUserName();
+//pedido actual para saber fecha y num_pedido
+[$fecha_hora, $num_pedido] = Pedido::pedidosNuevosUsuario($nombreUsuario, Pedido::TIPO_DOMICILIO);
 
 if ($nombreProd) {
     if (Pedido::borra_producto_carrito($nombreProd)) {
         // Guardamos un mensaje de éxito para mostrarlo en la siguiente petición
+        Pedido::actualizarTotalPedido($fecha_hora, $num_pedido);
         $app->putRequestAttribute('mensaje', "El producto '$nombreProd' ha sido eliminado correctamente.");
     } 
     else {

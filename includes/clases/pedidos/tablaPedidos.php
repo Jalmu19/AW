@@ -31,6 +31,7 @@ class TablaPedidos extends Tabla {
                     <span class="cantidad_producto">$valor</span>
                     <input type="hidden" name="cantidades[$idProd]" class="input_cantidad" value="$valor">
                     <input type="hidden" class="precio_unidad" value="$precio">
+                    <input type="hidden" class="nombreProducto" value="$idProd">
                     <button type="button" class="btn_aumentar_producto"> + </button>                
                 EOS;
         }

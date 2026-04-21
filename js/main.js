@@ -14,6 +14,7 @@ $(document).ready(function(){
 function modificarValor(boton, operacion){
     let cantidad = boton.siblings(".cantidad_producto");
     let inputOculto = boton.siblings(".input_cantidad");
+    let nombreProducto = boton.siblings(".nombreProducto").val();
   
     //Obtenemos el valor actual (usando .text()) y lo pasamos a número
     let valorActual = parseInt(inputOculto.val());
@@ -27,6 +28,14 @@ function modificarValor(boton, operacion){
     inputOculto.val(nuevoValor);
 
     modificarPrecio();
+
+
+    // Enviamos 'origen=carrito' para que el PHP sepa que debe sobreescribir la cantidad
+    $.get("includes/clases/pedidos/añadir_carrito.php", {
+        id: nombreProducto,
+        cantidad: nuevoValor,
+        origen: 'carrito' 
+    });
 }
 
 

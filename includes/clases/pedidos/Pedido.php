@@ -232,32 +232,6 @@ class Pedido {
         }
     }
 
-    /*public static function actualizarCantidad($fecha_hora, $num_pedido){
-        $conn = Aplicacion::getInstance()->getConexionBd();
-
-        $query = sprintf("SELECT *
-                        FROM Pedido_Producto pp
-                                JOIN Producto p ON pp.nombre = p.nombre
-                        WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d",
-                        $fecha_hora, $num_pedido);
-
-        $result = $conn->query($query);
-        if ($result) {
-            $fila = $result->fetch_assoc();
-            $nuevoTotal = $fila['total_calculado'] ?? 0.0;
-
-            // Actualizamos el campo 'total' en la tabla Pedido
-            $queryUpdate = sprintf("UPDATE Pedido SET total = %f 
-                                    WHERE fecha_hora = '%s' AND num_pedido = %d",
-                                    $nuevoTotal, $fecha_hora, $num_pedido);
-            $conn->query($queryUpdate);
-        }
-
-        //actualizarTotalPedido($fecha_hora, $num_pedido);
-    }*/
-
-
-
 
     //historial de pedidos de un usuario concreto
     public static function historialPedidoUsuario($nombreUsuario){

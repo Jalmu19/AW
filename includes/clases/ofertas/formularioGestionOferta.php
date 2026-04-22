@@ -118,7 +118,7 @@ class FormularioGestionOferta extends Formulario {
             <hr>
 
             <div>
-                <p>Total Pack (Sin descuento): <span id="precio-original-display">0.00</span>€</p>
+                <p>Total Pack (Sin descuento): <span id="precio-original-display">10.00</span>€</p>
                 
                 <div>
                     <label>Precio Final de la Oferta (€):</label>

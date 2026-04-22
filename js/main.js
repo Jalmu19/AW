@@ -42,7 +42,7 @@ function modificarValor(boton, operacion){
 $(document).ready(function(){
     $(".borrar_prod_carrito").click(function(){
         if(confirm("¿Desea borrar este producto del carrito?")){ 
-            modificarPrecio(); //esto no funciona
+            modificarPrecio(); 
         }        
     });
 });
@@ -87,11 +87,19 @@ $(document).ready(function() {
 });
 
 
+$(document).ready(function() {
+    $("#precio_final").change(function(){
+        calculoDescuento();    
+    });
+
+});
 
 function calculoDescuento(){
-    let precio = $("#precio_total").val();
-    let precio_reducido = $("#precio_reducido").val();
-    return (100*(precio-precio_reducido))/precio;
+    let precio = parseFloat($("#precio-original-display").text()) || 0;
+    let precio_reducido = parseFloat($("#precio_final").val()) || 0;
+
+    let descuento = (100*(precio-precio_reducido))/precio;
+    $("#descuento-input").val(descuento);
 }
 
 

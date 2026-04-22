@@ -11,7 +11,7 @@ $tituloPagina = "Gestión de Gerente";
 $GestionarProducto = RUTA_APP .'/includes/clases/productos/listar_productos.php';
 $GestionarUsuarios = RUTA_APP .'/includes/clases/users/listar_usuario.php';
 $GestionarCategorias = RUTA_APP .'/includes/clases/categorias/listar_categorias.php';
-$GestionarOfertas = RUTA_APP .'/includes/clases/categorias/listar_ofertas.php';
+$GestionarOfertas = RUTA_APP .'/includes/clases/ofertas/listar_ofertas.php';
 $VisualizarPedidos = RUTA_APP .'/list_ped_ger.php';
 
 

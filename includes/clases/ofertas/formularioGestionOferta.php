@@ -1,37 +1,55 @@
 <?php
 namespace BistroFDI\clases\ofertas;
-require_once __DIR__ . '/../../../autoload.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+require_once __DIR__ . '/../../../autoload.php';
 
 use BistroFDI\clases\productos\Producto;
 use BistroFDI\clases\ofertas\Oferta;
 use BistroFDI\clases\formulario;
 
-class FormularioCrearOferta extends Formulario {
+class FormularioGestionOferta extends Formulario {
 
-    public function __construct() {
-        parent::__construct('formOferta', [
-            'action' => 'crear_oferta.php', 
+    private $oferta; // Objeto oferta para edición
+
+    public function __construct($oferta = null) {
+        $this->oferta = $oferta;
+        $idForm = $oferta ? 'formEditarOferta' : 'formCrearOferta';
+        $action = 'crear_actualizar_oferta.php';
+
+        parent::__construct($idForm, [
+            'action' => $action, 
             'urlRedireccion' => 'listar_ofertas.php'
         ]);
     }
 
     protected function generaCamposFormulario(&$datos) {
 
-        // Recuperar datos si hay errores de validación
-        $nombre = $datos['nombre'] ?? '';
-        $descripcion = $datos['descripcion'] ?? '';
-        $fecha_ini = $datos['fecha_ini'] ?? date('Y-m-d\TH:i');
-        $fecha_fin = $datos['fecha_fin'] ?? '';
-        $descuento = $datos['descuento'] ?? '0.00';
+        // Si venimos de un error de validación, usamos $datos. 
+        // Si no, y tenemos oferta, usamos los valores de la oferta.
+        $id_oferta = $this->oferta ? $this->oferta->getIdOferta() : ($datos['id_oferta'] ?? '');
+        $nombre = $datos['nombre'] ?? ($this->oferta ? $this->oferta->getNombre() : '');
+        $descripcion = $datos['descripcion'] ?? ($this->oferta ? $this->oferta->getDescripcion() : '');
+        $fecha_ini = $datos['fecha_ini'] ?? ($this->oferta ? date('Y-m-d\TH:i', strtotime($this->oferta->getFechaIni())) : date('Y-m-d\TH:i'));
+        $fecha_fin = $datos['fecha_fin'] ?? ($this->oferta ? date('Y-m-d\TH:i', strtotime($this->oferta->getFechaFin())) : '');
+        $descuento = $datos['descuento'] ?? ($this->oferta ? $this->oferta->getDescuento() : '0.00');
 
-        // Gestión de errores
+        // Productos existentes para la tabla si estamos editando
+        $productosExistentes = $this->oferta ? $this->oferta->getProductosPack() : [];
+        
+        // Convertimos el diccionario ['nombre' => cant] en el formato que espera la TablaOfertas
+        $filasTabla = [];
+        foreach ($productosExistentes as $nom => $cant) {
+            $p = Producto::buscaProducto($nom);
+            $filasTabla[] = [
+                'nombre' => $nom,
+                'cantidad' => $cant,
+                'precio' => $p ? $p->getPrecio() : 0
+            ];
+        }
+
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'descuento'], $this->errores, 'span', array('class' => 'error'));
 
-        // Cargar productos para el selector
         $listaProductos = Producto::listarProductos();
         $optionsProductos = "<option value='' data-precio='0'>Selecciona un producto...</option>";
         if ($listaProductos) {
@@ -40,41 +58,45 @@ class FormularioCrearOferta extends Formulario {
             }
         }
 
-        // Tabla para ir viendo los productos añadidos al pack de la oferta
         $columnas = [
             'nombre'   => 'Producto',
             'cantidad' => 'Cantidad',
             'precio'   => 'Precio Unit.'
         ];
 
-        $tablaObj = new TablaOfertas($columnas, [], true);
+        $tablaObj = new TablaOfertas($columnas, $filasTabla, true);
         $tablaHtml = $tablaObj->genera();
+
+        $legend = $this->oferta ? "Editar Oferta: " . $nombre : "Configuración de la nueva oferta";
+        $botonTexto = $this->oferta ? "Actualizar Oferta" : "Guardar Oferta";
 
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
-            <legend>Configuración de la nueva oferta</legend>
+            <legend>$legend</legend>
             
+            <input type="hidden" name="id_oferta" value="$id_oferta">
+
             <div>
-                <label for="nombre">Nombre de la oferta:</label>
+                <label>Nombre de la oferta:</label>
                 <input id="nombre" type="text" name="nombre" value="$nombre" required>
                 {$erroresCampos['nombre']}
             </div>
 
             <div>
-                <label for="descripcion">Descripción:</label>
+                <label>Descripción:</label>
                 <textarea id="descripcion" name="descripcion" required>$descripcion</textarea>
                 {$erroresCampos['descripcion']}
             </div>
 
             <div>
                 <div>
-                    <label for="fecha_ini">Fecha Inicio:</label>
+                    <label>Fecha Inicio:</label>
                     <input id="fecha_ini" type="datetime-local" name="fecha_ini" value="$fecha_ini" required>
                     {$erroresCampos['fecha_ini']}
                 </div>
                 <div>
-                    <label for="fecha_fin">Fecha Fin:</label>
+                    <label>Fecha Fin:</label>
                     <input id="fecha_fin" type="datetime-local" name="fecha_fin" value="$fecha_fin" required>
                     {$erroresCampos['fecha_fin']}
                 </div>
@@ -87,7 +109,7 @@ class FormularioCrearOferta extends Formulario {
                 <select id="select-prod-aux">
                     $optionsProductos
                 </select>
-                <input type="number" id="cant-prod-aux" value="1" min="1" placeholder="Cant.">
+                <input type="number" id="cant-prod-aux" value="1" min="1">
                 <button type="button" onclick="addProductoOferta()" class="boton-form">Añadir</button>
             </div>
 
@@ -99,21 +121,21 @@ class FormularioCrearOferta extends Formulario {
                 <p>Total Pack (Sin descuento): <span id="precio-original-display">0.00</span>€</p>
                 
                 <div>
-                    <label for="precio_final">Precio Final de la Oferta (€):</label>
+                    <label>Precio Final de la Oferta (€):</label>
                     <input id="precio_final" type="number" step="0.01" placeholder="Ej: 9.99">
                 </div>
 
                 <div>
-                    <label for="descuento-input">Descuento calculado (%):</label>
+                    <label>Descuento calculado (%):</label>
                     <input id="descuento-input" type="text" name="descuento" value="$descuento" readonly>
                     {$erroresCampos['descuento']}
                 </div>
             </div>
 
-
-            <button type="submit" name="enviar" class="boton-form">Guardar Oferta</button>
+            <button type="submit" name="enviar" class="boton-form">$botonTexto</button>
 
         </fieldset>
+        <script> document.addEventListener('DOMContentLoaded', () => { if(typeof calcularTotales === 'function') calcularTotales(); }); </script>
         EOF;
 
         return $html;
@@ -122,49 +144,46 @@ class FormularioCrearOferta extends Formulario {
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
 
-        //validaciones básicas
+        $id_oferta = $datos['id_oferta'] ?? null;
         $nombre = trim($datos['nombre'] ?? '');
+        $descripcion = trim($datos['descripcion'] ?? '');
+        $fecha_ini = $datos['fecha_ini'] ?? '';
+        $fecha_fin = $datos['fecha_fin'] ?? '';
+        $descuento = (float)($datos['descuento'] ?? 0);
+
+        //validaciones
         if (empty($nombre)) $this->errores['nombre'] = "El nombre es obligatorio.";
 
-        $descripcion = trim($datos['descripcion'] ?? '');
         if (empty($descripcion)) {
             $this->errores['descripcion'] = "Debes introducir una descripción.";
         }
 
-        $fecha_ini = $datos['fecha_ini'] ?? '';
-        $fecha_fin = $datos['fecha_fin'] ?? '';
         if (strtotime($fecha_fin) <= strtotime($fecha_ini)) {
             $this->errores['fecha_fin'] = "La fecha de fin debe ser posterior a la de inicio.";
         }
 
-        //procesar arrays de productos (enviados por el JS)
         $nombresProd = $datos['prod_nombres'] ?? [];
         $cantsProd = $datos['prod_cants'] ?? [];
-
         if (empty($nombresProd)) {
-            $this->errores[] = "Debes añadir al menos un producto al pack de la oferta.";
+            $this->errores[] = "Debes añadir al menos un producto al pack.";
         }
 
-        //si no hay errores, guardamos
         if (count($this->errores) === 0) {
             $productos_pack = [];
             for ($i = 0; $i < count($nombresProd); $i++) {
                 $productos_pack[$nombresProd[$i]] = (int)$cantsProd[$i];
             }
 
-            $descuento = (float)$datos['descuento'];
-            
-            $exito = Oferta::crea(
-                $nombre, 
-                $descripcion, 
-                $fecha_ini, 
-                $fecha_fin, 
-                $descuento, 
-                $productos_pack
-            );
+            // Si hay ID, actualizamos; si no, creamos.
+            if ($id_oferta) {
+                $ofertaObj = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $id_oferta, $productos_pack);
+                $exito = $ofertaObj->guarda();
+            } else {
+                $exito = Oferta::crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack);
+            }
 
             if (!$exito) {
-                $this->errores[] = "Hubo un error al guardar la oferta en la base de datos.";
+                $this->errores[] = "Hubo un error al procesar la oferta en la base de datos.";
             }
         }
     }

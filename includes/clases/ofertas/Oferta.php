@@ -93,6 +93,43 @@ class Oferta {
         return $conn->query($query);
     }
 
+
+    public static function listarOfertas($soloActivas = false)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        //usamos GROUP_CONCAT para traer todos los productos y cantidades en una sola celda
+        //tablas-> Oferta (o), Oferta_Producto (op)
+        $query = "SELECT o.*, 
+                  GROUP_CONCAT(CONCAT(op.nombre_producto, 'x', op.cantidad) SEPARATOR '<br>') as productos_pack
+                  FROM Oferta o
+                  LEFT JOIN Oferta_Producto op ON o.id_oferta = op.id_oferta";
+        
+        //para mostrar las que están activas al cliente
+        if ($soloActivas) {
+            $fechaActual = date('Y-m-d H:i:s');
+            $query .= sprintf(" WHERE o.fecha_ini <= '%s' AND o.fecha_fin >= '%s'", 
+                $conn->real_escape_string($fechaActual),
+                $conn->real_escape_string($fechaActual)
+            );
+        }
+
+        $query .= " GROUP BY o.id_oferta ORDER BY o.fecha_ini DESC";
+
+        $rs = $conn->query($query);
+        $ofertas = [];
+        
+        if ($rs) {
+            while ($fila = $rs->fetch_assoc()) {
+                $ofertas[] = $fila;
+            }
+            $rs->free();
+            return $ofertas;
+        }
+        
+        return false;
+    }
+
     // Getters
     public function getIdOferta() { return $this->id_oferta; }
     public function getNombre() { return $this->nombre; }

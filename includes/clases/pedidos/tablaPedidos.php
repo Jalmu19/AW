@@ -44,7 +44,7 @@ class TablaPedidos extends Tabla {
 
         $urlBorrar = RUTA_APP . "/includes/clases/pedidos/eliminar_producto_pedido.php?id=$id";
         return <<<EOS
-            <a href="$urlBorrar" class="borrar_prod_carrito">Borrar</a>
+            <a href="$urlBorrar" class="eliminar">Borrar</a>
         EOS;
     }
 

@@ -9,7 +9,7 @@ use BistroFDI\clases\formulario;
 
 class FormularioGestionOferta extends Formulario {
 
-    private $oferta; // Objeto oferta para edición
+    private $oferta;
 
     public function __construct($oferta = null) {
         $this->oferta = $oferta;
@@ -24,8 +24,6 @@ class FormularioGestionOferta extends Formulario {
 
     protected function generaCamposFormulario(&$datos) {
 
-        // Si venimos de un error de validación, usamos $datos. 
-        // Si no, y tenemos oferta, usamos los valores de la oferta.
         $id_oferta = $this->oferta ? $this->oferta->getIdOferta() : ($datos['id_oferta'] ?? '');
         $nombre = $datos['nombre'] ?? ($this->oferta ? $this->oferta->getNombre() : '');
         $descripcion = $datos['descripcion'] ?? ($this->oferta ? $this->oferta->getDescripcion() : '');
@@ -33,11 +31,10 @@ class FormularioGestionOferta extends Formulario {
         $fecha_fin = $datos['fecha_fin'] ?? ($this->oferta ? date('Y-m-d\TH:i', strtotime($this->oferta->getFechaFin())) : '');
         $descuento = $datos['descuento'] ?? ($this->oferta ? $this->oferta->getDescuento() : '0.00');
 
-        // Productos existentes para la tabla si estamos editando
         $productosExistentes = $this->oferta ? $this->oferta->getProductosPack() : [];
         
-        // Convertimos el diccionario ['nombre' => cant] en el formato que espera la TablaOfertas
         $filasTabla = [];
+        $arrayParaJS = [];
         foreach ($productosExistentes as $nom => $cant) {
             $p = Producto::buscaProducto($nom);
             $filasTabla[] = [
@@ -45,7 +42,15 @@ class FormularioGestionOferta extends Formulario {
                 'cantidad' => $cant,
                 'precio' => $p ? $p->getPrecio() : 0
             ];
+
+            $arrayParaJS[] = [
+                'nombre' => $nom,
+                'cantidad' => $cant
+            ];
         }
+
+        // Convertimos a JSON string
+        $jsonInicial = json_encode($arrayParaJS);
 
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'descuento'], $this->errores, 'span', array('class' => 'error'));
@@ -76,6 +81,7 @@ class FormularioGestionOferta extends Formulario {
             <legend>$legend</legend>
             
             <input type="hidden" name="id_oferta" value="$id_oferta">
+            <input type="hidden" name="productos_json" id="productos_json" value='$jsonInicial'>
 
             <div>
                 <label>Nombre de la oferta:</label>
@@ -110,19 +116,21 @@ class FormularioGestionOferta extends Formulario {
                     $optionsProductos
                 </select>
                 <input type="number" id="cant-prod-aux" value="1" min="1">
-                <button type="button" onclick="addProductoOferta()" class="boton-form">Añadir</button>
+                <button type="button" id="btn_add_pack" class="boton-form">Añadir</button>
             </div>
 
-            $tablaHtml
+            <div id="tabla-productos-oferta">
+                $tablaHtml
+            </div>
 
             <hr>
 
             <div>
-                <p>Total Pack (Sin descuento): <span id="precio-original-display">10.00</span>€</p>
+                <p>Total Pack (Sin descuento): <span id="precio_total">0.00</span>€</p>
                 
                 <div>
                     <label>Precio Final de la Oferta (€):</label>
-                    <input id="precio_final" type="number" step="0.01" placeholder="Ej: 9.99">
+                    <input id="precio_reducido" type="number" name="precio_reducido" step="0.01" placeholder="Ej: 9.99">
                 </div>
 
                 <div>
@@ -135,7 +143,7 @@ class FormularioGestionOferta extends Formulario {
             <button type="submit" name="enviar" class="boton-form">$botonTexto</button>
 
         </fieldset>
-        <script> document.addEventListener('DOMContentLoaded', () => { if(typeof calcularTotales === 'function') calcularTotales(); }); </script>
+        <script> document.addEventListener('DOMContentLoaded', () => { if(typeof modificarPrecioOferta === 'function') modificarPrecioOferta(); }); </script>
         EOF;
 
         return $html;
@@ -153,28 +161,26 @@ class FormularioGestionOferta extends Formulario {
 
         //validaciones
         if (empty($nombre)) $this->errores['nombre'] = "El nombre es obligatorio.";
-
-        if (empty($descripcion)) {
-            $this->errores['descripcion'] = "Debes introducir una descripción.";
-        }
-
+        if (empty($descripcion)) $this->errores['descripcion'] = "Debes introducir una descripción.";
         if (strtotime($fecha_fin) <= strtotime($fecha_ini)) {
             $this->errores['fecha_fin'] = "La fecha de fin debe ser posterior a la de inicio.";
         }
 
-        $nombresProd = $datos['prod_nombres'] ?? [];
-        $cantsProd = $datos['prod_cants'] ?? [];
-        if (empty($nombresProd)) {
+        //procesamiento de los productos
+        $productos_json = $datos['productos_json'] ?? '[]';
+        $listaProd = json_decode($productos_json, true);
+
+        if (empty($listaProd)) {
             $this->errores[] = "Debes añadir al menos un producto al pack.";
         }
 
         if (count($this->errores) === 0) {
+            //convertimos el JSON [{nombre:x, cantidad:y}] a [nombre => cantidad]
             $productos_pack = [];
-            for ($i = 0; $i < count($nombresProd); $i++) {
-                $productos_pack[$nombresProd[$i]] = (int)$cantsProd[$i];
+            foreach ($listaProd as $item) {
+                $productos_pack[$item['nombre']] = (int)$item['cantidad'];
             }
 
-            // Si hay ID, actualizamos; si no, creamos.
             if ($id_oferta) {
                 $ofertaObj = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $id_oferta, $productos_pack);
                 $exito = $ofertaObj->guarda();

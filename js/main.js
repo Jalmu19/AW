@@ -87,21 +87,113 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-    $("#precio_final").change(function(){
-        calculoDescuento();    
-    });
-
-});
 
 function calculoDescuento(){
-    let precio = parseFloat($("#precio-original-display").text()) || 0;
-    let precio_reducido = parseFloat($("#precio_final").val()) || 0;
+    let precio = parseFloat($("#precio_total").text()) || 0;
+    let precio_reducido = parseFloat($("#precio_reducido").val()) || 0;
 
     let descuento = (100*(precio-precio_reducido))/precio;
     $("#descuento-input").val(descuento);
 }
 
+//para los botones de crear ofertas
+$(document).ready(function(){
+
+    if ($("#productos_json").val() !== "") {
+        $("#tabla-productos-oferta tbody tr").addClass("fila-oferta");
+        modificarPrecioOferta(); 
+    }
+
+    $("#btn_add_pack").click(function(){
+        addProductoPack();
+    });
+
+    $(document).on("click", ".borrar_prod_pack", function(){
+        borrarProductoPack($(this));
+    });
+
+    $("#precio_reducido").on("input", function(){
+        calculoDescuento();
+    });
+});
+
+
+function addProductoPack() {
+    let select = $("#select-prod-aux");
+    let nombre = select.val();
+    let precio = select.find(':selected').data('precio');
+    let cantidadNueva = parseInt($("#cant-prod-aux").val());
+
+    if (nombre === "") {
+        alert("Selecciona un producto");
+        return;
+    }
+
+    let productoEncontrado = false;
+
+    // buscamos si ese prod ya está en la tabla para modificar la cantidad
+    $(".fila-oferta").each(function() {
+        let nombreExistente = $(this).find(".nom-prod").text().trim();
+        
+        if (nombreExistente === nombre) {
+            let cantActual = parseInt($(this).find(".cant-prod").text());
+            $(this).find(".cant-prod").text(cantActual + cantidadNueva);
+            productoEncontrado = true;
+            return false; 
+        }
+    });
+
+    // si no está en la tabla ya 
+    if (!productoEncontrado) {
+        let nuevaFila = `
+            <tr class="fila-oferta">
+                <td class="nom-prod">${nombre}</td>
+                <td class="cant-prod">${cantidadNueva}</td>
+                <td>
+                    <span class="precio-prod">${precio}</span>€
+                </td>
+                <td>
+                    <button type="button" class="borrar_prod_pack">Borrar</button>
+                </td>
+            </tr>`;
+        $("#tabla-productos-oferta tbody").append(nuevaFila);
+    }
+
+    modificarPrecioOferta();
+}
+
+
+function borrarProductoPack(boton) {
+    if(confirm("¿Desea quitar este producto del pack?")){ 
+        boton.closest("tr").remove();
+        modificarPrecioOferta();
+    }
+}
+
+
+function modificarPrecioOferta() {
+    let totalPack = 0;
+    let listaProductosJSON = [];
+
+    if ($(".fila-oferta").length > 0) {
+        $(".fila-oferta").each(function() {
+            let nombre = $(this).find(".nom-prod").text().trim();
+            let cantidad = parseInt($(this).find(".cant-prod").text().trim());
+            let precioUnitario = parseFloat($(this).find(".precio-prod").text().trim());
+
+            if (!isNaN(cantidad) && !isNaN(precioUnitario)) {
+                totalPack += (precioUnitario * cantidad);
+                listaProductosJSON.push({ nombre: nombre, cantidad: cantidad });
+            }
+        });
+    } 
+    
+    // Actualizamos el input con lo que hay actualmente en la tabla
+    $("#productos_json").val(JSON.stringify(listaProductosJSON));
+    $("#precio_total").text(totalPack.toFixed(2));
+    
+    calculoDescuento();
+}
 
 
 

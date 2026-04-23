@@ -8,15 +8,31 @@ use BistroFDI\clases\tabla;
 
 class TablaOfertas extends Tabla {
 
-    protected function formateaContenido($campo, $valor, $fila) {
+   protected function formateaContenido($campo, $valor, $fila) {
+
+        if ($campo == 'nombre') {
+            return '<span class="nom-prod">' . htmlspecialchars($valor) . '</span>';
+        }
+
+        if ($campo == 'cantidad') {
+            return '<span class="cant-prod">' . htmlspecialchars($valor) . '</span>';
+        }
+
+        if ($campo == 'precio') {
+            // Le ponemos la clase precio-prod para que JS lo sume al cargar
+            return '<span class="precio-prod">' . number_format($valor, 2) . '</span>€';
+        }
+
         if ($campo == 'descuento') {
             return number_format($valor, 2) . " %";
         }
+
         if ($campo === 'id_oferta') {
             return "#" . htmlspecialchars($valor);
         }
+
         if ($campo === 'productos_pack') {
-            return $valor; 
+            return $valor;
         }
 
         return parent::formateaContenido($campo, $valor, $fila);
@@ -38,7 +54,7 @@ class TablaOfertas extends Tabla {
 
         if ($paginaActual == 'crear_actualizar_oferta.php') {
             return <<<EOS
-                <button type="button" class="eliminar" onclick="eliminarFila(this)">Borrar</button>
+                <button type="button" class="borrar_prod_pack">Borrar</button>
             EOS;
         }
         

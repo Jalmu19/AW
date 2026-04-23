@@ -56,31 +56,6 @@ class Oferta {
         }
         return $productos;
     }
-
-    public static function crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack)
-    {
-        //obtener el siguiente id disponible
-        $queryUltimoID = sprintf("SELECT MAX(id_oferta) as ultimo FROM Oferta");
-        $resQueryUltimoID = $conn->query($queryUltimoID);
-        $filaMax = $resQueryUltimoID->fetch_assoc();
-        
-        // Si no hay ofertas (null)->empezamos en 1
-        // Si hay -> +1
-        $id_oferta = ($filaMax['ultimo'] !== null) ? $filaMax['ultimo'] + 1 : 1;
-
-        $oferta = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $id_oferta, $productos_pack);
-
-        return $oferta->guarda();
-    }
-
-    public function guarda()
-    {
-        if ($this->id_oferta !== null) {
-            return self::actualiza($this);
-        }
-        return self::inserta($this);
-    }
-
     
     public static function borra($id_oferta)
     {
@@ -92,7 +67,6 @@ class Oferta {
         $query = sprintf("DELETE FROM Oferta WHERE id_oferta=%d", $id_oferta);
         return $conn->query($query);
     }
-
 
     public static function listarOfertas($soloActivas = false)
     {
@@ -129,6 +103,81 @@ class Oferta {
         
         return false;
     }
+
+    public static function crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack)
+    {
+        $oferta = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, null, $productos_pack);
+        return $oferta->guarda();
+    }
+
+    public function guarda()
+    {
+        if ($this->id_oferta !== null) {
+            return self::actualiza($this);
+        }
+
+        return self::inserta($this);
+    }
+
+    private static function inserta($oferta)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        $query = sprintf("INSERT INTO Oferta (nombre, descripcion, fecha_ini, fecha_fin, descuento) VALUES ('%s', '%s', '%s', '%s', %f)",
+            $conn->real_escape_string($oferta->nombre),
+            $conn->real_escape_string($oferta->descripcion),
+            $conn->real_escape_string($oferta->fecha_ini),
+            $conn->real_escape_string($oferta->fecha_fin),
+            $oferta->descuento
+        );
+
+        if ($conn->query($query)) {
+            // Recuperamos el ID que la BD acaba de generar
+            $oferta->id_oferta = $conn->insert_id;
+            return self::insertaProductosPack($oferta->id_oferta, $oferta->productos_pack);
+        }
+        return false;
+    }
+
+    private static function actualiza($oferta)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        $query = sprintf("UPDATE Oferta SET nombre='%s', descripcion='%s', fecha_ini='%s', fecha_fin='%s', descuento=%f WHERE id_oferta=%d",
+            $conn->real_escape_string($oferta->nombre),
+            $conn->real_escape_string($oferta->descripcion),
+            $conn->real_escape_string($oferta->fecha_ini),
+            $conn->real_escape_string($oferta->fecha_fin),
+            $oferta->descuento,
+            $oferta->id_oferta
+        );
+
+        if ($conn->query($query)) {
+            // Borramos relación antigua y metemos la nueva (Sincronización)
+            $queryBorrar = sprintf("DELETE FROM Oferta_Producto WHERE id_oferta=%d", $oferta->id_oferta);
+            $conn->query($queryBorrar);
+            
+            return self::insertaProductosPack($oferta->id_oferta, $oferta->productos_pack);
+        }
+        return false;
+    }
+
+    private static function insertaProductosPack($id_oferta, $productos)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        foreach ($productos as $nombreProd => $cantidad) {
+            $query = sprintf("INSERT INTO Oferta_Producto (id_oferta, nombre_producto, cantidad) VALUES (%d, '%s', %d)",
+                $id_oferta,
+                $conn->real_escape_string($nombreProd),
+                $cantidad
+            );
+            if (!$conn->query($query)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     // Getters
     public function getIdOferta() { return $this->id_oferta; }

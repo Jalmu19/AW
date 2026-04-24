@@ -49,8 +49,8 @@ class FormularioGestionOferta extends Formulario {
             ];
         }
 
-        // Convertimos a JSON string
-        $jsonInicial = json_encode($arrayParaJS);
+
+        $jsonInicial = htmlspecialchars(json_encode($arrayParaJS), ENT_QUOTES, 'UTF-8');
 
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['nombre', 'descripcion', 'fecha_ini', 'fecha_fin', 'descuento'], $this->errores, 'span', array('class' => 'error'));
@@ -81,7 +81,7 @@ class FormularioGestionOferta extends Formulario {
             <legend>$legend</legend>
             
             <input type="hidden" name="id_oferta" value="$id_oferta">
-            <input type="hidden" name="productos_json" id="productos_json" value='$jsonInicial'>
+            <input type="hidden" name="productos_json" id="productos_json" value="$jsonInicial">
 
             <div>
                 <label>Nombre de la oferta:</label>
@@ -152,21 +152,23 @@ class FormularioGestionOferta extends Formulario {
     protected function procesaFormulario(&$datos) {
         $this->errores = [];
 
-        $id_oferta = $datos['id_oferta'] ?? null;
+        $id_oferta = !empty($datos['id_oferta']) ? (int)$datos['id_oferta'] : null;
         $nombre = trim($datos['nombre'] ?? '');
         $descripcion = trim($datos['descripcion'] ?? '');
-        $fecha_ini = $datos['fecha_ini'] ?? '';
-        $fecha_fin = $datos['fecha_fin'] ?? '';
+        
+        // Limpieza de fechas para MySQL (quitar la T)
+        $fecha_ini = str_replace('T', ' ', $datos['fecha_ini'] ?? '');
+        $fecha_fin = str_replace('T', ' ', $datos['fecha_fin'] ?? '');
+        
         $descuento = (float)($datos['descuento'] ?? 0);
 
-        //validaciones
+        // validaciones
         if (empty($nombre)) $this->errores['nombre'] = "El nombre es obligatorio.";
         if (empty($descripcion)) $this->errores['descripcion'] = "Debes introducir una descripción.";
         if (strtotime($fecha_fin) <= strtotime($fecha_ini)) {
             $this->errores['fecha_fin'] = "La fecha de fin debe ser posterior a la de inicio.";
         }
 
-        //procesamiento de los productos
         $productos_json = $datos['productos_json'] ?? '[]';
         $listaProd = json_decode($productos_json, true);
 
@@ -175,22 +177,18 @@ class FormularioGestionOferta extends Formulario {
         }
 
         if (count($this->errores) === 0) {
-            //convertimos el JSON [{nombre:x, cantidad:y}] a [nombre => cantidad]
             $productos_pack = [];
             foreach ($listaProd as $item) {
                 $productos_pack[$item['nombre']] = (int)$item['cantidad'];
             }
 
-            if ($id_oferta) {
-                $ofertaObj = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $id_oferta, $productos_pack);
-                $exito = $ofertaObj->guarda();
-            } else {
-                $exito = Oferta::crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack);
-            }
+            $exito = Oferta::crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack, $id_oferta);
 
             if (!$exito) {
                 $this->errores[] = "Hubo un error al procesar la oferta en la base de datos.";
             }
         }
+
+        return count($this->errores) === 0;
     }
 }

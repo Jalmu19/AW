@@ -18,8 +18,8 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-//si es actualizar cogemos el id de la oferta para cargar los datos
-$id = $_GET['id'] ?? null;
+// Buscamos el ID tanto si viene por la URL (GET) como si viene del formulario oculto (POST)
+$id = $_GET['id'] ?? $_POST['id_oferta'] ?? null;
 $oferta = null;
 $titulo = "Crear una nueva oferta";
 $subtitulo = "Rellena todos los campos para dar de alta una oferta.";

@@ -104,15 +104,16 @@ class Oferta {
         return false;
     }
 
-    public static function crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack)
+    public static function crea($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $productos_pack, $id_oferta)
     {
-        $oferta = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, null, $productos_pack);
+        $oferta = new Oferta($nombre, $descripcion, $fecha_ini, $fecha_fin, $descuento, $id_oferta, $productos_pack);
         return $oferta->guarda();
     }
 
-    public function guarda()
+   public function guarda()
     {
-        if ($this->id_oferta !== null) {
+        // Si el id no es nulo, es que viene de un formulario de edición -> ACTUALIZAMOS
+        if ($this->id_oferta !== null && $this->id_oferta !== '') {
             return self::actualiza($this);
         }
 
@@ -132,7 +133,7 @@ class Oferta {
         );
 
         if ($conn->query($query)) {
-            // Recuperamos el ID que la BD acaba de generar
+
             $oferta->id_oferta = $conn->insert_id;
             return self::insertaProductosPack($oferta->id_oferta, $oferta->productos_pack);
         }
@@ -153,7 +154,7 @@ class Oferta {
         );
 
         if ($conn->query($query)) {
-            // Borramos relación antigua y metemos la nueva (Sincronización)
+            // Borramos relación antigua y metemos la nueva
             $queryBorrar = sprintf("DELETE FROM Oferta_Producto WHERE id_oferta=%d", $oferta->id_oferta);
             $conn->query($queryBorrar);
             

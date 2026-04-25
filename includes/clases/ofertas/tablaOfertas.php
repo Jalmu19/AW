@@ -14,10 +14,6 @@ class TablaOfertas extends Tabla {
             return '<span class="nom-prod">' . htmlspecialchars($valor) . '</span>';
         }
 
-        if ($campo == 'cantidad') {
-            return ' <input type="number" class="cantidad_oferta" name="cant_ofert" value="1" min="1">';
-        }
-
         if ($campo == 'precio') {
             // Le ponemos la clase precio-prod para que JS lo sume al cargar
             return '<span class="precio-prod">' . number_format((float)$valor, 2) . '</span>€';
@@ -61,14 +57,15 @@ class TablaOfertas extends Tabla {
         if($paginaActual == 'ver_ofertas.php'){
 
            $id = urlencode($fila['id_oferta']);
-           echo($id);
+
            $urlComprar = "includes/clases/pedidos/anyadir_carrito.php?id=$id&origen=ofertas";
 
            return <<<EOS
                 <form action="$urlComprar" method="GET">
                     <input type="hidden" name="origen" value="ofertas">
                     <input type="hidden" name="id" value="$id">
-                    <button type="submit" class="btn_add_pack">Comprar</button>
+                    <input type="number" class="cantidad_oferta" name="cant_ofert" value="1" min="1">
+                    <button type="submit" class="boton-form">Comprar</button>
                 </form>
             EOS;
         }

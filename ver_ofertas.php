@@ -14,7 +14,6 @@ $columnas = [
     'id_oferta'=>'Número',
     'nombre' => 'Nombre',
     'productos_pack'=>'Productos incluidos',
-    'cantidad'=>'Cantidad',
     'descuento' => 'Descuento',    
     'precio'=>'Precio'
 

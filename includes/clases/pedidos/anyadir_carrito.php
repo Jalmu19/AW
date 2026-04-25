@@ -6,6 +6,7 @@ ini_set('display_startup_errors', 1);
 
 use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\pedidos\Pedido;
+use BistroFDI\clases\ofertas\Oferta;
 
  
 
@@ -26,7 +27,7 @@ $origen = filter_input(INPUT_GET, 'origen', FILTER_SANITIZE_STRING);
 $carta = ($origen === 'carta');
 
 
-if($nombreProducto && $tipoPedido){
+if($nombreProducto && $tipoPedido && $carta){
 
     //buscar si el usuario tiene un pedido "abierto" (estado=recibido)
     //si no encuentra, crea un pedido nuevo
@@ -36,10 +37,29 @@ if($nombreProducto && $tipoPedido){
     Pedido::insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidadAAñadir, $carta);
 
     //actualizar el precio
-    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido);  
+    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido); 
+    
+    header('Location: ../../../carta.php');
 } 
+else{
+    //TODO: Que añada al carrito todos los productos de la oferta
+    [$fecha_hora, $num_pedido] = Pedido::pedidosNuevosUsuario($nombreUsuario, $tipoPedido);
+    $idOferta = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+       
+    $oferta = Oferta::buscaProductosOferta($idOferta);
+    //Por cada producto en la oferta
+    foreach($oferta as $pro => $cant){
+       
+        //Añadimos el producto
+        Pedido::insertarPedidoProducto($fecha_hora, $num_pedido, $pro, $cant, $carta);
+        Pedido::actualizarTotalPedido($fecha_hora, $num_pedido); 
+    }   
+    
+    header('Location: ../../../ver_ofertas.php');
+}
 
-header('Location: ../../../carta.php');
+
+
 exit();
 
 

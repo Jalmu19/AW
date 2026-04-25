@@ -66,7 +66,6 @@ class TablaCarta extends Tabla {
         return parent::formateaContenido($campo, $valor, $fila);
     }
 
-    //TODO: Cambiar esto tambien
     protected function generaAcciones($fila) {
         $app = Aplicacion::getInstance();
         $id = urlencode($fila['nombre']);
@@ -75,7 +74,7 @@ class TablaCarta extends Tabla {
         $paginaActual = basename($_SERVER['PHP_SELF']);
 
         if ($paginaActual == 'carta.php') {
-            $urlComprar = "includes/clases/pedidos/añadir_carrito.php?id=$id&origen=carta";
+            $urlComprar = "includes/clases/pedidos/anyadir_carrito.php?id=$id&origen=carta";
             
             return <<<EOS
                 <form action="$urlComprar" method="GET">

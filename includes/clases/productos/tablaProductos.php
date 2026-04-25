@@ -36,7 +36,7 @@ class TablaProductos extends Tabla {
         $paginaActual = basename($_SERVER['PHP_SELF']);
 
         if ($paginaActual == 'carta.php') {
-            $urlComprar = "includes/clases/pedidos/añadir_carrito.php?id=$id";
+            $urlComprar = "includes/clases/pedidos/anyadir_carrito.php?id=$id";
             
             return <<<EOS
                 <form action="$urlComprar" method="GET">

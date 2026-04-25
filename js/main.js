@@ -92,8 +92,8 @@ function calculoDescuento(){
     let precio = parseFloat($("#precio_total").text()) || 0;
     let precio_reducido = parseFloat($("#precio_reducido").val()) || 0;
 
-    let descuento = (100*(precio-precio_reducido))/precio;
-    $("#descuento-input").val(descuento);
+    let descuento = (100*(precio-precio_reducido))/precio; //redondeo hacia abajo
+    $("#descuento-input").val(Math.round(descuento));
 }
 
 //para los botones de crear ofertas

@@ -24,7 +24,7 @@ if (!$nombre) {
     exit();
 }
 
-$producto = Producto::buscaProducto($nombre); //
+$producto = Producto::buscaProducto($nombre); 
 if (!$producto) {
     header('Location:'.RUTA_APP.'/includes/clases/productos/listar_productos.php');
     exit();
@@ -39,7 +39,8 @@ $datos = [
     'imagen' => $producto->getImagen(),
     'disponibilidad' => $producto->getDisponibilidad(),
     'ofertado' => $producto->getOfertado(),
-    'cocinable' => $producto->getCocinable()
+    'cocinable' => $producto->getCocinable(),
+    'iva' => $producto->getIva()
 ];
 
 

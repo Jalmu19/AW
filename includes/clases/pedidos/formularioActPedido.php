@@ -12,32 +12,36 @@ class FormularioActPedido extends Formulario
 {
     public function __construct() {
         parent::__construct('formActPedido', ['action' => 'actualizar_pedido.php',
-                                              'urlRedireccion' => RUTA_APP . '/list_ped_ger.php',
-                                               'enctype' => 'multipart/form-data']);
+                                              'urlRedireccion' => RUTA_APP . '/list_ped_ger.php']);
     }
     
     protected function generaCamposFormulario(&$datos)
     {
-        $idPedido = $datos['num_pedido'] ?? '';
+        $idPedido = $datos['id_pedido'] ?? '';
+        $fecha_hora = $datos['fecha_hora'] ?? '';
 
+  
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['id_pedido'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['num_pedido'], $this->errores, 'span', array('class' => 'error'));
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Actualizar estado del pedido</legend>
+
+           <input type="hidden" name="id_pedido" value="$idPedido">
+           <input type="hidden" name="fecha_hora" value="$fecha_hora">
+
             <div>
-                <label for="id_pedido">Id del pedido:</label>
-                <input id="id_pedido" type="text" name="id_pedido" value="$idPedido" />
-                {$erroresCampos['id_pedido']}
+                <label for="id_pedido">Id del pedido: $idPedido</label>
+                {$erroresCampos['num_pedido']}
             </div>
            
             <div>
                 <label class="label-en-linea">
-                    <input type="radio" id="nuevo" name="estado" value="Nuevo" class="input-en-linea"> Nuevo
+                    <input type="radio" name="estado" value="Nuevo" class="input-en-linea"> Nuevo
                 </label>
                 
                 <label class="label-en-linea">
@@ -69,7 +73,7 @@ class FormularioActPedido extends Formulario
                 </label>
             </div>
             
-            <div>
+             <div>
                 <button type="submit" name="actualizar" class="boton-form">Ok</button>
             </div>
 
@@ -79,9 +83,18 @@ class FormularioActPedido extends Formulario
     }
 
     protected function procesaFormulario(&$datos){
-        
+        $num_pedido = (int)$datos['id_pedido'];
+        $fecha_hora = str_replace('T', ' ', $datos['fecha_hora'] ?? '');
+
+        $estado = trim($datos['estado'] ?? '');
+        $estado = filter_var($estado, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ( ! $estado || empty($estado) ) {
+            $this->errores['estado'] = 'Debes seleccionar un estado.';
+        }
+
+
         if (count($this->errores) === 0) { 
-            $pedido = Pedido::actualizaEstado($datos['num_pedido'], $datos['fecha_hora'], $datos['estado']);
+            $pedido = Pedido::actualizaEstado($num_pedido, $fecha_hora, $estado);
         
             if (!$pedido) {
                 $this->errores[] = "El pedido no ha podido actualizarse correctamente";

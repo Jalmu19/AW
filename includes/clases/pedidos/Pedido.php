@@ -587,6 +587,7 @@ class Pedido {
         return $productos;     
     }
 
+
     //Terminar cocinar pedido (cocinero): Cocinando->ListoCocina
     public static function terminarCocinarPedido($num_pedido, $fecha_hora) {
         return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_LISTO_COCINA);

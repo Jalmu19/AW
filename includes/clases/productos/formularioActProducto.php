@@ -148,7 +148,7 @@ class formularioActProducto extends Formulario
             }
         }
 
-        $iva = $datos['descripcion'] ?? '';
+        $iva = $datos['iva'] ?? '';
 
         $disponibilidad = isset($datos['disponibilidad']) ? 1 : 0;
         $ofertado = isset($datos['ofertado']) ? 1 : 0;

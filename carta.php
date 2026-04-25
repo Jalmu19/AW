@@ -45,7 +45,7 @@ $contenidoPrincipal = '';
 
 if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUserWaiter()) {
     $contenidoPrincipal .= <<<EOS
-        <a href="index.php" class="btn-volver" title="Volver al Inicio">
+        <a href="opciones.php" class="btn-volver" title="Volver al Inicio">
             <img src= "$Rutaflecha" alt="Volver al Inicio">
         </a>
     EOS;

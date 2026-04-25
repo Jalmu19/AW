@@ -8,7 +8,9 @@ ini_set('display_startup_errors', 1);
 //define('BD_HOST', 'vm002.db.swarm.test');// sevidor de la base de datos, no localhost
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'awp2');
+//define('BD_USER', 'aw2')
 define('BD_USER', 'root');
+//define('BD_PASS', 'awpass')
 define('BD_PASS', '');
 
 /**

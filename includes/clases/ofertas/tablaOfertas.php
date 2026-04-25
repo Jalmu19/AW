@@ -15,16 +15,16 @@ class TablaOfertas extends Tabla {
         }
 
         if ($campo == 'cantidad') {
-            return '<span class="cant-prod">' . htmlspecialchars($valor) . '</span>';
+            return ' <input type="number" class="cantidad_oferta" name="cant_ofert" value="1" min="1">';
         }
 
         if ($campo == 'precio') {
             // Le ponemos la clase precio-prod para que JS lo sume al cargar
-            return '<span class="precio-prod">' . number_format($valor, 2) . '</span>€';
+            return '<span class="precio-prod">' . number_format((float)$valor, 2) . '</span>€';
         }
 
         if ($campo == 'descuento') {
-            return number_format($valor, 2) . " %";
+            return number_format($valor, 0) . " %";
         }
 
         if ($campo === 'id_oferta') {
@@ -55,6 +55,21 @@ class TablaOfertas extends Tabla {
         if ($paginaActual == 'crear_actualizar_oferta.php') {
             return <<<EOS
                 <button type="button" class="borrar_prod_pack">Borrar</button>
+            EOS;
+        }
+
+        if($paginaActual == 'ver_ofertas.php'){
+
+           $id = urlencode($fila['id_oferta']);
+           echo($id);
+           $urlComprar = "includes/clases/pedidos/anyadir_carrito.php?id=$id&origen=ofertas";
+
+           return <<<EOS
+                <form action="$urlComprar" method="GET">
+                    <input type="hidden" name="origen" value="ofertas">
+                    <input type="hidden" name="id" value="$id">
+                    <button type="submit" class="btn_add_pack">Comprar</button>
+                </form>
             EOS;
         }
         

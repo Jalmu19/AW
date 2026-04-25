@@ -17,7 +17,7 @@ if(!$app->isCurrentUserLogged()){
 
 //clientes
 if($app->isCurrentUserClient()){
-    header('Location: carta.php');
+    header('Location: opciones.php');
 }
 
 //camareros
@@ -25,7 +25,7 @@ if ($app->isCurrentUserWaiter() || $app->isCurrentUserCook() || $app->isCurrentU
     $contenidoPrincipal .= '<div class="panel-botones">';
     
     $contenidoPrincipal .= <<<EOS
-        <form action="carta.php" method="get">
+        <form action="opciones.php" method="get">
             <button type="submit" class="boton">Acceder como Cliente</button>
         </form>   
 

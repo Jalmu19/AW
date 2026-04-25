@@ -42,7 +42,7 @@ class Oferta {
         return false;
     }
 
-    private static function buscaProductosOferta($id_oferta)
+    public static function buscaProductosOferta($id_oferta)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT nombre_producto, cantidad FROM Oferta_Producto WHERE id_oferta=%d", $id_oferta);

@@ -31,7 +31,7 @@ function modificarValor(boton, operacion){
 
 
     // Enviamos 'origen=carrito' para que el PHP sepa que debe sobreescribir la cantidad
-    $.get("includes/clases/pedidos/añadir_carrito.php", {
+    $.get("includes/clases/pedidos/anyadir_carrito.php", {
         id: nombreProducto,
         cantidad: nuevoValor,
         origen: 'carrito' 

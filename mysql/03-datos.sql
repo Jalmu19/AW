@@ -41,7 +41,7 @@ INSERT INTO Pedido_Producto VALUES('coca-cola', 1, '17-02-2025 19:37:00', 5, fal
 INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Despertar dulce', 'Desayuna lo mejor del dia', '2026-04-18 9:00:00', '2026-12-18 9:00:00', 10.0);
 INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Puente de mayo', 'Preparate para el verano', '2026-04-20 9:00:00', '2026-05-20 9:00:00', 20.0);
 INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Veraneo', 'Refresca tu cuerpo', '2026-05-20 9:00:00', '2026-09-20 9:00:00', 20.0);
-INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Doble tentación', 'Endulzate la vida', '2026-04-20 9:00:00', '2026-05-20 9:00:00', 20.0);
+INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Doble tentacion', 'Endulzate la vida', '2026-04-20 9:00:00', '2026-05-20 9:00:00', 20.0);
 
 
 INSERT INTO Oferta_Producto VALUES('cafe con leche', 1, 1);

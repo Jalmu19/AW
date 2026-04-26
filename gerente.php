@@ -33,7 +33,7 @@ $contenidoPrincipal = <<<EOS
     <h1>Panel - Gerente</h1>
     <p>Seleccione la acción que desea realizar:</p>
 
-    <div class="panel-botones">
+    <div class="panel-botones-gerente">
         
         <form action= "$GestionarProducto" method="get">
             <button type="submit" class="boton">

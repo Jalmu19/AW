@@ -24,6 +24,8 @@ function modificarValor(boton, operacion){
     if(operacion === "+") nuevoValor = nuevoValor + 1;
     else if(valorActual > 0) nuevoValor = nuevoValor - 1;
 
+    if( nuevoValor === 0) eliminar_producto_carrito(nombreProducto);
+
     cantidad.text(nuevoValor);
     inputOculto.val(nuevoValor);
 
@@ -39,24 +41,27 @@ function modificarValor(boton, operacion){
 }
 
 
+
 $(document).ready(function(){
     $(".borrar_prod_carrito").click(function(){
         let fila = $(this).closest("tr"); //buscamos la celda vecina
         let nombreProducto = fila.find(".nombreProducto").val();
 
-        console.log("Producto", nombreProducto);
-
-        if(confirm("¿Desea borrar este producto del carrito?")){ 
-            
-            $.post("includes/clases/pedidos/eliminar_producto_pedido.php", { id:nombreProducto}, function() {
-                //se ejecuta solo cuando el PHP termina
-                //recarga la página para ver los cambios
-                window.location.href = "carrito.php"; 
-            });
-        }    
-        
+        eliminar_producto_carrito(nombreProducto);              
     });
 });
+
+
+function eliminar_producto_carrito(nombreProducto){
+
+    if(confirm("¿Desea borrar este producto del carrito?")){         
+        $.post("includes/clases/pedidos/eliminar_producto_pedido.php", { id:nombreProducto}, function() {
+            //se ejecuta solo cuando el PHP termina
+            //recarga la página para ver los cambios
+            window.location.href = "carrito.php"; 
+        });
+    }  
+}
 
 
 

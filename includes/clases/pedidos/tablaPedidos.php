@@ -40,11 +40,8 @@ class TablaPedidos extends Tabla {
     }
 
     protected function generaAcciones($fila) {
-        $id = urlencode($fila['nombre']);
-
-        $urlBorrar = RUTA_APP . "/includes/clases/pedidos/eliminar_producto_pedido.php?id=$id";
         return <<<EOS
-            <a href="$urlBorrar" class="borrar_prod_carrito">Borrar</a>
+            <button type="button" class="borrar_prod_carrito">Borrar</button>
         EOS;
     }
 

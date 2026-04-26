@@ -41,9 +41,20 @@ function modificarValor(boton, operacion){
 
 $(document).ready(function(){
     $(".borrar_prod_carrito").click(function(){
+        let fila = $(this).closest("tr"); //buscamos la celda vecina
+        let nombreProducto = fila.find(".nombreProducto").val();
+
+        console.log("Producto", nombreProducto);
+
         if(confirm("¿Desea borrar este producto del carrito?")){ 
-            modificarPrecio(); 
-        }        
+            
+            $.post("includes/clases/pedidos/eliminar_producto_pedido.php", { id:nombreProducto}, function() {
+                //se ejecuta solo cuando el PHP termina
+                //recarga la página para ver los cambios
+                window.location.href = "carrito.php"; 
+            });
+        }    
+        
     });
 });
 

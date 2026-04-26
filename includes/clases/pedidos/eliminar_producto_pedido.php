@@ -15,7 +15,7 @@ if (!$app->isCurrentUserAdmin()) {
     exit();
 }
 
-$nombreProd = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombreProd = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 $nombreUsuario = $app->getCurrentUserName();
 //pedido actual para saber fecha y num_pedido

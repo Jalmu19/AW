@@ -89,6 +89,7 @@ h1{ /*todos los titulos en el centro*/
 	text-align:center;
 }
 
+
 fieldset {
 	align-items: center;
 	flex-wrap:wrap;
@@ -239,6 +240,7 @@ img.logout{
     border-radius: 8px;
     cursor: pointer;
     width: 250px; 
+    height: 75px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 	text-decoration: none;
 }
@@ -254,11 +256,13 @@ img.logout{
 
 .panel-botones-gerente{
     display: grid;          
-    grid-template-columns: 250px 250px 250px;
-    grid-template-rows: 120px;
-    grid-column-gap:30px;
-    justify-content: center;         
+    grid-template-columns: 250px 250px;
+    grid-template-rows: 100px 100px 100px;
+    column-gap:30px;
+    justify-content: center;  
 }
+
+
 
 /*Botones de los formularios y para volver*/
 .boton-form {

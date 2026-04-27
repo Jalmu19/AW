@@ -136,6 +136,7 @@ $(document).ready(function(){
     $("#precio_reducido").on("input", function(){
         calculoDescuento();
     });
+
 });
 
 
@@ -215,6 +216,8 @@ function modificarPrecioOferta() {
     
     calculoDescuento();
 }
+
+
 
 
 

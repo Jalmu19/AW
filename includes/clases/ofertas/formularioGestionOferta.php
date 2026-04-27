@@ -130,7 +130,7 @@ class FormularioGestionOferta extends Formulario {
                 
                 <div>
                     <label>Precio Final de la Oferta (€):</label>
-                    <input id="precio_reducido" type="number" name="precio_reducido" step="0.01" placeholder="Ej: 9.99">
+                    <input id="precio_reducido" type="number" min="0" name="precio_reducido" step="0.01" placeholder="Ej: 9.99">
                 </div>
 
                 <div>

@@ -27,7 +27,7 @@ $origen = filter_input(INPUT_GET, 'origen', FILTER_SANITIZE_STRING);
 $carta = ($origen === 'carta');
 
 
-if($nombreProducto && $tipoPedido && $carta){
+if($nombreProducto && $tipoPedido || $carta){
 
     //buscar si el usuario tiene un pedido "abierto" (estado=recibido)
     //si no encuentra, crea un pedido nuevo

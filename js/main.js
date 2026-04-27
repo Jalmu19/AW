@@ -24,20 +24,25 @@ function modificarValor(boton, operacion){
     if(operacion === "+") nuevoValor = nuevoValor + 1;
     else if(valorActual > 0) nuevoValor = nuevoValor - 1;
 
-    if( nuevoValor === 0) eliminar_producto_carrito(nombreProducto);
+    if( nuevoValor === 0)
+        eliminar_producto_carrito(nombreProducto);
+    else{
+        cantidad.text(nuevoValor);
+        inputOculto.val(nuevoValor);
 
-    cantidad.text(nuevoValor);
-    inputOculto.val(nuevoValor);
+        // Enviamos 'origen=carrito' para que el PHP sepa que debe sobreescribir la cantidad
+        $.get("includes/clases/pedidos/anyadir_carrito.php", {
+            id: nombreProducto,
+            cantidad: nuevoValor,
+            origen: 'carrito' 
+        });
+    }
+   
 
     modificarPrecio();
 
 
-    // Enviamos 'origen=carrito' para que el PHP sepa que debe sobreescribir la cantidad
-    $.get("includes/clases/pedidos/anyadir_carrito.php", {
-        id: nombreProducto,
-        cantidad: nuevoValor,
-        origen: 'carrito' 
-    });
+    
 }
 
 

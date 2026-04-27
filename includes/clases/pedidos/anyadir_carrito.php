@@ -41,25 +41,6 @@ if($nombreProducto && $tipoPedido || $carta){
     
     header('Location: ../../../carta.php');
 } 
-else{
-    //TODO: Que añada al carrito todos los productos de la oferta
-    [$fecha_hora, $num_pedido] = Pedido::pedidosNuevosUsuario($nombreUsuario, $tipoPedido);
-    
-    $idOferta = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $cantidadAAnyadir = filter_input(INPUT_GET, 'cant_ofert', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-       
-    $oferta = Oferta::buscaProductosOferta($idOferta);
-    //Por cada producto en la oferta
-    foreach($oferta as $pro => $cant){       
-        //Añadimos el producto
-        $cantTotal = $cant * $cantidadAAnyadir;
-
-        Pedido::insertarPedidoProducto($fecha_hora, $num_pedido, $pro, $cantTotal, $carta);
-        Pedido::actualizarTotalPedido($fecha_hora, $num_pedido); 
-    }   
-    
-    header('Location: ../../../ver_ofertas.php');
-}
 
 
 

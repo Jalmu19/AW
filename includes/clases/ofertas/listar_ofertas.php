@@ -48,7 +48,7 @@ $contenidoPrincipal .= <<<EOS
         <img src= "$Rutaflecha" alt="Volver al Inicio">
     </a>  
 <div>
-    <h1>Gestión de Productos</h1>
+    <h1>Gestión de Ofertas</h1>
 </div>
 
 EOS;

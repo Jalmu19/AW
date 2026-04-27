@@ -106,6 +106,8 @@ class Pedido {
             while($p = $rsProd->fetch_assoc()) {
                 $productos[] = $p;
             }
+
+            $rsProd->free();
             
             $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['total'], $f['estado'], $f['tipo'], $productos);
             $rs->free();
@@ -138,6 +140,7 @@ class Pedido {
             $lista[] = $fila;
         }
         
+        $result->free();
         $stmt->close();
         return $lista;
     }
@@ -161,11 +164,12 @@ class Pedido {
             $num_pedido = $pedidoActual['num_pedido'];
         }
         else{ //si no, creamos uno
-
+            if ($resultado) $resultado->free();
             //saber el ultimo pedido
             $queryUltimoPedido = sprintf("SELECT MAX(num_pedido) as ultimo FROM Pedido"); //devuelve el útlimo num usado
             $resQueyUltimoPedido = $conn->query($queryUltimoPedido);
             $filaMax = $resQueyUltimoPedido->fetch_assoc();
+            $resQueyUltimoPedido->free();
             $num_pedido = ($filaMax['ultimo'] !== null) ? $filaMax['ultimo'] + 1 : 1;
 
 
@@ -208,6 +212,8 @@ class Pedido {
                                 $nombreProducto, $cantidad, $fecha_hora, $num_pedido);
             $conn->query($query3);
         } 
+
+        if ($res) $res->free();
     }
 
     public static function actualizarTotalPedido($fecha_hora, $num_pedido){
@@ -229,6 +235,8 @@ class Pedido {
                                     WHERE fecha_hora = '%s' AND num_pedido = %d",
                                     $nuevoTotal, $fecha_hora, $num_pedido);
             $conn->query($queryUpdate);
+
+            $result->free();
         }
     }
 
@@ -259,6 +267,7 @@ class Pedido {
             $lista[] = $fila;
         }
 
+        $result->free();
         $stmt->close();
         return $lista;
     }
@@ -403,11 +412,13 @@ class Pedido {
                 $rsP = $conn->query($sqlProd);
                 $prods = [];
                 while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
+                if ($rsP) $rsP->free();
 
                 if (!empty($prods)) {
                     $pedidosCocinero[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 'estado' => $f['estado'], 'productos' => $prods, 'cocinero' => $f['cocinero']];
                 }
             }
+            $rs->free();
         }
         return $pedidosCocinero;
     }
@@ -428,6 +439,7 @@ class Pedido {
                 $rsP = $conn->query($sqlProd);
                 $prods = [];
                 while ($p = $rsP->fetch_assoc()) { $prods[] = $p; }
+                if ($rsP) $rsP->free();
 
                 if (!empty($prods)) {
                     $pedidos[] = ['num_pedido' => $f['num_pedido'], 'fecha_hora' => $f['fecha_hora'], 
@@ -435,6 +447,7 @@ class Pedido {
                                     'cliente' => $f['cliente'], 'cocinero' => $f['cocinero'], 'productos' => $prods];
                 }
             }
+            $rs->free();
         }
         return $pedidos;
     }

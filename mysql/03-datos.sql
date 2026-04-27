@@ -25,11 +25,11 @@ INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','coca_
 INSERT INTO Producto VALUES('cafe solo', 2.5, true, 21, true, 'cafe solo','cafe_solo.png', false,'bebida');
 INSERT INTO Producto VALUES('cafe con leche', 2.75, true, 21, true, 'cafe con leche','cafe_con_leche.png', false,'bebida');
 
-INSERT INTO Pedido VALUES('2025-02-12 22:00:00', 1, 'en local', 22.50, 'Cocinando', 'martita', 'ana', 'silvia');
-INSERT INTO Pedido VALUES('2025-02-13 15:02:00', 2, 'en local', 12.25, 'Cocinando', 'martita', 'ana', 'marcos');
-INSERT INTO Pedido VALUES('2025-02-15 12:24:00', 3,'a domicilio' , 30.20, 'Cocinando', 'martita', 'juan', 'marcos');
-INSERT INTO Pedido VALUES('2025-02-16 20:46:00', 4,'a domicilio' , 7.40, 'Cocinando', 'jose', 'juan', 'silvia');
-INSERT INTO Pedido VALUES('2025-02-17 19:37:00', 5, 'a domicilio', 10.50, 'Cocinando', 'jose', 'ana', 'silvia');
+INSERT INTO Pedido VALUES('2025-02-12 22:00:00', 1, 'en local', 22.50, 20.50, 2.0, 'Cocinando', 'martita', 'ana', 'silvia');
+INSERT INTO Pedido VALUES('2025-02-13 15:02:00', 2, 'en local', 12.25, 10.0, 2.25, 'Cocinando', 'martita', 'ana', 'marcos');
+INSERT INTO Pedido VALUES('2025-02-15 12:24:00', 3,'a domicilio' , 30.20, 30.20, 0.0, 'Cocinando', 'martita', 'juan', 'marcos');
+INSERT INTO Pedido VALUES('2025-02-16 20:46:00', 4,'a domicilio' , 7.40, 3.10, 4.30, 'Cocinando', 'jose', 'juan', 'silvia');
+INSERT INTO Pedido VALUES('2025-02-17 19:37:00', 5, 'a domicilio', 10.50, 10.50, 0.0, 'Cocinando', 'jose', 'ana', 'silvia');
 
 INSERT INTO Pedido_Producto VALUES('pasta', 1, '12-02-2025 22:00:00', 1, false);
 INSERT INTO Pedido_Producto VALUES('pollo', 2, '13-02-2025 15:02:00', 2, false);
@@ -43,7 +43,6 @@ INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento
 INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Veraneo', 'Refresca tu cuerpo', '2026-05-20 9:00:00', '2026-09-20 9:00:00', 20.0);
 INSERT INTO Oferta(`nombre`, `descripcion`, `fecha_ini`, `fecha_fin`, `descuento`) VALUES('Doble tentacion', 'Endulzate la vida', '2026-04-20 9:00:00', '2026-05-20 9:00:00', 20.0);
 
-
 INSERT INTO Oferta_Producto VALUES('cafe con leche', 1, 1);
 INSERT INTO Oferta_Producto VALUES('brownie', 1, 1);
 INSERT INTO Oferta_Producto VALUES('salmorejo', 2, 1);
@@ -54,3 +53,10 @@ INSERT INTO Oferta_Producto VALUES('salmon', 3, 1);
 INSERT INTO Oferta_Producto VALUES('agua', 3, 1);
 INSERT INTO Oferta_Producto VALUES('tiramisu', 4, 1);
 INSERT INTO Oferta_Producto VALUES('brownie', 4, 2);
+
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (1, '2026-04-28 14:30:00', 10, 1);
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (2, '2026-05-20 15:00:00', 11, 2);
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (3, '2026-05-20 9:00:00', 12, 1);
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (4, '2026-05-20 9:00:00', 12, 1);
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (1, '2024-04-22 09:00:00', 13, 1);
+INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) VALUES (1, '2024-04-22 09:15:00', 14, 1);

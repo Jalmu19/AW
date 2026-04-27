@@ -42,7 +42,7 @@ if($nombreUsuario && $idOferta){
 
     // Solo aplicamos si el resultado final es mayor que cero.
     if ($vecesAplicable > 0) {
-        Pedido::aplicarOfertaACarrito($nombreUsuario, $idOferta, $vecesAplicable);
+        Pedido::aplicarOferta($nombreUsuario, $idOferta, $vecesAplicable);
     }
 } 
 

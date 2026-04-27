@@ -23,6 +23,7 @@ $columnas = [
     'fecha_hora'        => 'Fecha',
     'tipo'         => 'Tipo',
     'productos'    => 'Detalle',
+    'descuento'    => 'Ahorro',
     'precio_total' => 'Importe',
     'estado'       => 'Estado'
 ];

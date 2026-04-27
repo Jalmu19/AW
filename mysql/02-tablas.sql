@@ -23,6 +23,8 @@ CREATE TABLE `Pedido` (
     `num_pedido` int NOT NULL,
     `tipo` varchar(30) NOT NULL,
     `total` float DEFAULT 0.0,
+    `subtotal` float DEFAULT 0.0,
+    `descuento` float DEFAULT 0.0,
     `estado` varchar(25) NOT NULL,
     `cliente` varchar(20) NOT NULL,
     `camarero` varchar(20) DEFAULT NULL,
@@ -82,4 +84,14 @@ CREATE TABLE `Oferta_Producto` (
     FOREIGN KEY (`nombre_producto`) REFERENCES `Producto` (`nombre`),
     FOREIGN KEY (`id_oferta`) REFERENCES `Oferta` (`id_oferta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `Pedido_Ofertas` (
+    `id_oferta` int NOT NULL,
+    `fecha_hora` datetime NOT NULL,
+    `num_pedido` int NOT NULL,
+    `cantidad_aplicada` int NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id_oferta`, `fecha_hora`, `num_pedido`),
+    FOREIGN KEY (`id_oferta`) REFERENCES `Oferta` (`id_oferta`),
+    FOREIGN KEY (`fecha_hora`, `num_pedido`) REFERENCES `Pedido` (`fecha_hora`, `num_pedido`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -24,16 +24,19 @@ class Pedido {
     private $cliente;
     private $cocinero;
     private $camarero;
-    private $total;
+    private $subtotal;
+    private $descuento;
     private $estado;
     private $tipo;
     private $productos; // Array de productos: [['nombre' => 'Agua', 'cantidad' => 2, 'preparado' => 0], ...] de la tabla Pedido_Producto.
 
-    private function __construct($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productos = [], $cocinero="NULL", $camarero="NULL") {
+    private function __construct($num_pedido, $fecha_hora, $cliente, $total, $subtotal, $descuento, $estado, $tipo, $productos = [], $cocinero="NULL", $camarero="NULL") {
         $this->num_pedido = $num_pedido;
         $this->fecha_hora = $fecha_hora;
         $this->cliente = $cliente;
         $this->total = $total;
+        $this->subtotal = $subtotal;
+        $this->descuento = $descuento;
         $this->estado = $estado;
         $this->tipo = $tipo;
         $this->productos = $productos;
@@ -42,8 +45,8 @@ class Pedido {
     }
 
     //crea un pedido
-    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $estado, $cliente, $productosArr, $cocinero, $camarero) {
-        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $total, $estado, $tipo, $productosArr, $cocinero, $camarero);
+    public static function crea($fecha_hora, $num_pedido, $tipo, $total, $subtotal, $descuento, $estado, $cliente, $productosArr, $cocinero, $camarero) {
+        $pedido = new Pedido($num_pedido, $fecha_hora, $cliente, $total, $subtotal, $descuento, $estado, $tipo, $productosArr, $cocinero, $camarero);
         return self::inserta($pedido);
     }
 
@@ -55,12 +58,14 @@ class Pedido {
         $camarero = ($pedido->camarero && $pedido->camarero !== "NULL") ? "'" . $conn->real_escape_string($pedido->camarero) . "'" : "NULL";                
         $cocinero = ($pedido->cocinero && $pedido->cocinero !== "NULL")? "'" . $conn->real_escape_string($pedido->cocinero) . "'" : "NULL";
         
-        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, estado, cliente, camarero, cocinero) 
+        $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, subtotal, descuento, estado, cliente, camarero, cocinero) 
             VALUES ('%s', %d, '%s', %f, '%s', '%s',%s, %s)",
             $conn->real_escape_string($pedido->fecha_hora),
             $pedido->num_pedido,
             $conn->real_escape_string($pedido->tipo),
             $pedido->total,
+            $pedido->subtotal,
+            $pedido->descuento,
             $conn->real_escape_string($pedido->estado),
             $conn->real_escape_string($pedido->cliente),
             $camarero,
@@ -109,7 +114,7 @@ class Pedido {
 
             $rsProd->free();
             
-            $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['total'], $f['estado'], $f['tipo'], $productos);
+            $pedido = new Pedido($f['num_pedido'], $f['fecha_hora'], $f['cliente'], $f['total'], $f['subtotal'], $f['descuento'], $f['estado'], $f['tipo'], $productos);
             $rs->free();
             return $pedido;
         }
@@ -219,33 +224,76 @@ class Pedido {
     public static function actualizarTotalPedido($fecha_hora, $num_pedido){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $query = sprintf("SELECT SUM(p.precio * pp.cantidad) as total_calculado
+        // Calculamos del subtotal (precio sin descuento)
+        $querySubtotal = sprintf("SELECT SUM(p.precio * pp.cantidad) as bruto
                         FROM Pedido_Producto pp
-                                JOIN Producto p ON pp.nombre = p.nombre
+                        JOIN Producto p ON pp.nombre = p.nombre
                         WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d",
                         $fecha_hora, $num_pedido);
 
-        $result = $conn->query($query);
+        $result = $conn->query($querySubtotal);
         if ($result) {
             $fila = $result->fetch_assoc();
-            $nuevoTotal = $fila['total_calculado'] ?? 0.0;
+            $subtotal = $fila['bruto'] ?? 0.0;
 
-            // Actualizamos el campo 'total' en la tabla Pedido
-            $queryUpdate = sprintf("UPDATE Pedido SET total = %f 
-                                    WHERE fecha_hora = '%s' AND num_pedido = %d",
-                                    $nuevoTotal, $fecha_hora, $num_pedido);
+            // Calculamos el descuento
+            $queryDescuento = sprintf("SELECT SUM(o.descuento * po.cantidad_aplicada) as ahorro
+                                        FROM Pedido_Ofertas po
+                                        JOIN Oferta o ON po.id_oferta = o.id_oferta
+                                        WHERE po.num_pedido = %d AND po.fecha_hora = '%s'",
+                                        $num_pedido,
+                                        $conn->real_escape_string($fecha_hora)
+            );
+            $rsDesc = $conn->query($queryDescuento);
+            $descuento = $rsDesc->fetch_assoc()['ahorro'] ?? 0.0;
+           
+            $total = $subtotal - $descuento;
+
+            // Actualizamos los tres campos relacionados con el precio
+           $queryUpdate = sprintf("UPDATE Pedido SET subtotal = %f, descuento = %f, total = %f 
+                                    WHERE num_pedido = %d AND fecha_hora = '%s'",
+                                    $subtotal,
+                                    $descuento,
+                                    $total,
+                                    $num_pedido,
+                                    $conn->real_escape_string($fecha_hora)
+            );
             $conn->query($queryUpdate);
 
             $result->free();
         }
     }
 
+    public static function aplicarOferta($nombreUsuario, $idOferta, $vecesAplicable){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        
+        // Obtenemos los datos del pedido actual reutilizando pedidosNuevosUsuario. Le pasamos
+        // TIPO_LOCAL aunque no se vaya a utilizar porque así lo pide el método.
+        [$fecha_hora, $num_pedido] = self::pedidosNuevosUsuario($nombreUsuario, self::TIPO_LOCAL);
+        
+        // Guardamos la oferta en la tabla Pedido_Ofertas
+        $sql = sprintf(
+            "INSERT INTO Pedido_Ofertas (id_oferta, fecha_hora, num_pedido, cantidad_aplicada) 
+            VALUES (%d, '%s', %d, %d) 
+            ON DUPLICATE KEY UPDATE cantidad_aplicada = %d",
+            $idOferta, 
+            $db->real_escape_string($fecha_hora), 
+            $num_pedido, 
+            $vecesAplicable, 
+            $vecesAplicable
+        );
+        
+        $conn->query($sql);
+
+        return self::actualizarTotalPedido($fecha_hora, $num_pedido);
+    }
+    
 
     //historial de pedidos de un usuario concreto
     public static function historialPedidoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.total as precio_total, p.estado, p.tipo,
+        $query = "SELECT p.num_pedido as id, p.fecha_hora, p.descuento, p.total as precio_total, p.estado, p.tipo,
                          GROUP_CONCAT(CONCAT(pp.cantidad, ' x ', pp.nombre) SEPARATOR '<br>') as productos
                 FROM Pedido p
                 JOIN Pedido_Producto pp ON p.num_pedido = pp.num_pedido AND p.fecha_hora = pp.fecha_hora

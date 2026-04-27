@@ -109,11 +109,21 @@ $(document).ready(function() {
 
 
 
-function calculoDescuento(){
+function calculoDescuento() {
     let precio = parseFloat($("#precio_total").text()) || 0;
-    let precio_reducido = parseFloat($("#precio_reducido").val()) || 0;
+    let precio_reducido = parseFloat($("#precio_reducido").val());
 
-    let descuento = (100*(precio-precio_reducido))/precio; //redondeo hacia abajo
+    // Si no hay nada escrito, descuento 0
+    if(isNaN(precio_reducido)) {
+        $("#descuento-input").val(0);
+        return;
+    }
+
+    let descuento = 0;
+    if (precio > 0) {
+        descuento = (100 * (precio - precio_reducido)) / precio;
+    }
+    
     $("#descuento-input").val(Math.round(descuento));
 }
 
@@ -133,7 +143,27 @@ $(document).ready(function(){
         borrarProductoPack($(this));
     });
 
-    $("#precio_reducido").on("input", function(){
+   $("#precio_reducido").on("input", function(){
+        let inputValor = $(this).val();
+        let precioFinal = parseFloat(inputValor);
+        let totalPack = parseFloat($("#precio_total").text()) || 0;
+
+        // Si la casilla está vacía
+        if (inputValor === "" || isNaN(precioFinal)) {
+            $("#descuento-input").val("0");
+            return; 
+        }
+
+        // Si es menor que 0, forzamos a 0
+        if (precioFinal < 0) {
+            $(this).val(0);
+        } 
+        // Si supera el total del pack, forzamos al total máximo
+        else if (precioFinal > totalPack) {
+            $(this).val(totalPack.toFixed(2));
+        }
+
+        // Una vez comprobado y corregido, calculamos el descuento
         calculoDescuento();
     });
 

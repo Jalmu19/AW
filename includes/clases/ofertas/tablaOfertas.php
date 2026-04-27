@@ -13,7 +13,9 @@ class TablaOfertas extends Tabla {
         if ($campo == 'nombre') {
             return '<span class="nom-prod">' . htmlspecialchars($valor) . '</span>';
         }
-
+        if ($campo == 'cantidad') {
+            return '<span class="cant-prod">' . htmlspecialchars($valor) . '</span>';
+        }
         if ($campo == 'precio') {
             // Le ponemos la clase precio-prod para que JS lo sume al cargar
             return '<span class="precio-prod">' . number_format((float)$valor, 2) . '</span>€';

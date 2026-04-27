@@ -248,6 +248,35 @@ function modificarPrecioOferta() {
 }
 
 
+function calculoPrecioTotal() {
+    let total = 0;
 
+    // Usamos jQuery para iterar por cada fila de la tabla
+    $('table tbody tr').each(function() {
 
+        let cant = $(this).find('td:nth-child(2)').text();
+        let prec = $(this).find('td:nth-child(3)').text();
+        
+        //No estaba leyendo bien la , para los decimales
+        prec = prec.replace(',', '.').replace("€", "");
+       
+        const cantidad = parseInt(cant, 10);
+        const precio = parseFloat(prec);
+        
+        if (!isNaN(cantidad) && !isNaN(precio)) {
+            total += cantidad * precio;
+        }
+        
+    });
+
+    console.log(total);
+   $("#total_sin").text(total.toFixed(2));
+}
+
+function calculoPrecioFinal(){
+
+    let precioIni = $("#total_sin").text();
+    $("#total_con").text(precioIni);
+
+}
 

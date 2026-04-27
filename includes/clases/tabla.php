@@ -33,7 +33,7 @@ abstract class Tabla {
         $html .= $this->generaCabecera();
         $html .= "<tbody>";
         
-        if ($this->datos instanceof mysqli_result) {
+        if ($this->datos instanceof \mysqli_result) {
             while ($fila = $this->datos->fetch_assoc()) {
                 $html .= $this->generaFila($fila);
             }

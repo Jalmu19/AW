@@ -14,14 +14,6 @@ class TablaOfertas extends Tabla {
             return '<span class="nom-prod">' . htmlspecialchars($valor) . '</span>';
         }
 
-        if ($campo == 'precio') {
-            return '<span class="precio-prod">' . number_format((float)$valor, 2) . '</span>€';
-        }
-
-        if ($campo == 'cantidad') {
-            return '<span class="cant-prod">' . htmlspecialchars($valor) . '</span>';
-        }
-
         if ($campo == 'descuento') {
             return number_format($valor, 0) . " %";
         }
@@ -30,9 +22,15 @@ class TablaOfertas extends Tabla {
             return "#" . htmlspecialchars($valor);
         }
 
-        if ($campo === 'productos_pack') {
-            return $valor;
+        if($campo === 'detalles'){
+            
+            $id = $fila['id_oferta'];
+            $urlComprar = "vista_oferta.php?id_Oferta=$id";
+           return <<<EOS
+              <a href= $urlComprar class="boton-form"> Ver detalles</a>
+            EOS;
         }
+        
 
         return parent::formateaContenido($campo, $valor, $fila);
     }
@@ -54,22 +52,6 @@ class TablaOfertas extends Tabla {
         if ($paginaActual == 'crear_actualizar_oferta.php') {
             return <<<EOS
                 <button type="button" class="borrar_prod_pack">Borrar</button>
-            EOS;
-        }
-
-        if($paginaActual == 'ver_ofertas.php'){
-
-           $id = urlencode($fila['id_oferta']);
-
-           $urlComprar = "includes/clases/pedidos/anyadir_carrito.php?id=$id&origen=ofertas";
-
-           return <<<EOS
-                <form action="$urlComprar" method="GET">
-                    <input type="hidden" name="origen" value="ofertas">
-                    <input type="hidden" name="id" value="$id">
-                    <input type="number" class="cantidad_oferta" name="cant_ofert" value="1" min="1">
-                    <button type="submit" class="boton-form">Comprar</button>
-                </form>
             EOS;
         }
         

@@ -13,9 +13,8 @@ $app = Aplicacion::getInstance();
 $columnas = [
     'id_oferta'=>'Número',
     'nombre' => 'Nombre',
-    'productos_pack'=>'Productos incluidos',
     'descuento' => 'Descuento',    
-    'precio'=>'Precio'
+    'detalles'=>'Detalles'
 
 ];
 
@@ -33,7 +32,7 @@ if ($app->isCurrentUserAdmin() || $app->isCurrentUserCook() || $app->isCurrentUs
     EOS;
 }
 
-$tabla = new tablaOfertas($columnas, $ofertas, true);
+$tabla = new tablaOfertas($columnas, $ofertas, false);
 $htmlTabla = $tabla->genera();
 
 $contenidoPrincipal .= <<<EOS

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `Pedido_Ofertas`;
 DROP TABLE IF EXISTS `Oferta_Producto`;
 DROP TABLE IF EXISTS `Oferta`;
 DROP TABLE IF EXISTS `Pedido_Producto`;

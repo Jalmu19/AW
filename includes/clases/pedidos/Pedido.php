@@ -661,7 +661,35 @@ class Pedido {
 
     //Cobrar pedido (camarero): Recibido-> En preparación
     public static function cobrarPedido($num_pedido, $fecha_hora) {
-        return self::actualizaEstado($num_pedido, $fecha_hora, self::ESTADO_PREPARACION);
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        // consultamos si hay algún producto en este pedido que sea cocinable
+        $sql = sprintf("SELECT COUNT(*) as total_cocinables 
+                        FROM Pedido_Producto pp 
+                        JOIN Producto p ON pp.nombre = p.nombre 
+                        WHERE pp.num_pedido = %d 
+                        AND pp.fecha_hora = '%s' 
+                        AND p.cocinable = 1",
+                        $num_pedido,
+                        $conn->real_escape_string($fecha_hora));
+
+        $res = $conn->query($sql);
+        $irACocina = false;
+
+        if ($res) {
+            $fila = $res->fetch_assoc();
+            // Si hay al menos 1 producto cocinable, el pedido debe pasar por el cocinero
+            if ($fila['total_cocinables'] > 0) {
+                $irACocina = true;
+            }
+            $res->free();
+        }
+
+        // Si hay comida -> 'En preparacion' (para que el cocinero lo acepte)
+        // Si NO hay comida -> 'Listo cocina' (para que el camarero lo complete y entregue)
+        $nuevoEstado = $irACocina ? self::ESTADO_PREPARACION : self::ESTADO_LISTO_COCINA;
+
+        return self::actualizaEstado($num_pedido, $fecha_hora, $nuevoEstado);
     }
     
     //Entregar pedido (camarero): Terminado-> Entregado

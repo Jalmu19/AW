@@ -24,6 +24,8 @@ INSERT INTO Producto VALUES('brownie',4.50, true, 21, true, 'brownie de chocolat
 INSERT INTO Producto VALUES('coca-cola', 2.5, true, 21, true, 'coca-cola','coca_cola.png', false,'bebida');
 INSERT INTO Producto VALUES('cafe solo', 2.5, true, 21, true, 'cafe solo','cafe_solo.png', false,'bebida');
 INSERT INTO Producto VALUES('cafe con leche', 2.75, true, 21, true, 'cafe con leche','cafe_con_leche.png', false,'bebida');
+INSERT INTO Producto VALUES('agua', 1.5, true, 21, true, 'botella de agua','agua.png', false,'bebida');
+
 
 INSERT INTO Pedido VALUES('2025-02-12 22:00:00', 1, 'en local', 22.50, 20.50, 2.0, 'Cocinando', 'martita', 'ana', 'silvia');
 INSERT INTO Pedido VALUES('2025-02-13 15:02:00', 2, 'en local', 12.25, 10.0, 2.25, 'Cocinando', 'martita', 'ana', 'marcos');

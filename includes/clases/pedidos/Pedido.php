@@ -59,7 +59,7 @@ class Pedido {
         $cocinero = ($pedido->cocinero && $pedido->cocinero !== "NULL")? "'" . $conn->real_escape_string($pedido->cocinero) . "'" : "NULL";
         
         $query = sprintf("INSERT INTO Pedido (fecha_hora, num_pedido, tipo, total, subtotal, descuento, estado, cliente, camarero, cocinero) 
-            VALUES ('%s', %d, '%s', %f, '%s', '%s',%s, %s)",
+            VALUES ('%s', %d, '%s', %f, %f, %f, '%s', '%s',%s, %s)",
             $conn->real_escape_string($pedido->fecha_hora),
             $pedido->num_pedido,
             $conn->real_escape_string($pedido->tipo),
@@ -179,7 +179,7 @@ class Pedido {
 
 
             $fecha_hora = date('Y-m-d H:i:s');
-            self::crea($fecha_hora,$num_pedido, $tipo, 0.0, self::ESTADO_NUEVO , $nombreUsuario, [], NULL, NULL);
+            self::crea($fecha_hora,$num_pedido, $tipo, 0.0, 0.0, 0.0, self::ESTADO_NUEVO , $nombreUsuario, [], NULL, NULL);
         }
 
         return [$fecha_hora, $num_pedido];

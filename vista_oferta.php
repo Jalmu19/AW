@@ -12,6 +12,10 @@ use BistroFDI\clases\productos\TablaProductos;
 $app = Aplicacion::getInstance();
 
 $idOferta = $_GET['id_Oferta'] ?? '';
+$oferta = Oferta::buscaOferta($idOferta);
+$nombreOferta = $oferta->getNombre();
+
+
 $productos = Oferta::buscaProductosOferta($idOferta);
 $filasTabla = [];
 foreach($productos as $p => $cant){
@@ -43,7 +47,12 @@ $contenidoPrincipal .= <<<EOS
         <img src= "$Rutaflecha" alt="Volver al Inicio">
     </a>  
 </div>
+EOS;
 
+$contenidoPrincipal .= <<<EOS
+<div> 
+    <h1> Detalles de la oferta: $nombreOferta</h1>
+</div>
 EOS;
 
 $contenidoPrincipal .= $tablaObj->genera();

@@ -80,7 +80,7 @@ function modificarPrecio() {
         totalGeneral += precioUnid * cantidad;      
     });
 
-    $("#total_carrito").text(totalGeneral + "€");
+    $("#total_carrito").text(totalGeneral.toFixed(2));
 }
 
 
@@ -285,3 +285,8 @@ function calculoPrecioFinal(descuento){
 
 }
 
+function aplicarOfertas(){
+     $(".boton-desc").click(function(){
+        $.post("includes/clases/ofertas/aplicar_oferta.php",{'idOferta': 2});
+     }); 
+}

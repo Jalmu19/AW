@@ -47,13 +47,17 @@ if ($pedidos && count($pedidos) > 0) {
 
   $total = isset($pedidos[0]['total']) ? $pedidos[0]['total'] : 0;
   $contenidoPrincipal .= <<<EOS
+
+      <div>
         <h1>
           Total: 
-          <span id='total_carrito'>$total<span>
-          €
-        </h1>
+          <span id='total_carrito'>$total</span> €
+        </h1>      
+        <button id= 'boton-desc'class='boton-form'> Aplicar descuentos </button>
+      </div>
+      
   EOS;
-
+  //<script> document.addEventListener('DOMContentLoaded', () => {}); </script>
   $numPedido = $pedidos[0]['num_pedido'];
   $fechaHora = $pedidos[0]['fecha_hora'];
 

@@ -15,7 +15,7 @@ $idOferta = $_GET['id_Oferta'] ?? '';
 
 $oferta = Oferta::buscaOferta($idOferta);
 $nombreOferta = $oferta->getNombre();
-$desc = $oferta->getDescuento();
+$desc = round($oferta->getDescuento());
 
 $productos = Oferta::buscaProductosOferta($idOferta);
 $filasTabla = [];
@@ -61,7 +61,7 @@ $contenidoPrincipal .= $tablaObj->genera();
 $contenidoPrincipal .= <<<EOS
 <div>
     <h3>Total Pack (Sin descuento): <span id = "total_sin" >0.00</span>€</h3> 
-    <h2>Con descuento: <span id="total_con">0.00</span>€</h2>   
+    <h2>Con $desc % de descuento: <span id="total_con">0.00</span>€</h2>   
 </div>
 <script> document.addEventListener('DOMContentLoaded', () => {calculoPrecioTotal(); calculoPrecioFinal($desc);}); </script>
 EOS;

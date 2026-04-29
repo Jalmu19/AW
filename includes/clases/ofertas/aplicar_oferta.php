@@ -1,52 +1,57 @@
 <?php
 namespace BistroFDI\clases\ofertas;
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/../../../autoload.php';
-
-use BistroFDI\clases\ofertas\FormularioGestionOferta;
 use BistroFDI\clases\ofertas\Oferta;
 use BistroFDI\clases\pedidos\Pedido;
 use BistroFDI\clases\Aplicacion;
 
 $app = Aplicacion::getInstance();
-
-if (!$app->isCurrentUserLogged()) {
-    header('Location: login.php');
-    exit();
-}
-
 $nombreUsuario = $app->getCurrentUserName();
-$idOferta = filter_input(INPUT_GET, 'id_oferta', FILTER_VALIDATE_INT) ?: null;
 
+if ($nombreUsuario) {
+    // 1. Identificar pedido actual
+    $infoPedido = Pedido::pedidosNuevosUsuario($nombreUsuario, Pedido::TIPO_DOMICILIO);
+    if ($infoPedido) { 
+        $fecha = $infoPedido[0];
+        $num = $infoPedido[1];
 
-if($nombreUsuario && $idOferta){  
-    //recorrer carrito y comprobar si la oferta es aplicable
-    $productosEnLaOferta = Oferta::buscaProductosOferta($idOferta);
-    $productosCarrito = Pedido::getCarritoUsuario($nombreUsuario);
+        $conn = $app->getConexionBd();
 
-    // Inicializamos con un número muy alto. 
-    $vecesAplicable = !empty($productosEnLaOferta) ? PHP_INT_MAX : 0;
+        // 2. LIMPIAR ofertas previas (para que no se apliquen solas o se dupliquen)
+        $conn->query(sprintf("DELETE FROM Pedido_Ofertas WHERE num_pedido = %d AND fecha_hora = '%s'", $num, $conn->real_escape_string($fecha)));
 
-    foreach ($productosEnLaOferta as $nombreReq => $cantidadReq) {
-        $cantidadDisponible = $productosCarrito[$nombreReq] ?? 0;
-        
-        // Calculamos cuántos packs completos permite este ingrediente específico
-        $posiblesParaEsteProd = round(($cantidadDisponible / $cantidadReq));
-        
-        // El número total de packs será el mínimo de todos los componentes
-        // Si un producto falta (0), el min() se convertirá automáticamente en 0
-        $vecesAplicable = min($vecesAplicable, (int)$posiblesParaEsteProd);
+        // 3. Cargar carrito
+        $productosCarrito = Pedido::getCarritoUsuario($nombreUsuario);
+        $carritoMapeado = [];
+        foreach ($productosCarrito as $p) { $carritoMapeado[$p['nombre']] = $p['cantidad']; }
+
+        // 4. Procesar Ofertas
+        $ofertasActivas = Oferta::listarOfertas(true);
+        foreach ($ofertasActivas as $o) {
+            $idOferta = $o['id_oferta'];
+            $productosRequeridos = Oferta::buscaProductosOferta($idOferta);
+            
+            $vecesPosibles = PHP_INT_MAX;
+            $cumpleTodaLaOferta = true;
+
+            foreach ($productosRequeridos as $nombreProd => $cantidadNec) {
+                $cantidadTengo = $carritoMapeado[$nombreProd] ?? 0;
+                if ($cantidadTengo < $cantidadNec) {
+                    $cumpleTodaLaOferta = false;
+                    break;
+                }
+                $vecesPosibles = min($vecesPosibles, floor($cantidadTengo / $cantidadNec));
+            }
+
+            if ($cumpleTodaLaOferta && $vecesPosibles > 0) {
+                // Esta función en Pedido.php debe usar $conn, no $db
+                Pedido::aplicarOferta($nombreUsuario, $idOferta, $vecesPosibles);
+            }
+        }
+
+        //RECALCULAR TOTALES
+        Pedido::actualizarTotalPedido($fecha, $num, true);
     }
 
-    // Solo aplicamos si el resultado final es mayor que cero.
-    if ($vecesAplicable > 0) {
-        Pedido::aplicarOferta($nombreUsuario, $idOferta, $vecesAplicable);
-    }
-} 
-
-header('Location: ../../../carrito.php');
-exit();
-
-
+    
+}

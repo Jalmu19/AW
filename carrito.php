@@ -57,7 +57,6 @@ if ($pedidos && count($pedidos) > 0) {
       </div>
       
   EOS;
-  //<script> document.addEventListener('DOMContentLoaded', () => {}); </script>
   $numPedido = $pedidos[0]['num_pedido'];
   $fechaHora = $pedidos[0]['fecha_hora'];
 

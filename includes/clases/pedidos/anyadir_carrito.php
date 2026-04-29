@@ -27,7 +27,7 @@ $origen = filter_input(INPUT_GET, 'origen', FILTER_SANITIZE_STRING);
 $carta = ($origen === 'carta');
 
 
-if($nombreProducto && $tipoPedido || $carta){
+if($nombreProducto && $tipoPedido){
 
     //buscar si el usuario tiene un pedido "abierto" (estado=recibido)
     //si no encuentra, crea un pedido nuevo
@@ -37,7 +37,7 @@ if($nombreProducto && $tipoPedido || $carta){
     Pedido::insertarPedidoProducto($fecha_hora, $num_pedido, $nombreProducto, $cantidadAAñadir, $carta);
 
     //actualizar el precio
-    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido); 
+    Pedido::actualizarTotalPedido($fecha_hora, $num_pedido, false); 
     
     header('Location: ../../../carta.php');
 } 

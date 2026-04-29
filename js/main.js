@@ -285,8 +285,20 @@ function calculoPrecioFinal(descuento){
 
 }
 
+
+$(document).ready(function(){
+    $("#boton-desc").click(function(){
+        aplicarOfertas();
+    });
+});
+
+
+
+
 function aplicarOfertas(){
-     $(".boton-desc").click(function(){
-        $.post("includes/clases/ofertas/aplicar_oferta.php",{'idOferta': 2});
-     }); 
+    $.post("includes/clases/ofertas/aplicar_oferta.php", function(data) {
+        // recargamos para ver el subtotal/descuento actualizado
+        location.reload(); 
+    });
+     
 }

@@ -221,48 +221,51 @@ class Pedido {
         if ($res) $res->free();
     }
 
-    public static function actualizarTotalPedido($fecha_hora, $num_pedido){
+   public static function actualizarTotalPedido($fecha_hora, $num_pedido, $incluirDescuento = true){
         $conn = Aplicacion::getInstance()->getConexionBd();
+        $fechaEscaped = $conn->real_escape_string($fecha_hora);
 
-        // Calculamos del subtotal (precio sin descuento)
-        $querySubtotal = sprintf("SELECT SUM(p.precio * pp.cantidad) as bruto
-                        FROM Pedido_Producto pp
-                        JOIN Producto p ON pp.nombre = p.nombre
-                        WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d",
-                        $fecha_hora, $num_pedido);
+        //alculamos el subtotal (lo que cuestan los productos)
+        $qSub = sprintf("SELECT SUM(p.precio * pp.cantidad) as bruto FROM Pedido_Producto pp 
+                        JOIN Producto p ON pp.nombre = p.nombre 
+                        WHERE pp.fecha_hora = '%s' AND pp.num_pedido = %d", $fechaEscaped, $num_pedido);
+        $resSub = $conn->query($qSub);
+        $subtotal = ($resSub) ? ($resSub->fetch_assoc()['bruto'] ?? 0) : 0;
 
-        $result = $conn->query($querySubtotal);
-        if ($result) {
-            $fila = $result->fetch_assoc();
-            $subtotal = $fila['bruto'] ?? 0.0;
+        $descuento = 0;
 
-            // Calculamos el descuento
-            $queryDescuento = sprintf("SELECT SUM(o.descuento * po.cantidad_aplicada) as ahorro
-                                        FROM Pedido_Ofertas po
-                                        JOIN Oferta o ON po.id_oferta = o.id_oferta
-                                        WHERE po.num_pedido = %d AND po.fecha_hora = '%s'",
-                                        $num_pedido,
-                                        $conn->real_escape_string($fecha_hora)
-            );
-            $rsDesc = $conn->query($queryDescuento);
-            $descuento = $rsDesc->fetch_assoc()['ahorro'] ?? 0.0;
-           
-            $total = $subtotal - $descuento;
-
-            // Actualizamos los tres campos relacionados con el precio
-           $queryUpdate = sprintf("UPDATE Pedido SET subtotal = %f, descuento = %f, total = %f 
-                                    WHERE num_pedido = %d AND fecha_hora = '%s'",
-                                    $subtotal,
-                                    $descuento,
-                                    $total,
-                                    $num_pedido,
-                                    $conn->real_escape_string($fecha_hora)
-            );
-            $conn->query($queryUpdate);
-
-            $result->free();
+        //SOLO si $incluirDescuento es true, calculamos cuánto ahorro hay en la tabla Pedido_Ofertas
+        if ($incluirDescuento) {
+            $qDesc = sprintf("SELECT SUM(
+                                            (SELECT SUM(p2.precio * op.cantidad) 
+                                            FROM Oferta_Producto op 
+                                            JOIN Producto p2 ON op.nombre_producto = p2.nombre 
+                                            WHERE op.id_oferta = o.id_oferta) 
+                                           * (o.descuento / 100) * po.cantidad_aplicada
+                                        ) as ahorro
+                FROM Pedido_Ofertas po
+                JOIN Oferta o ON po.id_oferta = o.id_oferta
+                WHERE po.num_pedido = %d AND po.fecha_hora = '%s'", 
+                $num_pedido, $fechaEscaped);
+            
+            $resDesc = $conn->query($qDesc);
+            $descuento = ($resDesc) ? ($resDesc->fetch_assoc()['ahorro'] ?? 0) : 0;
+        } else {
+            // Si no queremos ofertas, borramos cualquier rastro de ofertas previas en la BD
+            // para que el total real del pedido no las arrastre.
+            $conn->query(sprintf("DELETE FROM Pedido_Ofertas WHERE num_pedido = %d AND fecha_hora = '%s'", $num_pedido, $fechaEscaped));
         }
+        
+        $total = $subtotal - $descuento;
+
+        //guardamos los cambios
+        $qUpd = sprintf("UPDATE Pedido SET subtotal = %f, descuento = %f, total = %f 
+                        WHERE num_pedido = %d AND fecha_hora = '%s'",
+                        $subtotal, $descuento, $total, $num_pedido, $fechaEscaped);
+        return $conn->query($qUpd);
     }
+
+
 
     public static function aplicarOferta($nombreUsuario, $idOferta, $vecesAplicable){
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -277,7 +280,7 @@ class Pedido {
             VALUES (%d, '%s', %d, %d) 
             ON DUPLICATE KEY UPDATE cantidad_aplicada = %d",
             $idOferta, 
-            $db->real_escape_string($fecha_hora), 
+            $conn->real_escape_string($fecha_hora), 
             $num_pedido, 
             $vecesAplicable, 
             $vecesAplicable

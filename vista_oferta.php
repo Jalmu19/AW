@@ -12,9 +12,10 @@ use BistroFDI\clases\productos\TablaProductos;
 $app = Aplicacion::getInstance();
 
 $idOferta = $_GET['id_Oferta'] ?? '';
+
 $oferta = Oferta::buscaOferta($idOferta);
 $nombreOferta = $oferta->getNombre();
-
+$desc = $oferta->getDescuento();
 
 $productos = Oferta::buscaProductosOferta($idOferta);
 $filasTabla = [];
@@ -61,16 +62,10 @@ $contenidoPrincipal .= <<<EOS
 <div>
     <h3>Total Pack (Sin descuento): <span id = "total_sin" >0.00</span>€</h3> 
     <h2>Con descuento: <span id="total_con">0.00</span>€</h2>   
-    
 </div>
-<script> document.addEventListener('DOMContentLoaded', () => {calculoPrecioTotal(); calculoPrecioFinal();}); </script>
+<script> document.addEventListener('DOMContentLoaded', () => {calculoPrecioTotal(); calculoPrecioFinal($desc);}); </script>
 EOS;
-//<div>
-//       <label>Precio Final de la Oferta (€):</label>
-//     <input id="precio_reducido" type="number" min="0" name="precio_reducido" step="0.01" placeholder="Ej: 9.99">
-//</div>
 
-//
 
 $tituloPagina = "Detalles de oferta";
 require RAIZ_APP . '/includes/vistas/plantillas/plantilla.php';

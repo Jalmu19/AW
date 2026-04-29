@@ -269,14 +269,19 @@ function calculoPrecioTotal() {
         
     });
 
-    console.log(total);
    $("#total_sin").text(total.toFixed(2));
 }
 
-function calculoPrecioFinal(){
+function calculoPrecioFinal(descuento){
 
-    let precioIni = $("#total_sin").text();
-    $("#total_con").text(precioIni);
+    let precioIni = parseFloat($("#total_sin").text())
+    let precioFin = 0.0;
+    let factor = descuento/100;
+      
+    precioFin = precioIni-(precioIni*factor);
+    console.log(precioFin);
+
+    $("#total_con").text(precioFin.toFixed(2));
 
 }
 

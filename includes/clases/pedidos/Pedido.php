@@ -367,6 +367,18 @@ class Pedido {
 
     }
 
+    public static function limpiarOfertasPrevias($num, $fecha){
+        $conn = Aplicacion::getInstance()->getConexionBd();
+
+        // 2. LIMPIAR ofertas previas (para que no se apliquen solas o se dupliquen)
+        $conn->query(sprintf("DELETE FROM Pedido_Ofertas 
+                            WHERE num_pedido = %d AND fecha_hora = '%s'", 
+                            $num, $conn->real_escape_string($fecha)));
+
+    }
+
+
+
     // (completar pedido camarero): devuelve pedidos en LISTO_COCINA, 
     // mostrando productos no cocinables (si los hay) y el tipo de pedido.
     public static function pedidosParaCompletar() {

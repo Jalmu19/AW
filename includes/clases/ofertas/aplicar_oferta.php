@@ -15,11 +15,9 @@ if ($nombreUsuario) {
         $fecha = $infoPedido[0];
         $num = $infoPedido[1];
 
-        $conn = $app->getConexionBd();
+        Pedido::limpiarOfertasPrevias($num, $fecha);
 
-        // 2. LIMPIAR ofertas previas (para que no se apliquen solas o se dupliquen)
-        $conn->query(sprintf("DELETE FROM Pedido_Ofertas WHERE num_pedido = %d AND fecha_hora = '%s'", $num, $conn->real_escape_string($fecha)));
-
+        
         // 3. Cargar carrito
         $productosCarrito = Pedido::getCarritoUsuario($nombreUsuario);
         $carritoMapeado = [];

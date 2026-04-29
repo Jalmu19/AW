@@ -52,8 +52,11 @@ if ($pedidos && count($pedidos) > 0) {
         <h1>
           Total: 
           <span id='total_carrito'>$total</span> €
-        </h1>      
-        <button id= 'boton-desc'class='boton-form'> Aplicar descuentos </button>
+        </h1>  
+        <p>
+          <button id= 'boton-desc' class='boton-form'> Aplicar descuentos </button>
+        </p>    
+        
       </div>
       
   EOS;
@@ -62,7 +65,7 @@ if ($pedidos && count($pedidos) > 0) {
 
   $formFinalizar = new FormularioFinalizarPedido($numPedido, $fechaHora);
   
-  $contenidoPrincipal .= $formFinalizar->gestiona();
+  $contenidoPrincipal .=  $formFinalizar->gestiona();
 
 } 
 else {

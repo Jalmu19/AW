@@ -22,6 +22,7 @@ class Pedido {
     private $num_pedido; 
     private $fecha_hora;
     private $cliente;
+    private $total;
     private $cocinero;
     private $camarero;
     private $subtotal;

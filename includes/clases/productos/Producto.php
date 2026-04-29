@@ -80,11 +80,11 @@ class Producto {
         $result = [];
         if ($rs) {
             while ($fila = $rs->fetch_assoc()) {
-                $productos[] = $fila;
+                $result[] = $fila;
             }
             $rs->free();
         }
-        return $productos;
+        return $result;
     }
 
     //función crear

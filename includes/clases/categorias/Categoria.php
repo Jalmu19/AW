@@ -64,7 +64,7 @@ class Categoria {
         return $conn->query($query);
     }
 
-    public static function actualiza($nombre, $descripcion)
+    public static function actualiza($nombre, $descripcion = "")
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("UPDATE Categoria SET descripcion='%s' WHERE nombre='%s'",

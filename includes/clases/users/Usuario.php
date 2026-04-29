@@ -64,12 +64,12 @@ class Usuario {
         return $user->guarda();
     }
 
-    public function guarda()
+    private function guarda()
     {
-        if (self::buscaUsuario($this->nombreUsuario)) {
-            return self::actualiza($this->nombreUsuario, $this->email, $this->nombre, $this->apellidos, $this->password, $this->avatar);
+        if (!self::buscaUsuario($this->nombreUsuario)) {
+           return self::inserta($this);
         }
-        return self::inserta($this);
+        
     }
 
     private static function inserta($usuario)

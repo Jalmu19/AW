@@ -9,7 +9,7 @@ $app = Aplicacion::getInstance();
 $nombreUsuario = $app->getCurrentUserName();
 
 if ($nombreUsuario) {
-    // 1. Identificar pedido actual
+    //Identificar pedido actual
     $infoPedido = Pedido::pedidosNuevosUsuario($nombreUsuario, Pedido::TIPO_DOMICILIO);
     if ($infoPedido) { 
         $fecha = $infoPedido[0];
@@ -18,12 +18,12 @@ if ($nombreUsuario) {
         Pedido::limpiarOfertasPrevias($num, $fecha);
 
         
-        // 3. Cargar carrito
+        //Cargar carrito
         $productosCarrito = Pedido::getCarritoUsuario($nombreUsuario);
         $carritoMapeado = [];
         foreach ($productosCarrito as $p) { $carritoMapeado[$p['nombre']] = $p['cantidad']; }
 
-        // 4. Procesar Ofertas
+        //Procesar Ofertas
         $ofertasActivas = Oferta::listarOfertas(true);
         foreach ($ofertasActivas as $o) {
             $idOferta = $o['id_oferta'];
@@ -42,7 +42,6 @@ if ($nombreUsuario) {
             }
 
             if ($cumpleTodaLaOferta && $vecesPosibles > 0) {
-                // Esta función en Pedido.php debe usar $conn, no $db
                 Pedido::aplicarOferta($nombreUsuario, $idOferta, $vecesPosibles);
             }
         }

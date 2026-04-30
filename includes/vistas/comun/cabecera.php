@@ -1,6 +1,8 @@
 <?php
 
 use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\pedidos\Pedido;
+
 function perfil() {
     $app = Aplicacion::getInstance();
     $html = '';
@@ -9,12 +11,18 @@ function perfil() {
         $avatar = $app->getCurrentUserAvatar();
         $nombre = $app->getCurrentUserName();
 
+        $carrito = Pedido::getCarritoUsuario($nombre);
+
         $rutaImg = RUTA_APP . '/img/avatares/' . $avatar;
-        $fotoCarrito = RUTA_APP . '/img/carrito.png';
         $fotoLogout = RUTA_APP . '/img/logout.png';
         $rutaPerfil = RUTA_APP . '/miCuenta.php';
         $rutaLogout = RUTA_APP . '/logout.php';
         $rutaCarrito = RUTA_APP. '/carrito.php';
+
+        $fotoCarrito = RUTA_APP . '/img/carrito.png';
+        //si el carrito tiene productos cambiamos la ruta de la imagen
+        if($carrito && count($carrito) > 0)
+            $fotoCarrito = RUTA_APP.'/img/carrito_lleno.png';
 
         $html = "<div class='perfil_carrito_salir'>
                   

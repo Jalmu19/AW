@@ -647,7 +647,7 @@ class Pedido {
     public static function getCarritoUsuario($nombreUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
 
-        $query = sprintf("SELECT Pedido.num_pedido, Pedido.fecha_hora, cantidad, Producto.nombre, total, precio FROM Pedido
+        $query = sprintf("SELECT Pedido.num_pedido, Pedido.fecha_hora, cantidad, Producto.nombre, subtotal, total, precio FROM Pedido
 	                            JOIN Pedido_Producto ON Pedido.fecha_hora=Pedido_Producto.fecha_hora AND Pedido.num_pedido=Pedido_Producto.num_pedido
                                 JOIN Producto ON Pedido_Producto.nombre = Producto.nombre
                             WHERE cliente='%s' AND estado='Nuevo'", $nombreUsuario);

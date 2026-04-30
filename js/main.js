@@ -38,11 +38,7 @@ function modificarValor(boton, operacion){
         });
     }
    
-
     modificarPrecio();
-
-
-    
 }
 
 
@@ -80,6 +76,7 @@ function modificarPrecio() {
         totalGeneral += precioUnid * cantidad;      
     });
 
+    $("#subtotal_carrito").text(totalGeneral.toFixed(2));
     $("#total_carrito").text(totalGeneral.toFixed(2));
 }
 
@@ -299,6 +296,7 @@ function aplicarOfertas(){
     $.post("includes/clases/ofertas/aplicar_oferta.php", function(data) {
         // recargamos para ver el subtotal/descuento actualizado
         location.reload(); 
+        alert(data);
     });
      
 }

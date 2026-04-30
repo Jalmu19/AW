@@ -46,9 +46,16 @@ if ($pedidos && count($pedidos) > 0) {
   $contenidoPrincipal .= $tabla->genera();
 
   $total = isset($pedidos[0]['total']) ? $pedidos[0]['total'] : 0;
+  $subtotal = isset($pedidos[0]['subtotal']) ? $pedidos[0]['subtotal'] : 0;
+
   $contenidoPrincipal .= <<<EOS
 
       <div>
+        <h2>
+          Subtotal (sin descuento):
+          <span id="subtotal_carrito"> $subtotal </span> €
+        </h2>
+        
         <h1>
           Total: 
           <span id='total_carrito'>$total</span> €

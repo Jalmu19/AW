@@ -24,6 +24,8 @@ if ($nombreUsuario) {
         foreach ($productosCarrito as $p) { $carritoMapeado[$p['nombre']] = $p['cantidad']; }
 
         //Procesar Ofertas
+        $cumpleTodaLaOferta = false;
+        $contadorOfertasAplicadas=0;
         $ofertasActivas = Oferta::listarOfertas(true);
         foreach ($ofertasActivas as $o) {
             $idOferta = $o['id_oferta'];
@@ -42,12 +44,30 @@ if ($nombreUsuario) {
             }
 
             if ($cumpleTodaLaOferta && $vecesPosibles > 0) {
+                $contadorOfertasAplicadas++;
+
                 Pedido::aplicarOferta($nombreUsuario, $idOferta, $vecesPosibles);
+
+                //asegurarse de que un producto solo cuenta en 1 oferta
+                foreach ($productosRequeridos as $nombreProd => $cantidadNec) {
+                    $carritoMapeado[$nombreProd] -= ($cantidadNec * $vecesPosibles);
+                }
+
+                if($vecesPosibles==1){
+                    echo("Se ha aplicado $vecesPosibles vez la oferta: " . $o['nombre']. "\n");
+                }
+                else{
+                    echo("Se ha aplicado $vecesPosibles veces la oferta: " . $o['nombre']. "\n");
+                }
             }
         }
 
         //RECALCULAR TOTALES
         Pedido::actualizarTotalPedido($fecha, $num, true);
+
+        if($contadorOfertasAplicadas===0){
+            echo("No hay ningún descuento aplicable");
+        }
     }
 
     

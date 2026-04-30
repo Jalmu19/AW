@@ -33,6 +33,12 @@ $contenidoPrincipal = <<<EOS
     <p>Seleccione la acción que desea realizar sobre los pedidos:</p>
 
     <div class="panel-botones">
+    
+        <form action= "$Cobrar" method="get">
+            <button type="submit" class="boton">
+                Cobrar Cuenta
+            </button>
+        </form>
         
         <form action= "$Completar" method="get">
             <button type="submit" class="boton">
@@ -43,12 +49,6 @@ $contenidoPrincipal = <<<EOS
         <form action= "$Entregar" method="get">
             <button type="submit" class="boton">
                 Entregar Pedidos
-            </button>
-        </form>
-
-        <form action= "$Cobrar" method="get">
-            <button type="submit" class="boton">
-                Cobrar Cuenta
             </button>
         </form>
 

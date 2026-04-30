@@ -75,6 +75,21 @@ class Categoria {
         return $conn->query($query);
     }
 
+
+    public static function tieneProductos($nombre) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = "SELECT COUNT(*) as total FROM Producto WHERE categoria = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        
+        // Si total > 0, significa que hay productos usando esta categoría
+        return $res['total'] > 0;
+    }
+
+
     public static function borra($nombre)
     {
         $result = false;

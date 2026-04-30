@@ -120,7 +120,7 @@ class FormularioRegistro extends Formulario
         if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errores['email'] = 'El email no es válido.';
         }
-        else if (mb_strlen($email) > 50) {
+        else if (mb_strlen($email) > 100) {
             $this->errores['email'] = 'El email es demasiado largo (max 100 caracteres).';
         }
 

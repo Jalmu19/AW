@@ -3,7 +3,7 @@ namespace BistroFDI\clases\ofertas;
 
 require_once __DIR__ . '/../../../autoload.php';
 
-use BistroFDI\clases\Aplicacion;
+use BistroFDI\clases\aplicacion;
 use BistroFDI\clases\tabla;
 
 class TablaOfertas extends Tabla {

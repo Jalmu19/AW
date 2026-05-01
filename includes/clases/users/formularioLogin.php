@@ -4,7 +4,8 @@ require_once __DIR__ . '/../../../autoload.php';
 
 
 use BistroFDI\clases\users\Usuario;
-use BistroFDI\clases\aplicacion;use BistroFDI\clases\formulario;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\formulario;
 
 class FormularioLogin extends Formulario
 {

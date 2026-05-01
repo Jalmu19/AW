@@ -1,9 +1,8 @@
 <?php
-namespace BistroFDI\clases\ofertas;
 require_once __DIR__ . '/../../../autoload.php';
 use BistroFDI\clases\ofertas\Oferta;
 use BistroFDI\clases\pedidos\Pedido;
-use BistroFDI\clases\Aplicacion;
+use BistroFDI\clases\aplicacion;
 
 $app = Aplicacion::getInstance();
 $nombreUsuario = $app->getCurrentUserName();

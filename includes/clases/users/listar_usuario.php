@@ -3,7 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/../../../autoload.php';
 
-use BistroFDI\clases\aplicacion;use BistroFDI\clases\users\tablaUsuarios;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\users\tablaUsuarios;
 use BistroFDI\clases\users\Usuario;
 
 

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../../autoload.php';
 
 use BistroFDI\clases\productos\Producto;
 use BistroFDI\clases\ofertas\Oferta;
+use BistroFDI\clases\ofertas\tablaOfertas;
 use BistroFDI\clases\formulario;
 
 class FormularioGestionOferta extends Formulario {

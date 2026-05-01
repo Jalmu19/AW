@@ -1,13 +1,12 @@
 <?php
-namespace BistroFDI\clases\ofertas;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/../../../autoload.php';
 
-use BistroFDI\clases\ofertas\FormularioGestionOferta;
+use BistroFDI\clases\ofertas\formularioGestionOferta;
 use BistroFDI\clases\ofertas\Oferta; // Necesario para buscar la oferta
-use BistroFDI\clases\Aplicacion;
+use BistroFDI\clases\aplicacion;
 
 $app = Aplicacion::getInstance();
 

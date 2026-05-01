@@ -5,7 +5,8 @@ require_once __DIR__ . '/../../../autoload.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 use BistroFDI\clases\users\Usuario;
-use BistroFDI\clases\aplicacion;use BistroFDI\clases\formulario;
+use BistroFDI\clases\aplicacion;
+use BistroFDI\clases\formulario;
 
 class formularioActUsuario extends Formulario
 {

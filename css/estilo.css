@@ -227,6 +227,10 @@ img.logout{
 	width: 35px;
 	height: auto;
 }
+img.prod_carrito{
+    height: 60px;
+    width: auto;
+}
 
 
 /*Botones index*/

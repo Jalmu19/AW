@@ -19,7 +19,10 @@ class TablaPedidos extends Tabla {
             // Formateamos el número como moneda
             return number_format($valor, 2, ',', '.') . " €";
         }
-
+        if ($campo === 'imagen') {
+            $rutaImg = RUTA_IMGS . 'productos/' . $valor;
+            return "<img src='$rutaImg' alt='Producto'  class='prod_carrito'>";
+        }  
         if ($campo == 'productos') {
             return htmlspecialchars_decode($valor);
         }

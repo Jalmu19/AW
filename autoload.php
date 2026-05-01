@@ -22,7 +22,6 @@ spl_autoload_register(function ($class) {
     if (file_exists($file)) {
         require $file;
     } else {
-        // Esto les ayudará a ver en el log qué ruta está fallando exactamente
         error_log("Autoload error: No se encontró el archivo en " . $file);
     }
 });
